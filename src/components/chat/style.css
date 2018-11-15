@@ -1,0 +1,224 @@
+.chat-input-wrapper{
+  position: fixed;
+  z-index: 1200;
+  background-color: #fff;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  padding: 10px 45px;
+}
+.chat-input-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.chat-input{
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+.chat-input input{
+  width: 100%;
+  border: 0;
+  outline: 0;
+  -webkit-appearance: none;
+  background-color: transparent;
+  font-size: inherit;
+  color: inherit;
+}
+.emoji-box{
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  bottom: 0px;
+}
+.emoji-box .emoji-icon{
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  left: 10px;
+  bottom: 12px;
+}
+.emoji-box .emoji-icon .emoji-icon-img{
+  width: 100%;
+}
+.submit-box{
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: 10px;
+  bottom: 12px;
+  background: linear-gradient(120deg,#3bacee,#32c4d3);
+  box-shadow: -3px 2px 2px rgba(18,111,112,.2);
+  border-radius: 50%;
+}
+.submit-box .submit-icon-img{
+  width: 80%;
+  margin: 0 auto;
+  display: block;
+  margin-top: 4px;
+}
+.emoji-box .emoji-picker{
+  width: 100%;
+  min-height: 200px;
+  bottom: 62px;
+  z-index: 2500;
+  position: absolute;
+  max-height: 260px;
+  box-shadow: 0 1px 15px 1px rgba(0, 0, 0, 0.12);
+  background-color: white;
+  border-radius: 6px;
+  display: none;
+}
+.emoji-box .emoji-picker .emoji-picker-arrow{
+  position: absolute;
+  bottom: -8px;
+  left: 24px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+}
+.emoji-popup-animate-show{
+  animation-name: emoji-fadeInUp;
+  animation-duration: 0.4s;
+  animation-fill-mode: both;
+  display: block !important;
+}
+.chat-textarea-box{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  min-height: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.chat-input-wrapper .chat-input{
+  width: 100%;
+  margin: 0px;
+  padding: 0px 10px;
+  color: #333;
+  position: absolute;
+  z-index: 9;
+  height: 100%;
+  line-height: 32px;
+  font-size: 18px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: #edf5f8;
+  border: none;
+  resize: none;
+}
+.textareaPlaceholder{
+  white-space:normal;
+  word-break:break-all;
+  overflow:hidden;
+  visibility: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: #333;
+  line-height: 32px;
+  font-size: 18px;
+  max-height: 200px;
+  padding: 0px 10px;
+}
+.emoji-picker-content img{
+  width: 20px;
+}
+@keyframes emoji-fadeInUp {
+  from {
+    opacity: .2;
+    transform: translate3d(0, 8%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.popup-animate-hide2{
+  animation-name: fadeOutDown;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  display: none;
+}
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.8;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+
+
+/*messages*/
+.message-item{
+  padding: 5px 0px;
+  position: relative;
+  overflow: hidden;
+}
+.message-item .message-item-content{
+  position: relative;
+  background-color: #fff;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 3px;
+  max-width: 60%;
+  line-height: 26px;
+  font-size: 18px;
+  word-wrap: break-word;
+}
+.message-item .message-item-content:before{
+  content: '';
+  display: block;
+  position: absolute;
+  top: 12px;
+  width: 0;
+  height: 0;
+}
+.message-item .message-item-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  position: absolute;
+}
+.message-item-other{
+  padding-left: 50px;
+}
+.message-item-other .message-item-avatar{
+  left: 5px;
+}
+.message-item-other .message-item-content{
+  float: left;
+  background-color: #d7e4f4;
+}
+.message-item-own{
+  padding-right: 50px;
+}
+.message-item-own .message-item-avatar{
+  right: 5px;
+}
+.message-item-own .message-item-content{
+  float: right;
+}
+.message-item-own .message-item-content:before {
+  right: -10px;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+}
+.message-item-other .message-item-content:before {
+  left: -10px;
+  border-left: 20px solid transparent;
+  border-bottom: 20px solid #d7e4f4;
+}
