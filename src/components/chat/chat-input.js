@@ -37,11 +37,12 @@ export default class ChatInput extends Component {
     this.setState({visible: true, textarea: `${textarea}[${text}]`});
   }
   submit = (e) => {
+    const {userInfo} = this.props;
     const {textarea} = this.state;
     const data = {
       value: textarea,
       timestamp: new Date().getTime(),
-      user: ''
+      userInfo
     };
     this.props.sendMessage(data);
     this.setState({textarea: ''});

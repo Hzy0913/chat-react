@@ -177,7 +177,8 @@
   max-width: 60%;
   line-height: 26px;
   font-size: 18px;
-  word-wrap: break-word;
+  word-break: break-all;
+  /*word-wrap: break-word;*/
 }
 .message-item .message-item-content:before{
   content: '';
@@ -221,4 +222,26 @@
   left: -10px;
   border-left: 20px solid transparent;
   border-bottom: 20px solid #d7e4f4;
+}
+.message-content-emoji{
+  width: 22px;
+  display: inline-block;
+  position: relative;
+  top: 4px;
+  margin: 0px 4px;
+}
+.message-list-wrapper .time-info span{
+  background-color: rgba(0,0,0,.12);
+  width: 90px;
+  line-height: 14px;
+  display: block;
+  margin: 0 auto;
+  font-size: 13px;
+  color: #fff;
+  text-align: center;
+  padding: 4px;
+  border-radius: 4px;
+}
+.message-list-wrapper .time-info{
+  margin: 10px 0px;
 }
