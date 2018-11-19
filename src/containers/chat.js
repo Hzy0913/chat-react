@@ -59,6 +59,33 @@ class Login extends Component {
           name: '啦啦啦啦'
         },
         value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      },
+      {
+        timestamp: 1542448795334,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      },
+      {
+        timestamp: 1542448795326,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      },
+      {
+        timestamp: 1542448793336,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
       }
     ]
   }
@@ -69,8 +96,81 @@ class Login extends Component {
   }
   sendMessage = (v) => {
     const {messages} = this.state;
-    messages.push(v);
-    this.setState({messages});
+    const newmessages = [
+      {
+        timestamp: 1542442795326,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      },
+      {
+        timestamp: 1542442143336,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      },
+      {
+        timestamp: 1542442193436,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      },
+      {
+        timestamp: 1542442193333,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      },
+      {
+        timestamp: 1542442193322,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      },
+      {
+        timestamp: 1542442193311,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      },
+      {
+        timestamp: 1542442193211,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      },
+      {
+        timestamp: 1542442192311,
+        userInfo: {
+          avatar: 'http://img.binlive.cn/1.png',
+          userId: 'ad123123123',
+          name: '啦啦啦啦'
+        },
+        value: '111[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+      }
+    ].concat(messages);
+    this.setState({messages: newmessages});
     console.log(v);
   }
   render() {
@@ -101,37 +201,16 @@ class Login extends Component {
             name: '啦啦啦啦'
           }}
         />
-        <div className="chat-content" style={{height: 4000}}>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
+        <div className="chat-content">
           <Messages
             dataSource={messages}
+            loading
             userInfo={{
               userId: '412312123123',
               avatar: 'http://img.binlive.cn/1.png',
               name: '啦啦啦啦'
             }}
           />
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
-          <h1>1</h1>
         </div>
       </div>
     );
