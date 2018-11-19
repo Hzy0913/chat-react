@@ -6,6 +6,11 @@ import {emojis} from './icon';
 import {dateFormat} from './utils';
 
 const re = /\[[\u4e00-\u9fa5-\w-\d]+\]/g;
+let lastDom;
+let firstDom;
+let isUnshift;
+let unshiftLastTimestamp;
+let setScrollTop;
 
 export default class ChatInput extends Component {
   static propTypes = {
@@ -23,10 +28,24 @@ export default class ChatInput extends Component {
     // this.setState({visibleWrapper: !!visible});
   }
   componentDidMount() {
+    window.onscroll = () => {
+      if (window.pageYOffset < 10) {
+        this.setState({loading: true});
+      }
+      console.log(window.pageYOffset);
+    };
     // const {startTimeStamp: propsStartTimeStamp} = this.state;
     // startTimeStamp = propsStartTimeStamp;
   }
   componentWillReceiveProps(nextProps) {
+  }
+  componentDidUpdate() {
+    const {offsetTop} = this.refs[lastDom];
+    console.log(this.refs[lastDom]);
+    console.log(lastDom);
+    console.log(offsetTop);
+    window.scrollTo(0, offsetTop);
+    setScrollTop = false;
   }
   userAvatarClick = (value) => {
     console.log(value);
@@ -38,7 +57,8 @@ export default class ChatInput extends Component {
 
     //12132312
     let startTimeStamp = 0;
-    return data.map(item => {
+    setScrollTop = true;
+    return data.map((item, itemIndex) => {
       const {timestamp, value, userInfo = {}} = item;
       const {avatar, userId, name} = userInfo;
       const {betweenTime} = this.state;
@@ -84,7 +104,28 @@ export default class ChatInput extends Component {
         // const {url} = emojiText && emojis.find(emv => emv.text === emojiText) || {};
         // return url && <img key={index} src={url} className="message-content-emoji" />;
       });
-      return (<div key={timestamp}>
+      let lastDomRef = {};
+      if (!itemIndex) {
+        //第一个元素
+        if (!firstDom) {
+          // firstDom 为空时 第一次render
+          firstDom = timestamp;
+        } else if ((firstDom !== timestamp)) {
+          // 执行了unshift操作
+          const unshiftLastIndex = (data.findIndex(v => v.timestamp === firstDom)) - 1;
+          unshiftLastTimestamp = data[unshiftLastIndex].timestamp;
+          isUnshift = true;
+        } else {
+          isUnshift = false;
+        }
+      } else if (unshiftLastTimestamp === timestamp) {
+        lastDomRef = {ref: unshiftLastTimestamp};
+        lastDom = unshiftLastTimestamp;
+      } else if (!isUnshift && (data.length === (itemIndex + 1))) {
+        lastDomRef = {ref: timestamp};
+        lastDom = timestamp;
+      }
+      return (<div key={timestamp} {...lastDomRef}>
         {timeInfoNode}
         <div className={`message-item ${userId.toString() === ownUserId.toString() ? 'message-item-own' : 'message-item-other'}`}>
           <div onClick={() => this.userAvatarClick(userInfo)}>
@@ -99,16 +140,21 @@ export default class ChatInput extends Component {
     });
   }
   render() {
-    const {loading = false, dataSource = []} = this.props;
+    const {dataSource = []} = this.props;
+    const {loading = false} = this.state;
     return (
       <div className="message-list-wrapper">
-        {loading && <div className="message-loading">loading...</div>}
+        {loading && <div className="message-loading loadEffect">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>}
         {this.renderMessageList(dataSource)}
-        <h1>12312</h1>
-        <h1>12312</h1>
-        <h1>12312</h1>
-        <h1>12312</h1>
-        <h1>12312</h1>
       </div>
     );
   }
