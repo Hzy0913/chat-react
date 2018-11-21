@@ -21,31 +21,39 @@ export default class ChatInput extends Component {
   state = {
     // startTimeStamp: 0,
     betweenTime: 1000 * 60 * 5,
-    maxTimeago: 1000 * 60 * 60 * 24 * 8
-  }
-  componentWillMount() {
-    // const {visible} = this.props;
-    // this.setState({visibleWrapper: !!visible});
+    maxTimeago: 1000 * 60 * 60 * 24 * 8,
   }
   componentDidMount() {
     window.onscroll = () => {
-      if (window.pageYOffset < 10) {
-        this.setState({loading: true});
+      const {loading, scrolltoupper} = this.props;
+      if (window.pageYOffset === 0 && !loading) {
+        scrolltoupper && scrolltoupper();
       }
-      console.log(window.pageYOffset);
     };
-    // const {startTimeStamp: propsStartTimeStamp} = this.state;
-    // startTimeStamp = propsStartTimeStamp;
+    const {offsetTop} = this.refs[lastDom];
+    window.scrollTo(0, offsetTop);
   }
-  componentWillReceiveProps(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
+    const {dataSource: nextDataSource, loading: nextLoading} = nextProps;
+    const {dataSource, loading} = this.props;
+    const dataSourceNoChange = nextDataSource.length === dataSource.length;
+    setScrollTop = !dataSourceNoChange;
+    if (loading !== nextLoading) {
+      return true;
+    }
+    if (dataSourceNoChange) {
+      return false;
+    }
   }
   componentDidUpdate() {
     const {offsetTop} = this.refs[lastDom];
     console.log(this.refs[lastDom]);
     console.log(lastDom);
     console.log(offsetTop);
-    window.scrollTo(0, offsetTop);
-    setScrollTop = false;
+    if (!this.props.loading && setScrollTop) {
+      setScrollTop = false;
+      window.scrollTo(0, offsetTop);
+    }
   }
   userAvatarClick = (value) => {
     console.log(value);
@@ -140,8 +148,7 @@ export default class ChatInput extends Component {
     });
   }
   render() {
-    const {dataSource = []} = this.props;
-    const {loading = false} = this.state;
+    const {dataSource = [], loading = false} = this.props;
     return (
       <div className="message-list-wrapper">
         {loading && <div className="message-loading loadEffect">
