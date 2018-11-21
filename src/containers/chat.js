@@ -94,6 +94,14 @@ class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
   }
+  scrolltoupper = (v) => {
+    setTimeout(() => {
+      this.sendMessage();
+      this.setState({loading: false});
+    }, 2000);
+    this.setState({loading: true});
+    console.log(v);
+  }
   sendMessage = (v) => {
     const {messages} = this.state;
     const newmessages = [
@@ -203,8 +211,9 @@ class Login extends Component {
         />
         <div className="chat-content">
           <Messages
+            scrolltoupper={this.scrolltoupper}
             dataSource={messages}
-            loading
+            loading={this.state.loading}
             userInfo={{
               userId: '412312123123',
               avatar: 'http://img.binlive.cn/1.png',

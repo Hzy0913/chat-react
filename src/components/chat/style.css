@@ -249,7 +249,11 @@
   margin: 10px 0px;
 }
 
-/*animate*/
+/*loading animate*/
+.message-loading{
+  margin-top: -30px !important;
+  margin-bottom: -40px !important;
+}
 .loadEffect{
   width: 100px;
   height: 100px;
