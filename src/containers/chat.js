@@ -211,6 +211,7 @@ class Login extends Component {
         />
         <div className="chat-content">
           <Messages
+            loader={<p>loading...</p>}
             scrolltoupper={this.scrolltoupper}
             dataSource={messages}
             loading={this.state.loading}

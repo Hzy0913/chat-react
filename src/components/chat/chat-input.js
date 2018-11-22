@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {emojiIcon, submitIcon, emojis} from './icon';
+import {emoji} from './emoji';
 import Popup from '../popup';
 import './style.css';
 
@@ -22,6 +23,10 @@ export default class ChatInput extends Component {
     document.addEventListener('click', this.hidePopup, true);
   }
   hidePopup = (e) => {
+    console.log(e);
+    const {target: {className, id}} = e;
+    console.log(className);
+    if (className === 'emoji-icon-img' || id === 'emoji-picker-content') return;
     this.setState({visible: false});
   }
   componentWillReceiveProps(nextProps) {
@@ -61,6 +66,7 @@ export default class ChatInput extends Component {
             className={`emoji-picker ${visible ? 'emoji-popup-animate-show' : 'popup-animate-hide'}`}
           >
             <div className="emoji-picker-content">
+              {emoji.map(v => <div key={v.text}>{v.content}</div>)}
               {emojis.map(v => (<div key={v.text} onClick={(e) => { this.selectEmoje(v); }} ><img src={v.url} /></div>))}
             </div>
             <div className="emoji-picker-arrow" />
