@@ -58,6 +58,7 @@ export default class ChatInput extends Component {
   userAvatarClick = (value) => {
     console.log(value);
   }
+  loaderContent = () => (<div className="loadEffect"><span /><span /><span /><span /><span /><span /><span /><span /></div>)
   renderMessageList = (data) => {
     const {userInfo: {userId: ownUserId, avatar: ownAvatar, name: ownName} = {}} = this.props;
     const {maxTimeago} = this.state;
@@ -148,18 +149,11 @@ export default class ChatInput extends Component {
     });
   }
   render() {
-    const {dataSource = [], loading = false} = this.props;
+    const {dataSource = [], loading = false, loader} = this.props;
     return (
       <div className="message-list-wrapper">
-        {loading && <div className="message-loading loadEffect">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
+        {loading && <div className="message-loading">
+          {loader || this.loaderContent()}
         </div>}
         {this.renderMessageList(dataSource)}
       </div>

@@ -251,8 +251,7 @@
 
 /*loading animate*/
 .message-loading{
-  margin-top: -30px !important;
-  margin-bottom: -40px !important;
+
 }
 .loadEffect{
   width: 100px;
@@ -260,6 +259,8 @@
   position: relative;
   margin: 0 auto;
   transform: scale(0.2, 0.2);
+  margin-top: -30px !important;
+  margin-bottom: -40px !important;
 }
 .loadEffect span{
   display: inline-block;
