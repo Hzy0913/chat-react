@@ -66,7 +66,7 @@ export default class ChatInput extends Component {
             className={`emoji-picker ${visible ? 'emoji-popup-animate-show' : 'popup-animate-hide'}`}
           >
             <div className="emoji-picker-content">
-              {emoji.map(v => <div key={v.text}>{v.content}</div>)}
+              {emoji.map(v => <div key={v.text} className="emoji-item">{v.content}</div>)}
               {emojis.map(v => (<div key={v.text} onClick={(e) => { this.selectEmoje(v); }} ><img src={v.url} /></div>))}
             </div>
             <div className="emoji-picker-arrow" />

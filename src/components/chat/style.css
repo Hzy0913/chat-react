@@ -132,6 +132,18 @@
 .emoji-picker-content img{
   width: 20px;
 }
+.emoji-picker-content .emoji-item{
+  float: left;
+  font-size: 28px;
+  padding: 4px;
+}
+.emoji-picker-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px;
+}
 @keyframes emoji-fadeInUp {
   from {
     opacity: .2;
