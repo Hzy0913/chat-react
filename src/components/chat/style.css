@@ -64,7 +64,7 @@
 }
 .emoji-box .emoji-picker{
   width: 100%;
-  min-height: 200px;
+  height: 210px;
   bottom: 62px;
   z-index: 2500;
   position: absolute;
@@ -77,7 +77,7 @@
 .emoji-box .emoji-picker .emoji-picker-arrow{
   position: absolute;
   bottom: -8px;
-  left: 24px;
+  left: 17px;
   width: 0;
   height: 0;
   border-left: 8px solid transparent;
@@ -130,19 +130,28 @@
   padding: 0px 10px;
 }
 .emoji-picker-content img{
-  width: 20px;
+  width: 100%;
 }
 .emoji-picker-content .emoji-item{
   float: left;
-  font-size: 28px;
+  width: 36px;
+  height: 40px;
   padding: 4px;
+  font-size: 31px;
+  margin: 0px 2px;
+  line-height: 31px;
+  cursor: pointer;
 }
 .emoji-picker-content {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  padding: 5px;
+  height: 100%;
+  overflow: scroll;
+}
+#emoji-picker-content-warpper{
+  padding: 5px 4px 10px 4px;
 }
 @keyframes emoji-fadeInUp {
   from {

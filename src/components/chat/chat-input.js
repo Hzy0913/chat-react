@@ -26,7 +26,7 @@ export default class ChatInput extends Component {
     console.log(e);
     const {target: {className, id}} = e;
     console.log(className);
-    if (className === 'emoji-icon-img' || id === 'emoji-picker-content') return;
+    if (className === 'emoji-icon-img' || id === 'emoji-picker-content-warpper') return;
     this.setState({visible: false});
   }
   componentWillReceiveProps(nextProps) {
@@ -37,8 +37,13 @@ export default class ChatInput extends Component {
     console.log(visible);
     this.setState({visible: !visible});
   }
-  selectEmoje = ({text}) => {
+  selectEmoje = ({text}, isEmoji) => {
+    console.log(text);
     const {textarea} = this.state;
+    if (isEmoji) {
+      const {content} = emoji.find(item => item.text === text) || {};
+      return this.setState({visible: true, textarea: `${textarea}${content}`});
+    }
     this.setState({visible: true, textarea: `${textarea}[${text}]`});
   }
   submit = (e) => {
@@ -61,13 +66,13 @@ export default class ChatInput extends Component {
       <div className="chat-input-wrapper">
         <div className="emoji-box">
           <div
-            id="emoji-picker-content"
+            id="emoji-picker-content-warpper"
             onClick={(e) => e.preventDefault()}
             className={`emoji-picker ${visible ? 'emoji-popup-animate-show' : 'popup-animate-hide'}`}
           >
             <div className="emoji-picker-content">
-              {emoji.map(v => <div key={v.text} className="emoji-item">{v.content}</div>)}
-              {emojis.map(v => (<div key={v.text} onClick={(e) => { this.selectEmoje(v); }} ><img src={v.url} /></div>))}
+              {emojis.map(v => (<div key={v.text} className="emoji-item" onClick={(e) => { this.selectEmoje(v); }} ><img src={v.url} /></div>))}
+              {emoji.map(v => (<div key={v.text} className="emoji-item" onClick={(e) => { this.selectEmoje(v, true); }} >{v.content}</div>))}
             </div>
             <div className="emoji-picker-arrow" />
           </div>
