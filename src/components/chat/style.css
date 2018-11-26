@@ -193,13 +193,13 @@
   position: relative;
   background-color: #fff;
   display: inline-block;
-  padding: 5px 10px;
+  padding: 10px;
   border-radius: 3px;
   max-width: 60%;
-  line-height: 26px;
+  line-height: 24px;
   font-size: 18px;
   word-break: break-all;
-  /*word-wrap: break-word;*/
+  min-height: 36px;
 }
 .message-item .message-item-content:before{
   content: '';
@@ -224,6 +224,19 @@
 .message-item-other .message-item-content{
   float: left;
   background-color: #d7e4f4;
+  position: relative;
+}
+.message-item-own .message-item-content .error-status{
+  width: 32px;
+  position: absolute;
+  left: -38px;
+  top: 50%;
+  margin-top: -16px;
+  padding: 4px;
+}
+.message-item-own .message-item-content .error-status img{
+  width: 100%;
+  display: block;
 }
 .message-item-own{
   padding-right: 50px;
@@ -245,11 +258,11 @@
   border-bottom: 20px solid #d7e4f4;
 }
 .message-content-emoji{
-  width: 22px;
+  width: 16px;
   display: inline-block;
   position: relative;
-  top: 4px;
-  margin: 0px 4px;
+  top: 1px;
+  margin: 0px 1px;
 }
 .message-list-wrapper {
   position: relative;
