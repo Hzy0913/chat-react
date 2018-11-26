@@ -38,9 +38,10 @@ class Login extends Component {
         userInfo: {
           avatar: 'http://img.binlive.cn/1.png',
           userId: '412312123123',
-          name: '啦啦啦啦'
+          name: '啦啦啦啦',
         },
-        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
+        value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd',
+        error: true
       },
       {
         timestamp: 1542448745336,
@@ -87,9 +88,17 @@ class Login extends Component {
         },
         value: '[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
       }
-    ]
+    ],
+    timestamp: new Date().getTime()
   }
   componentDidMount() {
+    setTimeout(() => {
+      const {messages} = this.state;
+      const item = messages.find(v => v.timestamp === 1542423382465);
+      console.log(item);
+      item.error = false;
+      this.setState({messages, timestamp: new Date().getTime()});
+    }, 7000);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -98,8 +107,14 @@ class Login extends Component {
     setTimeout(() => {
       this.sendMessage();
       this.setState({loading: false});
-    }, 2000);
+    }, 20000);
     this.setState({loading: true});
+    console.log(v);
+  }
+  sendMessage2 = (v) => {
+    const {messages} = this.state;
+    messages.push(v);
+    this.setState({messages, timestamp: new Date().getTime()});
     console.log(v);
   }
   sendMessage = (v) => {
@@ -178,11 +193,11 @@ class Login extends Component {
         value: '111[哈哈]123123[123][哈哈]123123哈哈哈哈ashdasd'
       }
     ].concat(messages);
-    this.setState({messages: newmessages});
+    this.setState({messages: newmessages, timestamp: new Date().getTime()});
     console.log(v);
   }
   render() {
-    const {messages} = this.state;
+    const {messages, timestamp} = this.state;
     return (
       <div className="chat-box">
         <div className="chat-top-bar">
@@ -202,7 +217,7 @@ class Login extends Component {
           </div>
         </div>
         <ChatInput
-          sendMessage={this.sendMessage}
+          sendMessage={this.sendMessage2}
           userInfo={{
             userId: '412312123123',
             avatar: 'http://img.binlive.cn/1.png',
@@ -211,6 +226,7 @@ class Login extends Component {
         />
         <div className="chat-content">
           <Messages
+            timestamp={timestamp}
             loader={<p>loading...</p>}
             scrolltoupper={this.scrolltoupper}
             dataSource={messages}
