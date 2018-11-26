@@ -4,13 +4,15 @@ import timeago from 'timeago.js';
 import './style.css';
 import {emojis} from './icon';
 import {dateFormat} from './utils';
+import errorIcon from './emoji-img/error.png';
 
 const re = /\[[\u4e00-\u9fa5-\w-\d]+\]/g;
 let lastDom;
 let firstDom;
 let isUnshift;
 let unshiftLastTimestamp;
-let setScrollTop;
+let setScrollTop = true;
+let messageLength;
 
 export default class ChatInput extends Component {
   static propTypes = {
@@ -34,23 +36,33 @@ export default class ChatInput extends Component {
     window.scrollTo(0, offsetTop);
   }
   shouldComponentUpdate(nextProps, nextState) {
-    const {dataSource: nextDataSource, loading: nextLoading} = nextProps;
-    const {dataSource, loading} = this.props;
-    const dataSourceNoChange = nextDataSource.length === dataSource.length;
-    setScrollTop = !dataSourceNoChange;
-    if (loading !== nextLoading) {
+    const {dataSource: nextDataSource, loading: nextLoading, timestamp: nextTimestamp} = nextProps;
+    const {dataSource, loading, timestamp} = this.props;
+    const dataSourcehasChange = nextDataSource.length !== messageLength;
+    setScrollTop = dataSourcehasChange;
+    console.log(timestamp !== nextTimestamp);
+    console.log(messageLength);
+    console.log(this.state);
+    console.log(nextProps, nextState);
+    console.log(nextDataSource, dataSource);
+    console.log(nextDataSource !== dataSource);
+    console.log(loading !== nextLoading);
+    if (timestamp !== nextTimestamp) {
+      console.log(1111111);
+      return true;
+    } else if (loading !== nextLoading) {
+      console.log(2222222);
       return true;
     }
-    if (dataSourceNoChange) {
-      return false;
-    }
+    return false;
   }
   componentDidUpdate() {
     const {offsetTop} = this.refs[lastDom];
     console.log(this.refs[lastDom]);
     console.log(lastDom);
     console.log(offsetTop);
-    if (!this.props.loading && setScrollTop) {
+    console.log(setScrollTop);
+    if (setScrollTop) {
       setScrollTop = false;
       window.scrollTo(0, offsetTop);
     }
@@ -60,15 +72,19 @@ export default class ChatInput extends Component {
   }
   loaderContent = () => (<div className="loadEffect"><span /><span /><span /><span /><span /><span /><span /><span /></div>)
   renderMessageList = (data) => {
+    console.log(data);
+    messageLength = data.length;
     const {userInfo: {userId: ownUserId, avatar: ownAvatar, name: ownName} = {}} = this.props;
     const {maxTimeago} = this.state;
     const timeagoInstance = timeago();
 
     //12132312
     let startTimeStamp = 0;
-    setScrollTop = true;
+    // setScrollTop = true;
     return data.map((item, itemIndex) => {
-      const {timestamp, value, userInfo = {}} = item;
+      const {
+        timestamp, value, userInfo = {}, error
+      } = item;
       const {avatar, userId, name} = userInfo;
       const {betweenTime} = this.state;
       const split = value.split(re);
@@ -130,20 +146,27 @@ export default class ChatInput extends Component {
       } else if (unshiftLastTimestamp === timestamp) {
         lastDomRef = {ref: unshiftLastTimestamp};
         lastDom = unshiftLastTimestamp;
+        //reset
+        firstDom = data[0].timestamp;
+        unshiftLastTimestamp = '';
       } else if (!isUnshift && (data.length === (itemIndex + 1))) {
         lastDomRef = {ref: timestamp};
         lastDom = timestamp;
       }
+      const isOwn = userId.toString() === ownUserId.toString();
       return (<div key={timestamp} {...lastDomRef}>
         {timeInfoNode}
-        <div className={`message-item ${userId.toString() === ownUserId.toString() ? 'message-item-own' : 'message-item-other'}`}>
+        <div className={`message-item ${isOwn ? 'message-item-own' : 'message-item-other'}`}>
           <div onClick={() => this.userAvatarClick(userInfo)}>
             <img
               className="message-item-avatar"
               src={avatar}
             />
           </div>
-          <p className="message-item-content">{content}</p>
+          <p className="message-item-content">
+            {content}
+            {isOwn && error && <span className="error-status" ><img src={errorIcon} /></span>}
+          </p>
         </div>
       </div>);
     });
