@@ -7,9 +7,11 @@ import './style.css';
 
 export default class ChatInput extends Component {
   static propTypes = {
-    // visible: PropTypes.bool,
-    // onCancel: PropTypes.func,
-    // children: PropTypes.node
+    placeholder: PropTypes.string,
+    loading: PropTypes.bool,
+    scrolltoupper: PropTypes.func,
+    timestamp: PropTypes.number,
+    loader: PropTypes.node
   };
   state = {
     visible: false,
@@ -28,8 +30,6 @@ export default class ChatInput extends Component {
     console.log(className);
     if (className === 'emoji-icon-img' || id === 'emoji-picker-content-warpper') return;
     this.setState({visible: false});
-  }
-  componentWillReceiveProps(nextProps) {
   }
   visiblePopup = (e) => {
     e.stopPropagation();
@@ -62,6 +62,7 @@ export default class ChatInput extends Component {
   }
   render() {
     const {visible, textarea} = this.state;
+    const {placeholder} = this.props;
     return (
       <div className="chat-input-wrapper">
         <div className="emoji-box">
@@ -83,7 +84,7 @@ export default class ChatInput extends Component {
         <div className="chat-textarea-box" style={{height: !textarea ? 32 : 'auto'}}>
           <p className="textareaPlaceholder">{textarea}</p>
           <textarea
-            placeholder=""
+            placeholder={placeholder}
             type="text"
             className="chat-input"
             value={textarea}
