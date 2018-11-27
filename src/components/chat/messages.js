@@ -16,24 +16,33 @@ let messageLength;
 
 export default class ChatInput extends Component {
   static propTypes = {
-    // visible: PropTypes.bool,
-    // onCancel: PropTypes.func,
-    // children: PropTypes.node
+    dataSource: PropTypes.array,
+    loading: PropTypes.bool,
+    scrolltoupper: PropTypes.func,
+    timestamp: PropTypes.number,
+    loader: PropTypes.node
   };
   state = {
-    // startTimeStamp: 0,
     betweenTime: 1000 * 60 * 5,
     maxTimeago: 1000 * 60 * 60 * 24 * 8,
   }
   componentDidMount() {
-    window.onscroll = () => {
-      const {loading, scrolltoupper} = this.props;
-      if (window.pageYOffset === 0 && !loading) {
-        scrolltoupper && scrolltoupper();
-      }
-    };
+    window.addEventListener('scroll', this.onScroll);
+    // window.onscroll = () => {
+    //   const {loading, scrolltoupper} = this.props;
+    //   if (window.pageYOffset === 0 && !loading) {
+    //     scrolltoupper && scrolltoupper();
+    //   }
+    // };
     const {offsetTop} = this.refs[lastDom];
     window.scrollTo(0, offsetTop);
+  }
+  onScroll = (e) => {
+    console.log(e);
+    const {loading, scrolltoupper} = this.props;
+    if (window.pageYOffset === 0 && !loading) {
+      scrolltoupper && scrolltoupper();
+    }
   }
   shouldComponentUpdate(nextProps, nextState) {
     const {dataSource: nextDataSource, loading: nextLoading, timestamp: nextTimestamp} = nextProps;
@@ -66,6 +75,9 @@ export default class ChatInput extends Component {
       setScrollTop = false;
       window.scrollTo(0, offsetTop);
     }
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
   }
   userAvatarClick = (value) => {
     console.log(value);
