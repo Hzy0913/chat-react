@@ -68,7 +68,9 @@ export default class ArticleDetails extends Component {
             提取密码:
             <p>{course.passworld}</p>
           </div>
-          <Button type="primary" style={{marginTop: 20}} onClick={this.openSource}>跳转至资源页面</Button>
+          <Button type="primary" style={{marginTop: 20}} onClick={this.openSource}>
+            跳转至资源页面
+          </Button>
         </div>
       </div>
     );

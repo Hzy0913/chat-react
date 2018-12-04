@@ -19,12 +19,15 @@ export default class ChatInput extends Component {
     dataSource: PropTypes.array,
     loading: PropTypes.bool,
     scrolltoupper: PropTypes.func,
+    avatarClick: PropTypes.func,
     timestamp: PropTypes.number,
+    timeBetween: PropTypes.number,
+    timeagoMax: PropTypes.number,
     loader: PropTypes.node
   };
   state = {
-    betweenTime: 1000 * 60 * 5,
-    maxTimeago: 1000 * 60 * 60 * 24 * 8,
+    betweenTime: 1000 * 60,
+    maxTimeago: 1000 * 60 * 60,
   }
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll);
@@ -80,16 +83,24 @@ export default class ChatInput extends Component {
     window.removeEventListener('scroll', this.onScroll);
   }
   userAvatarClick = (value) => {
+    const {avatarClick} = this.props;
+    avatarClick && avatarClick(value);
     console.log(value);
   }
-  loaderContent = () => (<div className="loadEffect"><span /><span /><span /><span /><span /><span /><span /><span /></div>)
+  loaderContent = () => (<div className="loadEffect">
+    <span /><span /><span /><span /><span /><span /><span /><span />
+  </div>)
   renderMessageList = (data) => {
     console.log(data);
+    // timeBetween ---- 分钟单位
+    // timeagoMax ----- 小时单位
+    const {timeBetween = 5, timeagoMax = (24 * 3)} = this.props;
     messageLength = data.length;
     const {userInfo: {userId: ownUserId, avatar: ownAvatar, name: ownName} = {}} = this.props;
-    const {maxTimeago} = this.state;
+    let {maxTimeago, betweenTime} = this.state;
     const timeagoInstance = timeago();
-
+    maxTimeago *= timeagoMax;
+    betweenTime *= timeBetween;
     //12132312
     let startTimeStamp = 0;
     // setScrollTop = true;
@@ -98,14 +109,13 @@ export default class ChatInput extends Component {
         timestamp, value, userInfo = {}, error
       } = item;
       const {avatar, userId, name} = userInfo;
-      const {betweenTime} = this.state;
       const split = value.split(re);
       const found = value.match(re);
       const search = value.search(re);
 
       console.log(value);
       console.log(split);
-      console.log((timestamp - startTimeStamp) > betweenTime);
+      console.log((timestamp - startTimeStamp) > (betweenTime * timeBetween));
       let timeInfoNode = '';
       if ((timestamp - startTimeStamp) > betweenTime) {
         timeInfoNode = (new Date().getTime() - timestamp) < maxTimeago ?
@@ -130,7 +140,8 @@ export default class ChatInput extends Component {
             return chatValue;
           case 'emoji':
             const {url} = chatValue && emojis.find(emv => emv.text === chatValue) || {};
-            return url ? <img key={index} src={url} className="message-content-emoji" /> : `[${chatValue}]`;
+            return url ? <img key={index} src={url} className="message-content-emoji" /> :
+              `[${chatValue}]`;
           default:
             return v;
         }

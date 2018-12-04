@@ -72,7 +72,10 @@ class Review extends Component {
                 <div style={{padding: '5px 0px'}}>提取码: <p>{v.passworld}</p></div>
               </div>))}
               <div className="item-top item-bottom">
-                <button className="review-button" onClick={() => this.showReview(item.email, item._id)}>审核</button>
+                <button
+                  className="review-button"
+                  onClick={() => this.showReview(item.email, item._id)}
+                >审核</button>
               </div>
             </div>))}
           </div>

@@ -1,4 +1,4 @@
-const emoji = [
+const emojiDefault = [
   {text: 'smile', content: '😀'},
   {text: 'laugh', content: '😂'},
   {text: 'blush', content: '😊'},
@@ -55,4 +55,4 @@ const emoji = [
   {text: 'kiss', content: '💋'},
 ];
 const def = '';
-export {emoji, def};
+export {emojiDefault, def};

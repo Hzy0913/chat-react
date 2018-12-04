@@ -170,7 +170,9 @@ class ResetPass extends Component {
               onChange={(value) => this.handleChange(value, 'passRepeat')}
             />
           </div>
-          <button className="login-submit input-item" onClick={this.handleSubmit}>发送邮箱验证码</button>
+          <button className="login-submit input-item" onClick={this.handleSubmit}>
+            发送邮箱验证码
+          </button>
           <div className="directional">
             <Link to="/login" style={{float: 'left'}}>登录</Link>
             <Link to="/register" style={{float: 'right'}}>注册</Link>

@@ -77,7 +77,10 @@ class Article extends React.Component {
       return (
         <div key={rowID} style={{padding: '0 15px'}} onClick={() => this.toArticle(obj._id)}>
           <div style={{display: 'flex', padding: '15px 0'}} className="article">
-            <img style={{height: '95px', width: '72px', marginRight: '15px'}} src={posters[obj.tag]} />
+            <img
+              style={{height: '95px', width: '72px', marginRight: '15px'}}
+              src={posters[obj.tag]}
+            />
             <div>
               <div
                 style={{

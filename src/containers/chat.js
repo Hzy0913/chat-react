@@ -223,6 +223,7 @@ class Login extends Component {
             avatar: 'http://img.binlive.cn/1.png',
             name: '啦啦啦啦'
           }}
+          placeholder="请输入内容..."
         />
         <div className="chat-content">
           <Messages

@@ -84,7 +84,10 @@ class Share extends Component {
     return (
       <div className="share-box">
         <List renderHeader={() => <p style={{color: '#ff6633'}}>分享您的教学视频资源即可获取积分哦</p>}>
-          {inputs.map((item, index) => (<div style={{marginBottom: 10, position: 'relative'}} key={index}>
+          {inputs.map((item, index) => (<div
+            style={{marginBottom: 10, position: 'relative'}}
+            key={index}
+          >
             <InputItem
               onChange={() => this.onChange(`address${item}`)}
               key={`address${index}`}
@@ -106,12 +109,23 @@ class Share extends Component {
               placeholder="请输入提取密码(若无密码可不填)"
               {...getFieldProps(`password${item}`)}
             >提取密码</InputItem>
-            <Button onClick={() => this.deleteInput(item)} style={{width: '100%', margin: '0px auto'}}>删除该项</Button>
+            <Button
+              onClick={() => this.deleteInput(item)}
+              style={{width: '100%', margin: '0px auto'}}
+            >删除该项</Button>
           </div>))}
         </List>
-        <Button onClick={this.submit} type="primary" style={{width: '90%', margin: '20px auto 0px'}}>确定</Button>
+        <Button
+          onClick={this.submit}
+          type="primary"
+          style={{width: '90%', margin: '20px auto 0px'}}
+        >确定</Button>
         <div onClick={this.addInput} className="addSVG">
-          <svg className="icon-SVG" aria-hidden="true" dangerouslySetInnerHTML={{__html: iconAdd}} />
+          <svg
+            className="icon-SVG"
+            aria-hidden="true"
+            dangerouslySetInnerHTML={{__html: iconAdd}}
+          />
         </div>
       </div>
     );

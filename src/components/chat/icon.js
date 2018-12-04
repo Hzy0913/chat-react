@@ -1,3 +1,4 @@
+/* eslint-disable */
 import doge from './emoji-img/2018new_doge02_org.png';
 import miaomiaothumb from './emoji-img/2018new_miaomiao_thumb.png';
 import erhaorg from './emoji-img/2018new_erha_org.png';

@@ -57,11 +57,20 @@ export default class Popup extends Component {
       ...style
     };
     return (
-      <div className={`popup-wrapper ${className}`} style={{display: `${visibleWrapper ? 'block' : 'none'}`}} {...props}>
-        <div style={popupStyle} className={`popup-box ${visible ? 'popup-animate-show' : 'popup-animate-hide'}`}>
+      <div
+        className={`popup-wrapper ${className}`}
+        style={{display: `${visibleWrapper ? 'block' : 'none'}`}} {...props}
+      >
+        <div
+          style={popupStyle}
+          className={`popup-box ${visible ? 'popup-animate-show' : 'popup-animate-hide'}`}
+        >
           {children}
         </div>
-        <div onClick={this.hidePopup} className={`popup-mask ${visible ? 'mask-show' : 'mask-hide'}`} />
+        <div
+          onClick={this.hidePopup}
+          className={`popup-mask ${visible ? 'mask-show' : 'mask-hide'}`}
+        />
       </div>
     );
   }

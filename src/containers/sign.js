@@ -63,8 +63,16 @@ export default class ArticleDetails extends Component {
     const {
       sign, score, tip, status = ''
     } = this.state;
-    const nextSvg = <svg className="icon-SVG" aria-hidden="true" dangerouslySetInnerHTML={{__html: next}} />;
-    const prevSvg = <svg className="icon-SVG" aria-hidden="true" dangerouslySetInnerHTML={{__html: prev}} />;
+    const nextSvg = (<svg
+      className="icon-SVG"
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{__html: next}}
+    />);
+    const prevSvg = (<svg
+      className="icon-SVG"
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{__html: prev}}
+    />);
     const self = this;
     return (
       <div className="sign-box">
@@ -80,7 +88,8 @@ export default class ArticleDetails extends Component {
           }]}
         >
           <div style={{height: 40}}>
-            {status === 2 ? <p style={{lineHeight: '40px'}}>今日已签到</p> : (<p>恭喜您获得2积分<br />明天请继续签到哦</p>)}
+            {status === 2 ? <p style={{lineHeight: '40px'}}>今日已签到</p> :
+              (<p>恭喜您获得2积分<br />明天请继续签到哦</p>)}
           </div>
         </Modal>
         <div className="Calendar-banner">

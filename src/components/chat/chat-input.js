@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {emojiIcon, submitIcon, emojis} from './icon';
-import {emoji} from './emoji';
+import {emojiDefault} from './emoji';
 import Popup from '../popup';
 import './style.css';
 
@@ -11,7 +11,8 @@ export default class ChatInput extends Component {
     loading: PropTypes.bool,
     scrolltoupper: PropTypes.func,
     timestamp: PropTypes.number,
-    loader: PropTypes.node
+    loader: PropTypes.node,
+    customEmoticon: PropTypes.array,
   };
   state = {
     visible: false,
@@ -40,40 +41,55 @@ export default class ChatInput extends Component {
   selectEmoje = ({text}, isEmoji) => {
     console.log(text);
     const {textarea} = this.state;
+    const {emoji = []} = this.props;
+    const emojiContent = [...emojiDefault, ...emoji];
     if (isEmoji) {
-      const {content} = emoji.find(item => item.text === text) || {};
+      const {content} = emojiContent.find(item => item.text === text) || {};
       return this.setState({visible: true, textarea: `${textarea}${content}`});
     }
     this.setState({visible: true, textarea: `${textarea}[${text}]`});
   }
   submit = (e) => {
-    const {userInfo} = this.props;
+    const {userInfo, sendMessage} = this.props;
     const {textarea} = this.state;
     const data = {
       value: textarea,
       timestamp: new Date().getTime(),
       userInfo
     };
-    this.props.sendMessage(data);
     this.setState({textarea: ''});
+    sendMessage && sendMessage(data);
   }
   textareaChange = (e) => {
     this.setState({textarea: e.target.value});
   }
   render() {
     const {visible, textarea} = this.state;
-    const {placeholder} = this.props;
+    const {placeholder, customEmoticon = [], emoji} = this.props;
+    const showEmoji = emoji !== false;
+    const emojiContent = Array.isArray(emoji) ? [...emojiDefault, ...emoji] : emojiDefault;
     return (
       <div className="chat-input-wrapper">
         <div className="emoji-box">
           <div
             id="emoji-picker-content-warpper"
             onClick={(e) => e.preventDefault()}
-            className={`emoji-picker ${visible ? 'emoji-popup-animate-show' : 'popup-animate-hide'}`}
+            className={`emoji-picker ${visible ? 'emoji-popup-animate-show' :
+              'popup-animate-hide'}`}
           >
             <div className="emoji-picker-content">
-              {emojis.map(v => (<div key={v.text} className="emoji-item" onClick={(e) => { this.selectEmoje(v); }} ><img src={v.url} /></div>))}
-              {emoji.map(v => (<div key={v.text} className="emoji-item" onClick={(e) => { this.selectEmoje(v, true); }} >{v.content}</div>))}
+              {customEmoticon.map(v =>
+                (<div
+                  key={v.text}
+                  className="emoji-item"
+                  onClick={(e) => { this.selectEmoje(v); }}
+                ><img src={v.url} /></div>))}
+              {showEmoji && emojiContent.map(v =>
+                (<div
+                  key={v.text}
+                  className="emoji-item"
+                  onClick={(e) => { this.selectEmoje(v, true); }}
+                >{v.content}</div>))}
             </div>
             <div className="emoji-picker-arrow" />
           </div>
