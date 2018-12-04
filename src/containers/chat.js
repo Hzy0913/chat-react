@@ -95,7 +95,6 @@ class Login extends Component {
     setTimeout(() => {
       const {messages} = this.state;
       const item = messages.find(v => v.timestamp === 1542423382465);
-      console.log(item);
       item.error = false;
       this.setState({messages, timestamp: new Date().getTime()});
     }, 7000);
@@ -109,13 +108,11 @@ class Login extends Component {
       this.setState({loading: false});
     }, 20000);
     this.setState({loading: true});
-    console.log(v);
   }
   sendMessage2 = (v) => {
     const {messages} = this.state;
     messages.push(v);
     this.setState({messages, timestamp: new Date().getTime()});
-    console.log(v);
   }
   sendMessage = (v) => {
     const {messages} = this.state;

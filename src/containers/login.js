@@ -22,7 +22,6 @@ class Login extends Component {
   };
   componentWillReceiveProps(nextProps) {
     const {user} = nextProps;
-    console.log(nextProps);
     if (user) {
       return this.context.router.history.push('/');
     }

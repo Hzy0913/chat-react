@@ -44,7 +44,6 @@ class Share extends Component {
         const errors = Object.keys(error).map(item => item);
         return this.setState({errors});
       }
-      console.log(Object.keys(value));
       const length = Object.keys(value).length / 2;
       const content = [];
       for (let i = 0; i < length; i++) {

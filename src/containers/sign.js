@@ -46,7 +46,6 @@ export default class ArticleDetails extends Component {
   handleSign = () => {
     const {id} = store.get('user') || {};
     axios.post('/auth/sign', {id}).then(res => {
-      console.log(res);
       const {status} = res;
       if (status === 1) {
         this.setState({modal: true, tip: '签到成功'});

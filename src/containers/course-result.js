@@ -12,17 +12,14 @@ export default class ArticleDetails extends Component {
     course: {}
   }
   componentWillMount() {
-    console.log(this.props);
     const {match: {params: {id} = {}} = {}} = this.props;
     const {history: {location: {state = {}} = {}} = {}} = this.props;
     const {learn = [], token} = store.get('user') || {};
     let course = learn.find(item => item._id === id);
-    console.log(state);
     if (state.course) {
       const {course: stateCourse} = state;
       course = stateCourse;
     }
-    console.log(course);
     this.setState({token, course});
   }
   openSource = () => {

@@ -32,7 +32,6 @@ class MyList extends Component {
       {title: '审核分享', icon: 'icon-shenhe', route: 'review'},
       {title: '设置', icon: 'icon-shezhi', route: 'seting'},
     ];
-    console.log(supAdmin);
     if (!supAdmin) {
       myList = myList.filter(item => item.route !== 'review');
     }

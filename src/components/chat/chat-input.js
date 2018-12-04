@@ -26,20 +26,16 @@ export default class ChatInput extends Component {
     document.addEventListener('click', this.hidePopup, true);
   }
   hidePopup = (e) => {
-    console.log(e);
     const {target: {className, id}} = e;
-    console.log(className);
     if (className === 'emoji-icon-img' || id === 'emoji-picker-content-warpper') return;
     this.setState({visible: false});
   }
   visiblePopup = (e) => {
     e.stopPropagation();
     const {visible} = this.state;
-    console.log(visible);
     this.setState({visible: !visible});
   }
   selectEmoje = ({text}, isEmoji) => {
-    console.log(text);
     const {textarea} = this.state;
     const {emoji = []} = this.props;
     const emojiContent = [...emojiDefault, ...emoji];

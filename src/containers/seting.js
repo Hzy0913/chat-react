@@ -105,12 +105,10 @@ class Seting extends Component {
       this.props.userInfo();
       Toast.success('信息修改成功');
     }).catch(err => {
-      console.log(err);
       Toast.fail('信息修改失败');
     });
   }
   render() {
-    console.log(this.props);
     const {nickName = '', avatar, avatarHide} = this.state;
     return (
       <div className="login register setting">

@@ -41,7 +41,6 @@ export default class ChatInput extends Component {
     window.scrollTo(0, offsetTop);
   }
   onScroll = (e) => {
-    console.log(e);
     const {loading, scrolltoupper} = this.props;
     if (window.pageYOffset === 0 && !loading) {
       scrolltoupper && scrolltoupper();
@@ -52,28 +51,15 @@ export default class ChatInput extends Component {
     const {dataSource, loading, timestamp} = this.props;
     const dataSourcehasChange = nextDataSource.length !== messageLength;
     setScrollTop = dataSourcehasChange;
-    console.log(timestamp !== nextTimestamp);
-    console.log(messageLength);
-    console.log(this.state);
-    console.log(nextProps, nextState);
-    console.log(nextDataSource, dataSource);
-    console.log(nextDataSource !== dataSource);
-    console.log(loading !== nextLoading);
     if (timestamp !== nextTimestamp) {
-      console.log(1111111);
       return true;
     } else if (loading !== nextLoading) {
-      console.log(2222222);
       return true;
     }
     return false;
   }
   componentDidUpdate() {
     const {offsetTop} = this.refs[lastDom];
-    console.log(this.refs[lastDom]);
-    console.log(lastDom);
-    console.log(offsetTop);
-    console.log(setScrollTop);
     if (setScrollTop) {
       setScrollTop = false;
       window.scrollTo(0, offsetTop);
@@ -85,13 +71,11 @@ export default class ChatInput extends Component {
   userAvatarClick = (value) => {
     const {avatarClick} = this.props;
     avatarClick && avatarClick(value);
-    console.log(value);
   }
   loaderContent = () => (<div className="loadEffect">
     <span /><span /><span /><span /><span /><span /><span /><span />
   </div>)
   renderMessageList = (data) => {
-    console.log(data);
     // timeBetween ---- 分钟单位
     // timeagoMax ----- 小时单位
     const {timeBetween = 5, timeagoMax = (24 * 3)} = this.props;
@@ -113,9 +97,6 @@ export default class ChatInput extends Component {
       const found = value.match(re);
       const search = value.search(re);
 
-      console.log(value);
-      console.log(split);
-      console.log((timestamp - startTimeStamp) > (betweenTime * timeBetween));
       let timeInfoNode = '';
       if ((timestamp - startTimeStamp) > betweenTime) {
         timeInfoNode = (new Date().getTime() - timestamp) < maxTimeago ?
