@@ -59,7 +59,8 @@ export default class Popup extends Component {
     return (
       <div
         className={`popup-wrapper ${className}`}
-        style={{display: `${visibleWrapper ? 'block' : 'none'}`}} {...props}
+        style={{display: `${visibleWrapper ? 'block' : 'none'}`}}
+        {...props}
       >
         <div
           style={popupStyle}
