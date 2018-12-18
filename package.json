@@ -26,6 +26,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-order": "^1.0.4",
+    "socket.io-client": "^2.2.0",
     "store": "^2.0.12",
     "sweetalert2": "^7.28.11",
     "swiper": "^4.4.1",
