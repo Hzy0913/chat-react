@@ -27,6 +27,7 @@ import Seting from '../containers/seting';
 import Message from '../containers/message';
 import Review from '../containers/review';
 import Chat from '../containers/chat';
+import LoginChat from '../containers/login-chat';
 
 const Router = ({component: Component, children, ...rest}) => (
   <Route
@@ -58,7 +59,8 @@ const Root = () => (
             <Router exact path="/sign" component={Sign} />
             <Router exact path="/share" component={Share} />
             <Router exact path="/message" component={Message} />
-            <Router exact path="/chat" component={Chat} />Ï
+            <Router exact path="/login-chat" component={LoginChat} />
+            <Router exact path="/chat" component={Chat} />
             <Router path="/list" component={List} >
               <Router exact path="/list/img" component={Img} />
               <Router exact path="/list/svg" component={Svg} />

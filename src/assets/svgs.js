@@ -5,3 +5,5 @@ export const next = '<use xlink:href="#icon-nextstep"/>';
 export const prev = '<use xlink:href="#icon-nextstep1"/>';
 export const iconDuihao = '<use xlink:href="#icon-duihao"/>';
 export const iconAdd = '<use xlink:href="#icon-tianjia"/>';
+export const iconNicheng = '<use xlink:href="#icon-nicheng"/>';
+export const iconMorenbiaoqing = '<use xlink:href="#icon-morenbiaoqing"/>';
