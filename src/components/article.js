@@ -21,8 +21,10 @@ const posters = {
 @connect(
   state => ({
     articles: state.home.articleList,
+    page: state.home.page,
     dataEnd: state.home.dataEnd,
-    articleLoading: state.home.articleLoading
+    articleLoading: state.home.articleLoading,
+    windowScrollTop: state.home.windowScrollTop
   }),
   dispatch => bindActionCreators(homeActions, dispatch),
 )
@@ -35,26 +37,32 @@ class Article extends React.Component {
     this.state = {
       pageIndex: 0,
       dataSource,
-      hasMore: true
+      hasMore: true,
+      initialListSize: 10
     };
   }
-  componentDidMount() {
-    const {getArticle} = this.props;
-    getArticle(this.state.pageIndex);
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.articles.length !== (this.props.articles || []).length) {
+  componentWillMount() {
+    const {getArticle, page, articles = []} = this.props;
+    if (!page) {
+      getArticle(page);
+    } else {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(nextProps.articles),
-        pageIndex: ++this.state.pageIndex,
-        hasMore: nextProps.dataEndLength === 0 ? false : !(nextProps.articles.length % 10)
+        initialListSize: articles.length,
+        dataSource: this.state.dataSource.cloneWithRows(articles),
       });
     }
   }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(nextProps.articles),
+      pageIndex: ++this.state.pageIndex,
+      hasMore: nextProps.dataEndLength === 0 ? false : !(nextProps.articles.length % 10)
+    });
+  }
   onEndReached = (event) => {
-    const {getArticle} = this.props;
+    const {getArticle, page} = this.props;
     if (!this.state.hasMore || this.props.articleLoading) return;
-    getArticle(this.state.pageIndex);
+    getArticle(page);
   }
   toArticle = (id) => {
     this.props.history.push(`/article-details/${id}`);
@@ -71,7 +79,7 @@ class Article extends React.Component {
         }}
       />
     );
-    const {articles = [], articleLoading = []} = this.props;
+    const {articleLoading = []} = this.props;
     const row = (rowData, sectionID, rowID) => {
       const obj = rowData;
       return (
@@ -112,6 +120,7 @@ class Article extends React.Component {
           /> : '没有更多数据了'}
         </div>)}
         renderRow={row}
+        initialListSize={this.state.initialListSize}
         renderSeparator={separator}
         className="am-list"
         pageSize={4}

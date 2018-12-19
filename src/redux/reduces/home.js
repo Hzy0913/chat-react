@@ -1,11 +1,12 @@
 const BANNER_SUCCESS = 'home/BANNER_SUCCESS';
 const ARTICLE_SUCCESS = 'home/ARTICLE_SUCCESS';
 const ARTICLE = 'home/ARTICLE';
-const INITALLOGO = 'home/INITALLOGO';
+const SAVESCROLL = 'home/SAVESCROLL';
 const CHANGEHISTORY = 'home/CHANGEHISTORY';
 
 const initialState = {
-  articleList: []
+  articleList: [],
+  page: 0
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -26,13 +27,19 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         articleList: [...articleList, ...action.res.Articles],
         articleLoading: false,
-        dataEndLength: action.res.Articles.length
+        dataEndLength: action.res.Articles.length,
+        page: state.page + 1
       };
     case CHANGEHISTORY:
       return {
         ...state,
         movelogo: true,
         text: action.text
+      };
+    case SAVESCROLL:
+      return {
+        ...state,
+        windowScrollTop: action.scrollTop
       };
     default:
       return state;
@@ -60,8 +67,9 @@ export function changeRoute() {
     text: 'showDocs'
   };
 }
-export function initalLogo() {
+export function saveScrollTop(scrollTop) {
   return {
-    type: INITALLOGO
+    type: SAVESCROLL,
+    scrollTop
   };
 }
