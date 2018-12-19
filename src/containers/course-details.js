@@ -90,7 +90,7 @@ class ArticleDetails extends Component {
           Toast.info(messageInfo);
         }
       }).catch(err => {
-        console.log(err);
+        // console.log(err);
       });
     }
   }

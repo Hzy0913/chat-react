@@ -264,8 +264,13 @@
   top: 1px;
   margin: 0px 1px;
 }
+.massage-container {
+  position: relative;
+}
 .message-list-wrapper {
   position: relative;
+  overflow: auto;
+  height: 900px;
 }
 .message-list-wrapper .time-info span{
   background-color: rgba(0,0,0,.12);
@@ -282,7 +287,20 @@
 .message-list-wrapper .time-info{
   margin: 10px 0px;
 }
-
+.noData-tips{
+  text-align: center;
+  color: #7a7a7a;
+  font-size: 13px;
+  padding: 10px 0px;
+}
+.unread-count-tips{
+  background-color: #00a2ae;
+  color: #fff;
+  padding: 10px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
 /*loading animate*/
 .message-loading{
 

@@ -18,10 +18,6 @@ export default class ChatInput extends Component {
     visible: false,
     textarea: ''
   }
-  componentWillMount() {
-    // const {visible} = this.props;
-    // this.setState({visibleWrapper: !!visible});
-  }
   componentDidMount() {
     document.addEventListener('click', this.hidePopup, true);
   }
@@ -57,13 +53,20 @@ export default class ChatInput extends Component {
     sendMessage && sendMessage(data);
   }
   textareaChange = (e) => {
+    const {textareaChange} = this.props;
     this.setState({textarea: e.target.value});
+    if (textareaChange) {
+      textareaChange(e.target.value);
+    }
   }
   render() {
     const {visible, textarea} = this.state;
-    const {placeholder, customEmoticon = [], emoji} = this.props;
+    const {
+      placeholder, customEmoticon = [], emoji, value
+    } = this.props;
     const showEmoji = emoji !== false;
     const emojiContent = Array.isArray(emoji) ? [...emojiDefault, ...emoji] : emojiDefault;
+    const inputValue = value || textarea;
     return (
       <div className="chat-input-wrapper">
         <div className="emoji-box">
@@ -99,7 +102,7 @@ export default class ChatInput extends Component {
             placeholder={placeholder}
             type="text"
             className="chat-input"
-            value={textarea}
+            value={inputValue}
             onChange={this.textareaChange}
           />
         </div>
