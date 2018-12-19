@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import store from 'store';
 import {Link, withRouter} from 'react-router-dom';
 import {TabBar} from 'antd-mobile';
 import {bindActionCreators} from 'redux';
@@ -32,7 +33,7 @@ class Main extends Component {
     });
   }
   visibleTab = (path = '') => {
-    const hiddenRoute = ['learned', 'article-details', 'chat'];
+    const hiddenRoute = ['learned', 'article-details', 'chat', 'login-chat'];
     const hidden = hiddenRoute.includes((path.split('/') || [])[1]);
     this.setState({hidden});
   }
