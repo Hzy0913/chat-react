@@ -729,6 +729,15 @@ body
     display block
 
 .chat-box
+  .message-list-wrapper
+    padding-top 80px
+  .robot-placeholder
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    left: 20px;
+    top: 4px;
+    z-index 9
   .robot
     width: 36px;
     height: 36px;
@@ -754,6 +763,7 @@ body
     height: 46px;
     width: 100%;
     position: fixed;
+    z-index 99
     left: 0;
     top: 0;
     background: linear-gradient(120deg,#3bacee,#32c4d3);
@@ -774,3 +784,95 @@ body
       min-width 32px
       display inline-block
       text-align left
+//chat-login
+.chat-login
+  position relative
+  .back-home
+    position absolute
+    top 10px
+    left 20px
+    color rgba(255,255,255,0.6)
+    font-size: 18px;
+  .chat-icon-item
+    position absolute
+    width 50%
+    top 10%
+    display none
+    svg
+      font-size: 100px;
+      margin 0 auto
+      display block
+    p
+      color #fff
+      font-size: 18px;
+      text-align center
+      margin-top 10px
+  .select-avatar
+    left 50%
+  .select-avatars
+    position absolute
+    width 90%
+    top 5%
+    left 5%
+    background-color rgba(255,255,255,0.8)
+    padding 5px
+    border-radius 5px
+    padding-bottom 60px
+    display none
+    h1
+      color #444
+      text-align center
+      line-height 30px
+      font-size: 16px;
+      margin-bottom 10px
+    .icon-guanbi1
+      position absolute
+      right 5px
+      top 2px
+      color: #fafafa;
+      padding 5px
+      font-size: 22px;
+    .select-avatar-item
+      width 33.33%
+      float left
+      box-sizing border-box
+      padding 10px
+      position relative
+      img
+        width 100%
+        border-radius 5px
+        box-shadow: 2px 2px 2px rgba(0,67,87,.1);
+      .checked-avatar
+        color: #27abf3;
+        position absolute
+        bottom 15px
+        right 15px
+        font-size: 22px;
+  .avatar-submit
+    width: 70%;
+    height: 30px;
+    line-height 30px
+    text-align center
+    background-color: #00a2d4;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    margin: 0 auto;
+    display: block;
+    font-size: 18px;
+    letter-spacing: 4px;
+    position: absolute;
+    bottom: 15px;
+    z-index 9
+    left 15%
+@-webkit-keyframes fadeInUp{
+  0%{ opacity:0; -webkit-transform:translate3d(0, 20%, 0); transform:translate3d(0, 20%, 0) }
+  100%{ opacity:1; -webkit-transform:none; transform:none }
+}
+
+@keyframes fadeInUp{
+  0%{ opacity:0; -webkit-transform:translate3d(0, 20%, 0); -ms-transform:translate3d(0, 20%, 0); transform:translate3d(0, 20%, 0) }
+  100%{ opacity:1; -webkit-transform:none; -ms-transform:none; transform:none }
+}
+
+.fadeInUp{ -webkit-animation-name:fadeInUp; animation-name:fadeInUp;-webkit-animation-duration:0.8s; animation-duration:0.8s; -webkit-animation-fill-mode:both; animation-fill-mode:both;display:block !important }

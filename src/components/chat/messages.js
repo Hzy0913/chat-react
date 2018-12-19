@@ -13,6 +13,9 @@ let isUnshift;
 let unshiftLastTimestamp;
 let setScrollTop = true;
 let messageLength;
+let autoScroll = true;
+let isUnShift = false;
+let firstDataSourceTimestamp;
 
 export default class ChatInput extends Component {
   static propTypes = {
@@ -20,6 +23,7 @@ export default class ChatInput extends Component {
     loading: PropTypes.bool,
     scrolltoupper: PropTypes.func,
     avatarClick: PropTypes.func,
+    unreadCountChange: PropTypes.func,
     timestamp: PropTypes.number,
     timeBetween: PropTypes.number,
     timeagoMax: PropTypes.number,
@@ -28,45 +32,77 @@ export default class ChatInput extends Component {
   state = {
     betweenTime: 1000 * 60,
     maxTimeago: 1000 * 60 * 60,
+    unreadCount: 0
   }
   componentDidMount() {
-    window.addEventListener('scroll', this.onScroll);
-    // window.onscroll = () => {
-    //   const {loading, scrolltoupper} = this.props;
-    //   if (window.pageYOffset === 0 && !loading) {
-    //     scrolltoupper && scrolltoupper();
-    //   }
-    // };
-    const {offsetTop} = this.refs[lastDom];
-    window.scrollTo(0, offsetTop);
+    this.refs['message-list-wrapper'].addEventListener('scroll', this.onScroll);
   }
   onScroll = (e) => {
-    const {loading, scrolltoupper} = this.props;
-    if (window.pageYOffset === 0 && !loading) {
+    const {target} = e;
+    const {loading, scrolltoupper, noData} = this.props;
+    if (target.scrollTop === 0 && !loading && !noData) {
       scrolltoupper && scrolltoupper();
     }
+    const scrollBottom = target.scrollHeight - target.clientHeight - target.scrollTop;
+    if (scrollBottom <= 2) {
+      autoScroll = true;
+      this.setState({unreadCount: 0});
+    } else {
+      autoScroll = false;
+    }
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const {dataSource: nextDataSource = [], timestamp: nextTimestamp, unreadCountChange} = nextProps;
+    const {randerTimestamp: prevTimestamp} = prevState;
+    if (prevTimestamp !== nextTimestamp) {
+      const {timestamp: newDataSourceTimestamp} = nextDataSource[0] || {};
+      if (firstDataSourceTimestamp !== newDataSourceTimestamp) {
+        autoScroll = true;
+        firstDataSourceTimestamp = newDataSourceTimestamp;
+        return {randerTimestamp: nextTimestamp};
+      }
+      if (!autoScroll) {
+        let {unreadCount} = prevState;
+        unreadCount += (nextDataSource.length - messageLength);
+        unreadCountChange && unreadCountChange(unreadCount);
+        return {unreadCount, randerTimestamp: nextTimestamp};
+      }
+    }
+    return null;
   }
   shouldComponentUpdate(nextProps, nextState) {
     const {dataSource: nextDataSource, loading: nextLoading, timestamp: nextTimestamp} = nextProps;
     const {dataSource, loading, timestamp} = this.props;
+    const {unreadCount} = this.state;
+    const {unreadCount: nextUnreadCount} = nextState;
     const dataSourcehasChange = nextDataSource.length !== messageLength;
     setScrollTop = dataSourcehasChange;
     if (timestamp !== nextTimestamp) {
       return true;
     } else if (loading !== nextLoading) {
       return true;
+    } else if (unreadCount !== nextUnreadCount) {
+      return true;
     }
     return false;
   }
   componentDidUpdate() {
-    const {offsetTop} = this.refs[lastDom];
-    if (setScrollTop) {
+    const {offsetTop} = this.refs[lastDom] || {};
+    if (setScrollTop && offsetTop && autoScroll) {
       setScrollTop = false;
-      window.scrollTo(0, offsetTop);
+      isUnShift = false;
+      this.refs['message-list-wrapper'].scrollTo(0, offsetTop - 40);
     }
   }
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll);
+    this.refs['message-list-wrapper'].removeEventListener('scroll', this.onScroll);
+  }
+  handleRead = () => {
+    const target = this.refs['message-list-wrapper'];
+    const {unreadCountChange} = this.props;
+    target.scrollTo(0, target.scrollHeight);
+    this.setState({unreadCount: 0});
+    unreadCountChange && unreadCountChange(0);
   }
   userAvatarClick = (value) => {
     const {avatarClick} = this.props;
@@ -85,7 +121,6 @@ export default class ChatInput extends Component {
     const timeagoInstance = timeago();
     maxTimeago *= timeagoMax;
     betweenTime *= timeBetween;
-    //12132312
     let startTimeStamp = 0;
     // setScrollTop = true;
     return data.map((item, itemIndex) => {
@@ -104,7 +139,6 @@ export default class ChatInput extends Component {
           <p className="time-info"><span>{dateFormat(timestamp, 'MM月dd hh:mm')}</span></p>;
       }
       startTimeStamp = timestamp;
-      // this.setState({startTimeStamp: timestamp});
       const concatChat = [];
       split.forEach(v => {
         const emojiText = ((found || []).shift() || '').replace(/(\[|\])+/g, '');
@@ -113,7 +147,6 @@ export default class ChatInput extends Component {
         }
         emojiText && concatChat.push({type: 'emoji', value: emojiText});
       });
-      console.log(concatChat);
       const content = concatChat.map((v, index) => {
         const {type, value: chatValue} = v || {};
         switch (type) {
@@ -126,12 +159,6 @@ export default class ChatInput extends Component {
           default:
             return v;
         }
-        // const emojiText = ((found || []).shift() || '').replace(/(\[|\])+/g, '');
-        // console.log(v);
-        // console.log(found);
-        // console.log(emojiText);
-        // const {url} = emojiText && emojis.find(emv => emv.text === emojiText) || {};
-        // return url && <img key={index} src={url} className="message-content-emoji" />;
       });
       let lastDomRef = {};
       if (!itemIndex) {
@@ -176,13 +203,19 @@ export default class ChatInput extends Component {
     });
   }
   render() {
-    const {dataSource = [], loading = false, loader} = this.props;
+    const {dataSource = [], loading = false, loader, noData, className = '', style = {}} = this.props;
+    const {unreadCount} = this.state;
+    const noDataElement = typeof noData === 'object' ? noData : <p className="noData-tips">没有更多数据了</p>;
     return (
-      <div className="message-list-wrapper">
-        {loading && <div className="message-loading">
-          {loader || this.loaderContent()}
-        </div>}
-        {this.renderMessageList(dataSource)}
+      <div className="massage-container">
+        <div className={`message-list-wrapper ${className}`} style={style} ref="message-list-wrapper">
+          {!noData && loading && <div className="message-loading">
+            {loader || this.loaderContent()}
+          </div>}
+          {noData && noDataElement}
+          {this.renderMessageList(dataSource)}
+        </div>
+        {!!unreadCount && <div className="unread-count-tips" onClick={this.handleRead}>{unreadCount}</div>}
       </div>
     );
   }

@@ -25,8 +25,8 @@ class Share extends Component {
   componentDidMount() {
   }
   onChange = (val, val2) => {
-    console.log(val);
-    console.log(val2);
+    // console.log(val);
+    // console.log(val2);
   }
   deleteInput = (index) => {
     if (this.state.inputs.length === 1) return;
