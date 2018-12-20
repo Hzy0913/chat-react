@@ -205,7 +205,7 @@
   content: '';
   display: block;
   position: absolute;
-  top: 12px;
+  top: 22px;
   width: 0;
   height: 0;
 }
@@ -249,13 +249,13 @@
 }
 .message-item-own .message-item-content:before {
   right: -10px;
-  border-right: 20px solid transparent;
-  border-bottom: 20px solid white;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid white;
 }
 .message-item-other .message-item-content:before {
   left: -10px;
-  border-left: 20px solid transparent;
-  border-bottom: 20px solid #d7e4f4;
+  border-left: 12px solid transparent;
+  border-bottom: 12px solid #d7e4f4;
 }
 .message-content-emoji{
   width: 16px;
@@ -268,9 +268,8 @@
   position: relative;
 }
 .message-list-wrapper {
-  position: relative;
   overflow: auto;
-  height: 900px;
+  height: 100%;
 }
 .message-list-wrapper .time-info span{
   background-color: rgba(0,0,0,.12);
@@ -293,13 +292,28 @@
   font-size: 13px;
   padding: 10px 0px;
 }
+.unread-count-tips:before{
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -8px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #00a2ae;
+}
 .unread-count-tips{
   background-color: #00a2ae;
   color: #fff;
-  padding: 10px;
+  padding: 5px 10px;
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 62px;
+  right: 25px;
+  border-radius: 14px;
+  font-size: 14px;
 }
 /*loading animate*/
 .message-loading{

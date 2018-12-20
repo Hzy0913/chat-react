@@ -23,7 +23,7 @@ export default class ChatInput extends Component {
   }
   hidePopup = (e) => {
     const {target: {className, id}} = e;
-    if (className === 'emoji-icon-img' || id === 'emoji-picker-content-warpper') return;
+    if (['emoji-item', 'emoji-icon-img'].includes(className) || id === 'emoji-picker-content-warpper') return;
     this.setState({visible: false});
   }
   visiblePopup = (e) => {
@@ -33,12 +33,14 @@ export default class ChatInput extends Component {
   }
   selectEmoje = ({text}, isEmoji) => {
     const {textarea} = this.state;
-    const {emoji = []} = this.props;
+    const {emoji = [], selectEmoje} = this.props;
     const emojiContent = [...emojiDefault, ...emoji];
     if (isEmoji) {
       const {content} = emojiContent.find(item => item.text === text) || {};
+      selectEmoje && selectEmoje(content);
       return this.setState({visible: true, textarea: `${textarea}${content}`});
     }
+    selectEmoje && selectEmoje(`[${text}]`);
     this.setState({visible: true, textarea: `${textarea}[${text}]`});
   }
   submit = (e) => {
@@ -52,15 +54,22 @@ export default class ChatInput extends Component {
     this.setState({textarea: ''});
     sendMessage && sendMessage(data);
   }
+  keyPress = ({keyCode}) => {
+    if (keyCode === 13) {
+      this.submit();
+    }
+  }
+  inputFocus = () => {
+    this.textareaInput.focus();
+  }
   textareaChange = (e) => {
     const {textareaChange} = this.props;
-    this.setState({textarea: e.target.value});
-    if (textareaChange) {
-      textareaChange(e.target.value);
-    }
+    this.setState({textarea: e.target.value, visible: false});
+    textareaChange && textareaChange(e.target.value);
   }
   render() {
     const {visible, textarea} = this.state;
+    console.log(visible);
     const {
       placeholder, customEmoticon = [], emoji, value
     } = this.props;
@@ -104,6 +113,8 @@ export default class ChatInput extends Component {
             className="chat-input"
             value={inputValue}
             onChange={this.textareaChange}
+            onKeyUp={this.keyPress}
+            ref={(input) => { this.textareaInput = input; }}
           />
         </div>
         <div className="submit-box" onClick={this.submit}>

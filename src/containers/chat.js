@@ -10,7 +10,8 @@ import {ChatInput, Messages} from '../components/chat';
 
 import * as authActions from '../redux/reduces/auth';
 
-let pageNum = 0;
+let pageNum = 1;
+let currentCount;
 @connect(
   state => ({auth: state.auth}),
   dispatch => bindActionCreators(authActions, dispatch)
@@ -38,12 +39,16 @@ class Chat extends Component {
     timestamp: new Date().getTime()
   }
   componentDidMount() {
-    this.getChatList(0);
     window.socket = io('ws://localhost:9000');
     const {name} = store.get('user') || {};
     const {name: visitorName} = store.get('visitor') || {};
     const userName = name || visitorName;
     socket.on('connect', this.socketConnect);
+  }
+  selectEmoje = (value) => {
+    const {inputValue = ''} = this.state;
+    this.setState({inputValue: `${inputValue}${value}`});
+    this.refs.chatInput.inputFocus();
   }
   textareaChange = (inputValue) => {
     this.setState({inputValue});
@@ -54,7 +59,7 @@ class Chat extends Component {
     if (page) {
       this.setState({loading: true});
     }
-    axios.get(`/chat/${page}`).then(res => {
+    axios.get(`/chat/${page}?currentCount=${currentCount || ''}`).then(res => {
       const {chatList = []} = res;
       if (!chatList.length) {
         this.setState({noData: true});
@@ -65,6 +70,7 @@ class Chat extends Component {
   robotClick = () => {
     const {inputValue = ''} = this.state;
     this.setState({inputValue: `${inputValue}@Robot小冰 `});
+    this.refs.chatInput.inputFocus();
   }
   socketConnect = (e) => {
     const {name, id} = store.get('user') || {};
@@ -75,8 +81,14 @@ class Chat extends Component {
     socket.emit('join', user);
     socket.on('user-join', this.userJoin);
     socket.on('user-info', this.userInfo);
+    socket.on('current-count', this.currentCount);
     socket.on('update-message', this.updateMessage);
     socket.on('update-robot-message', this.updateMessage2);
+  }
+  currentCount = ({messageCount: count} = {}) => {
+    if (currentCount) return;
+    currentCount = count;
+    this.getChatList(1);
   }
   userInfo = (msg = {}) => {
     const {onlineNumber} = msg;
@@ -100,6 +112,13 @@ class Chat extends Component {
   scrolltoupper = (v) => {
     pageNum += 1;
     this.getChatList(pageNum);
+  }
+  avatarClick = ({name, userId}) => {
+    const {id} = store.get('user') || store.get('visitor') || {};
+    if (userId.toString() === id.toString()) return;
+    const {inputValue = ''} = this.state;
+    this.setState({inputValue: `${inputValue}@${name} `});
+    this.refs.chatInput.inputFocus();
   }
   sendMessage = (v) => {
     const {value} = v;
@@ -147,18 +166,20 @@ class Chat extends Component {
           userInfo={userInfo}
           placeholder="请输入内容..."
           value={inputValue}
+          selectEmoje={this.selectEmoje}
           textareaChange={this.textareaChange}
+          ref="chatInput"
         />
-        <div className="chat-content">
-          <Messages
-            timestamp={timestamp}
-            scrolltoupper={this.scrolltoupper}
-            dataSource={messages}
-            loading={this.state.loading}
-            userInfo={userInfo}
-            noData={noData}
-          />
-        </div>
+        <Messages
+          style={{height: '100%', width: '100%', position: 'fixed', padding: '46px 0px 52px 0px'}}
+          timestamp={timestamp}
+          scrolltoupper={this.scrolltoupper}
+          avatarClick={this.avatarClick}
+          dataSource={messages}
+          loading={this.state.loading}
+          userInfo={userInfo}
+          noData={noData}
+        />
       </div>
     );
   }
