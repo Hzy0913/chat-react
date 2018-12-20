@@ -473,7 +473,12 @@ body
   border-radius 8px
   padding-bottom 20px
   .react-calendar__tile--active
-    background-color transparent
+    background-color transparent !important
+    time
+      color #000 !important
+  .react-calendar__tile--active.react-calendar__month-view__days__day--weekend
+    time
+      color red !important
   .iconfont
     color: #68bcff
   time

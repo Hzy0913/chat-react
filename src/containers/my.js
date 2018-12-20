@@ -15,8 +15,9 @@ import CourseList from '../components/course-list';
 )
 export default class Course extends Component {
   componentDidMount() {
+    const {token} = store.get('user') || {};
     const {userInfo} = this.props;
-    userInfo();
+    token && userInfo();
   }
   render() {
     return (

@@ -45,7 +45,7 @@ class ArticleDetails extends Component {
   }
   componentDidMount() {
     const {match: {params: {id} = {}} = {}} = this.props;
-    const {learn} = store.get('user') || {};
+    const {learn = []} = store.get('user') || {};
     const learned = learn.find(item => item._id === id);
     axios.get(`/courseDetails/${id}`).then(res => {
       this.setState({course: res.courseDetail, learned: !!learned});
