@@ -148,7 +148,7 @@
   align-items: center;
   justify-content: flex-start;
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 #emoji-picker-content-warpper{
   padding: 5px 4px 10px 4px;

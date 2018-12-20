@@ -28,6 +28,8 @@ body
   background-color #f0f2f5
 #app
   padding-bottom 56px
+  max-width 700px
+  margin 0 auto
 //main
 .am-tab-bar
   position fixed
@@ -53,7 +55,6 @@ body
     color #fff
     font-size: 16px
     text-shadow 1px 1px 1px rgba(0, 0, 0, 0.2)
-
 .am-carousel-wrap
   text-align right
   padding-right 10px
@@ -879,3 +880,27 @@ body
 }
 
 .fadeInUp{ -webkit-animation-name:fadeInUp; animation-name:fadeInUp;-webkit-animation-duration:0.8s; animation-duration:0.8s; -webkit-animation-fill-mode:both; animation-fill-mode:both;display:block !important }
+
+
+
+
+//media query
+@media screen and (min-width: 700px) {
+  body{
+    max-width 700px !important;
+    margin 0 auto
+  }
+  .am-tabs-tab-bar-wrap, .chat-top-bar, .chat-input-wrapper{
+    max-width 700px
+  }
+  .am-search, .search-list, .course-button, .popup-box, .chat-top-bar, .chat-input-wrapper, .massage-container {
+    max-width 700px
+    left 50% !important;
+    margin-left -350px
+  }
+  .massage-container{
+    border-left 1px solid #fafafa
+    border-right 1px solid #fafafa
+  }
+}
+

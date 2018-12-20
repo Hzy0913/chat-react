@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {ListView} from 'antd-mobile';
 import Swiper from 'swiper';
+import {withRouter} from 'react-router-dom';
 import 'swiper/dist/css/swiper.min.css';
 import {bindActionCreators} from 'redux';
 import * as authActions from '../redux/reduces/auth';
@@ -34,6 +35,12 @@ class Home extends Component {
   componentDidUpdate() {
     this.updateSlides();
   }
+  handleLink = (link) => {
+    if (link.includes('http')) {
+      return window.open(link);
+    }
+    this.props.history.push(`${link}`);
+  }
   updateSlides = () => {
     const {home: {bannerList = []} = {}} = this.props;
     if (bannerList.length !== this.state.bannerLength) {
@@ -44,6 +51,7 @@ class Home extends Component {
   render() {
     const bannerListDefault = [{bannerurl: bannerDefault}];
     const {home: {articleList = [], bannerList = []} = {}} = this.props;
+    const bannerFilter = bannerList.filter(v => v._id !== '59f1934f71811c2a26b3522e') || [];
     const row = (rowData, sectionID, rowID) => (
       <div key={rowID} style={{padding: '0 15px'}}>
         1231231231
@@ -65,8 +73,12 @@ class Home extends Component {
       <div>
         <div className="swiper-container">
           <div className="swiper-wrapper">
-            {bannerList.map((val, index) => (
-              <div className="swiper-slide banner" key={val.bannerurl}>
+            {bannerFilter.map((val, index) => (
+              <div
+                className="swiper-slide banner"
+                key={val.bannerurl}
+                onClick={() => this.handleLink(val.link)}
+              >
                 <img
                   src={val.bannerurl}
                   style={{
@@ -86,4 +98,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

@@ -20,15 +20,17 @@ class Main extends Component {
     router: PropTypes.object.isRequired
   };
   state = {
-    selectedTab: 'home',
+    selectedTab: '',
     hidden: false
   };
-  componentDidMount() {
+  componentWillMount() {
     const {location: {pathname: path} = {}, OAuth, auth: {route: Lroute} = {}} = this.props;
+    this.setState({selectedTab: ((path || '').split('/')[1] || '')});
     if (!Lroute) OAuth();
     this.visibleTab(path);
     this.context.router.history.listen((route) => {
       const {pathname} = route;
+      this.setState({selectedTab: ((pathname || '').split('/')[1] || '')});
       this.visibleTab(pathname);
     });
   }
@@ -57,6 +59,7 @@ class Main extends Component {
     const iconSizeChat = {
       style: {fontSize: 24}
     };
+    const {selectedTab} = this.state;
     const {auth: {user: {message = []} = {}} = {}} = this.props;
     const messageSee = message.filter(v => !v.see) || [];
     return (
@@ -73,7 +76,7 @@ class Main extends Component {
             key="home"
             icon={<i className="iconfont icon-home" {...iconSize} />}
             selectedIcon={<i className="iconfont icon-homefill" {...iconSize} />}
-            selected={this.state.selectedTab === 'home'}
+            selected={selectedTab === ''}
             onPress={() => this.handleTabBar('')}
           />
           <TabBar.Item
@@ -81,7 +84,7 @@ class Main extends Component {
             key="course"
             icon={<i className="iconfont icon-fengge" {...iconSizeCourse} />}
             selectedIcon={<i className="iconfont icon-fenggepitchon" {...iconSizeCourse} />}
-            selected={this.state.selectedTab === 'course'}
+            selected={selectedTab === 'course'}
             onPress={() => this.handleTabBar('course')}
           />
           <TabBar.Item
@@ -89,7 +92,7 @@ class Main extends Component {
             key="chat"
             icon={<i className="iconfont icon-xiaoxi" {...iconSizeChat} />}
             selectedIcon={<i className="iconfont icon-xiaoxi" {...iconSizeChat} />}
-            selected={this.state.selectedTab === 'chat'}
+            selected={selectedTab === 'chat'}
             badge={1}
             onPress={() => this.handleTabBar('chat')}
           />
@@ -98,7 +101,7 @@ class Main extends Component {
             key="my"
             icon={<i className="iconfont icon-me_line" {...iconSizeChat} />}
             selectedIcon={<i className="iconfont icon-me_surface" {...iconSizeChat} />}
-            selected={this.state.selectedTab === 'my'}
+            selected={['sign', 'my', 'share'].includes(selectedTab)}
             dot={!!messageSee.length}
             onPress={() => this.handleTabBar('my')}
           />

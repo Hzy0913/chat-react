@@ -179,7 +179,7 @@ class Chat extends Component {
           loading={this.state.loading}
           userInfo={userInfo}
           noData={noData}
-          timeagoMax="24"
+          timeagoMax={24}
         />
       </div>
     );
