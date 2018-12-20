@@ -17,7 +17,12 @@ let autoScroll = true;
 let isUnShift = false;
 let firstDataSourceTimestamp;
 
-export default class ChatInput extends Component {
+const defaultStyle = {
+  height: 500,
+  width: '100%',
+  position: 'relative'
+};
+export default class Messages extends Component {
   static propTypes = {
     dataSource: PropTypes.array,
     loading: PropTypes.bool,
@@ -40,13 +45,14 @@ export default class ChatInput extends Component {
   onScroll = (e) => {
     const {target} = e;
     const {loading, scrolltoupper, noData} = this.props;
+    const {unreadCount} = this.state;
     if (target.scrollTop === 0 && !loading && !noData) {
       scrolltoupper && scrolltoupper();
     }
     const scrollBottom = target.scrollHeight - target.clientHeight - target.scrollTop;
     if (scrollBottom <= 2) {
       autoScroll = true;
-      this.setState({unreadCount: 0});
+      (unreadCount !== 0) && this.setState({unreadCount: 0});
     } else {
       autoScroll = false;
     }
@@ -61,10 +67,18 @@ export default class ChatInput extends Component {
         firstDataSourceTimestamp = newDataSourceTimestamp;
         return {randerTimestamp: nextTimestamp};
       }
+      const {userInfo: {userId} = {}} = nextDataSource[nextDataSource.length - 1] || {};
+      const {userInfo: {userId: ownUserId} = {}} = nextProps;
+      if (userId === ownUserId) {
+        autoScroll = true;
+        return {randerTimestamp: nextTimestamp};
+      }
+      console.log(autoScroll);
       if (!autoScroll) {
         let {unreadCount} = prevState;
         unreadCount += (nextDataSource.length - messageLength);
         unreadCountChange && unreadCountChange(unreadCount);
+        console.log(unreadCount);
         return {unreadCount, randerTimestamp: nextTimestamp};
       }
     }
@@ -203,12 +217,12 @@ export default class ChatInput extends Component {
     });
   }
   render() {
-    const {dataSource = [], loading = false, loader, noData, className = '', style = {}} = this.props;
+    const {dataSource = [], loading = false, loader, noData, className = '', style = defaultStyle} = this.props;
     const {unreadCount} = this.state;
     const noDataElement = typeof noData === 'object' ? noData : <p className="noData-tips">没有更多数据了</p>;
     return (
-      <div className="massage-container">
-        <div className={`message-list-wrapper ${className}`} style={style} ref="message-list-wrapper">
+      <div className={`massage-container ${className}`} style={style}>
+        <div className="message-list-wrapper" ref="message-list-wrapper">
           {!noData && loading && <div className="message-loading">
             {loader || this.loaderContent()}
           </div>}
