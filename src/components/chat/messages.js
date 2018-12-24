@@ -9,7 +9,6 @@ import errorIcon from './emoji-img/error.png';
 const re = /\[[\u4e00-\u9fa5-\w-\d]+\]/g;
 let lastDom;
 let firstDom;
-let isUnshift;
 let unshiftLastTimestamp;
 let setScrollTop = true;
 let messageLength;
@@ -22,6 +21,17 @@ const defaultStyle = {
   width: '100%',
   position: 'relative'
 };
+
+const throttle = (function () {
+  let _lastTime = null;
+  return function (fn, param, millisecond) {
+    const _nowTime = new Date().getTime();
+    if (_nowTime - _lastTime > millisecond || !_lastTime) {
+      fn(param);
+      _lastTime = _nowTime;
+    }
+  };
+}());
 export default class Messages extends Component {
   static propTypes = {
     dataSource: PropTypes.array,
@@ -44,11 +54,12 @@ export default class Messages extends Component {
   }
   onScroll = (e) => {
     const {target} = e;
-    const {loading, scrolltoupper, noData} = this.props;
+    const {loading, scrolltoupper, noData, onScroll} = this.props;
     const {unreadCount} = this.state;
     if (target.scrollTop === 0 && !loading && !noData) {
       scrolltoupper && scrolltoupper();
     }
+    onScroll && throttle(onScroll, target.scrollTop, 100);
     const scrollBottom = target.scrollHeight - target.clientHeight - target.scrollTop;
     if (scrollBottom <= 2) {
       autoScroll = true;
@@ -56,6 +67,9 @@ export default class Messages extends Component {
     } else {
       autoScroll = false;
     }
+  }
+  setScrollTop = (value) => {
+    this.refs['message-list-wrapper'].scrollTo(0, value);
   }
   static getDerivedStateFromProps(nextProps, prevState) {
     const {dataSource: nextDataSource = [], timestamp: nextTimestamp, unreadCountChange} = nextProps;
@@ -73,12 +87,10 @@ export default class Messages extends Component {
         autoScroll = true;
         return {randerTimestamp: nextTimestamp};
       }
-      console.log(autoScroll);
       if (!autoScroll) {
         let {unreadCount} = prevState;
         unreadCount += (nextDataSource.length - messageLength);
         unreadCountChange && unreadCountChange(unreadCount);
-        console.log(unreadCount);
         return {unreadCount, randerTimestamp: nextTimestamp};
       }
     }
@@ -104,8 +116,9 @@ export default class Messages extends Component {
     const {offsetTop} = this.refs[lastDom] || {};
     if (setScrollTop && offsetTop && autoScroll) {
       setScrollTop = false;
+      const offsetTopVlaue = isUnShift ? offsetTop - 50 : offsetTop;
       isUnShift = false;
-      this.refs['message-list-wrapper'].scrollTo(0, offsetTop - 40);
+      this.refs['message-list-wrapper'].scrollTo(0, offsetTopVlaue);
     }
   }
   componentWillUnmount() {
@@ -125,7 +138,7 @@ export default class Messages extends Component {
   loaderContent = () => (<div className="loadEffect">
     <span /><span /><span /><span /><span /><span /><span /><span />
   </div>)
-  renderMessageList = (data) => {
+  renderMessageList = (data = []) => {
     // timeBetween ---- 分钟单位
     // timeagoMax ----- 小时单位
     const {timeBetween = 5, timeagoMax = (24 * 3)} = this.props;
@@ -136,7 +149,6 @@ export default class Messages extends Component {
     maxTimeago *= timeagoMax;
     betweenTime *= timeBetween;
     let startTimeStamp = 0;
-    // setScrollTop = true;
     return data.map((item, itemIndex) => {
       const {
         timestamp, value, userInfo = {}, error
@@ -183,18 +195,17 @@ export default class Messages extends Component {
         } else if ((firstDom !== timestamp)) {
           // 执行了unshift操作
           const unshiftLastIndex = (data.findIndex(v => v.timestamp === firstDom)) - 1;
-          unshiftLastTimestamp = data[unshiftLastIndex].timestamp;
-          isUnshift = true;
+          unshiftLastTimestamp = (data[unshiftLastIndex] || {}).timestamp;
+          isUnShift = true;
         } else {
-          isUnshift = false;
+          isUnShift = false;
         }
       } else if (unshiftLastTimestamp === timestamp) {
         lastDomRef = {ref: unshiftLastTimestamp};
         lastDom = unshiftLastTimestamp;
-        //reset
         firstDom = data[0].timestamp;
         unshiftLastTimestamp = '';
-      } else if (!isUnshift && (data.length === (itemIndex + 1))) {
+      } else if (!isUnShift && (data.length === (itemIndex + 1))) {
         lastDomRef = {ref: timestamp};
         lastDom = timestamp;
       }

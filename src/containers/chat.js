@@ -11,7 +11,6 @@ import {ChatInput, Messages} from '../components/chat';
 import * as authActions from '../redux/reduces/auth';
 
 let pageNum = 1;
-let currentCount;
 @connect(
   state => ({auth: state.auth}),
   dispatch => bindActionCreators(authActions, dispatch)
@@ -38,22 +37,45 @@ class Chat extends Component {
     messages: [],
     timestamp: new Date().getTime()
   }
-  componentDidMount() {
+  componentWillMount() {
     window.socket = io('ws://localhost:9000');
     const {name} = store.get('user') || {};
     const {name: visitorName} = store.get('visitor') || {};
+    const {auth: {currentCount, chatList} = {}} = this.props;
     const userName = name || visitorName;
+    if (chatList) {
+      this.setState({messages: chatList});
+    } else if (currentCount && currentCount !== '') {
+      this.getChatList(1);
+    }
     socket.on('connect', this.socketConnect);
   }
+  componentDidMount() {
+    setTimeout(() => {
+      if (this.state.onlineNumber === 1) {
+        const overlayNode = <div style={{whiteSpace: 'nowrap'}}>点击小冰的头像,您可以跟我聊天哦</div>;
+        this.setState({popoverVisible: true, overlayNode});
+        setTimeout(() => {
+          this.setState({popoverVisible: false});
+        }, 3500);
+      }
+    }, 6000);
+    const {auth: {currentCount, chatList, scrollTop} = {}} = this.props;
+    if (chatList && scrollTop) {
+      this.refs.message.setScrollTop(scrollTop);
+    }
+  }
   selectEmoje = (value) => {
-    const {inputValue = ''} = this.state;
-    this.setState({inputValue: `${inputValue}${value}`});
+    console.log(value, '头像被选');
+    // this.setState({inputValue: `${inputValue}${value}`});
     this.refs.chatInput.inputFocus();
   }
-  textareaChange = (inputValue) => {
+  textareaChange = (inputValue = '') => {
+    console.log(inputValue);
     this.setState({inputValue});
   }
   getChatList = (page) => {
+    const {auth: {currentCount} = {}, saveChatList} = this.props;
     const {messages = [], noData} = this.state;
     if (noData) return;
     if (page) {
@@ -64,7 +86,9 @@ class Chat extends Component {
       if (!chatList.length) {
         this.setState({noData: true});
       }
-      this.setState({loading: false, messages: [...chatList, ...messages], timestamp: new Date().getTime()});
+      const concatMessage = [...chatList, ...messages];
+      this.setState({loading: false, messages: concatMessage, timestamp: new Date().getTime()});
+      saveChatList(concatMessage);
     });
   }
   robotClick = () => {
@@ -86,20 +110,38 @@ class Chat extends Component {
     socket.on('update-robot-message', this.updateMessage2);
   }
   currentCount = ({messageCount: count} = {}) => {
+    const {auth: {currentCount} = {}, saveCurrentCount} = this.props;
     if (currentCount) return;
-    currentCount = count;
+    saveCurrentCount(count);
     this.getChatList(1);
   }
   userInfo = (msg = {}) => {
     const {onlineNumber} = msg;
+    // if (onlineNumber === 1) {
+    //   const {messages} = this.state;
+    //   setTimeout(() => {
+    //     const robotTip = {
+    //       userInfo: {
+    //         avatar: 'http://img.binlive.cn/robot.png',
+    //         name: 'Robot小冰',
+    //         userId: 'RobotId'
+    //       },
+    //       value: '现在只有你一个人和小冰在呢,快点击小冰头像跟我聊天吧',
+    //       timestamp: new Date().getTime()
+    //     };
+    //     messages.push(robotTip);
+    //     this.setState({messages, timestamp: new Date().getTime()});
+    //   }, 2500);
+    // }
     this.setState({onlineNumber});
   }
   userJoin = (msg = {}) => {
-    const {type, onlineNumber} = msg;
+    const {type, onlineNumber, joinName} = msg;
     if (type === 'disconnect') {
       return this.setState({onlineNumber});
     }
-    this.setState({popoverVisible: true, joinUser: msg, onlineNumber});
+    const overlayNode = <div style={{whiteSpace: 'nowrap'}}>{joinName} 已进入</div>;
+    this.setState({popoverVisible: true, joinUser: msg, onlineNumber, overlayNode});
     setTimeout(() => {
       this.setState({popoverVisible: false});
     }, 3500);
@@ -108,6 +150,10 @@ class Chat extends Component {
     const {messages} = this.state;
     messages.push(msg);
     this.setState({messages, timestamp: new Date().getTime()});
+  }
+  onScroll = (v) => {
+    const {saveScrollTop} = this.props;
+    saveScrollTop(v);
   }
   scrolltoupper = (v) => {
     pageNum += 1;
@@ -121,6 +167,7 @@ class Chat extends Component {
     this.refs.chatInput.inputFocus();
   }
   sendMessage = (v) => {
+    console.log(v);
     const {value} = v;
     if (!value) return;
     const {messages} = this.state;
@@ -133,7 +180,8 @@ class Chat extends Component {
   }
   render() {
     const {
-      inputValue, messages, timestamp, popoverVisible, joinUser = {}, onlineNumber = 1, noData
+      inputValue, messages, timestamp, popoverVisible, joinUser = {}, onlineNumber = 1, noData,
+      overlayNode
     } = this.state;
     const user = store.get('user') || store.get('visitor') || {};
     if (!user.id) {
@@ -150,7 +198,7 @@ class Chat extends Component {
             placement="bottomLeft"
             className="chat-popover"
             onVisibleChange={this.onVisibleChange}
-            overlay={<div style={{whiteSpace: 'nowrap'}}>{joinName} 已进入</div>}
+            overlay={overlayNode}
             getTooltipContainer={() => document.querySelector('.robot')}
           >
             <div className="robot" />
@@ -179,7 +227,9 @@ class Chat extends Component {
           loading={this.state.loading}
           userInfo={userInfo}
           noData={noData}
+          onScroll={this.onScroll}
           timeagoMax={24}
+          ref="message"
         />
       </div>
     );

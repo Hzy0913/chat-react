@@ -25,11 +25,13 @@ class Main extends Component {
   };
   componentWillMount() {
     const {location: {pathname: path} = {}, OAuth, auth: {route: Lroute} = {}} = this.props;
+    const {token} = store.get('user') || {};
     this.setState({selectedTab: ((path || '').split('/')[1] || '')});
-    if (!Lroute) OAuth();
+    if (!Lroute && token) OAuth();
     this.visibleTab(path);
     this.context.router.history.listen((route) => {
       const {pathname} = route;
+      console.log(pathname);
       this.setState({selectedTab: ((pathname || '').split('/')[1] || '')});
       this.visibleTab(pathname);
     });
@@ -84,7 +86,7 @@ class Main extends Component {
             key="course"
             icon={<i className="iconfont icon-fengge" {...iconSizeCourse} />}
             selectedIcon={<i className="iconfont icon-fenggepitchon" {...iconSizeCourse} />}
-            selected={selectedTab === 'course'}
+            selected={['course-result', 'course'].includes(selectedTab)}
             onPress={() => this.handleTabBar('course')}
           />
           <TabBar.Item
@@ -93,7 +95,6 @@ class Main extends Component {
             icon={<i className="iconfont icon-xiaoxi" {...iconSizeChat} />}
             selectedIcon={<i className="iconfont icon-xiaoxi" {...iconSizeChat} />}
             selected={selectedTab === 'chat'}
-            badge={1}
             onPress={() => this.handleTabBar('chat')}
           />
           <TabBar.Item

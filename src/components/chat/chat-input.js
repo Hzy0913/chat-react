@@ -21,6 +21,18 @@ export default class ChatInput extends Component {
   componentDidMount() {
     document.addEventListener('click', this.hidePopup, true);
   }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const {textarea} = prevState;
+    const {value, textareaChange} = nextProps;
+    if (textarea !== value) {
+      textareaChange && textareaChange(value);
+      return {textarea: value};
+    }
+    return null;
+  }
+  componentWillUnmount() {
+    document.removeEventListener('click', this.hidePopup, true);
+  }
   hidePopup = (e) => {
     const {target: {className, id}} = e;
     if (['emoji-item', 'emoji-icon-img'].includes(className) || id === 'emoji-picker-content-warpper') return;
@@ -33,19 +45,24 @@ export default class ChatInput extends Component {
   }
   selectEmoje = ({text}, isEmoji) => {
     const {textarea} = this.state;
-    const {emoji = [], selectEmoje} = this.props;
+    const {emoji = [], selectEmoje, textareaChange} = this.props;
     const emojiContent = [...emojiDefault, ...emoji];
     if (isEmoji) {
       const {content} = emojiContent.find(item => item.text === text) || {};
       selectEmoje && selectEmoje(content);
-      return this.setState({visible: true, textarea: `${textarea}${content}`});
+      const valueContent = `${textarea}${content}`;
+      textareaChange && textareaChange(valueContent);
+      return this.setState({visible: true, textarea: valueContent});
     }
     selectEmoje && selectEmoje(`[${text}]`);
-    this.setState({visible: true, textarea: `${textarea}[${text}]`});
+    const valueContent = `${textarea}[${text}]`;
+    textareaChange && textareaChange(valueContent);
+    this.setState({visible: true, textarea: valueContent});
   }
   submit = (e) => {
     const {userInfo, sendMessage} = this.props;
     const {textarea} = this.state;
+    console.log(textarea);
     const data = {
       value: textarea,
       timestamp: new Date().getTime(),
@@ -69,7 +86,6 @@ export default class ChatInput extends Component {
   }
   render() {
     const {visible, textarea} = this.state;
-    console.log(visible);
     const {
       placeholder, customEmoticon = [], emoji, value
     } = this.props;
