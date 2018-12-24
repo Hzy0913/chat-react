@@ -28,7 +28,7 @@ class MyList extends Component {
       {title: '我的学习', icon: 'icon-xuexi', route: 'learned'},
       {title: '我的签到', icon: 'icon-qiandao', route: 'sign'},
       {title: '分享换分', icon: 'icon-fenxiang1', route: 'share'},
-      {title: '测试题目', icon: 'icon-fabiaowenzhang', route: 'learned'},
+      {title: '测试题目', icon: 'icon-fabiaowenzhang', route: 'subject'},
       {title: '审核分享', icon: 'icon-shenhe', route: 'review'},
       {title: '设置', icon: 'icon-shezhi', route: 'seting'},
     ];

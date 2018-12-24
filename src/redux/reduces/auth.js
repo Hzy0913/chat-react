@@ -17,12 +17,14 @@ const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS';
 
 const EMPTYSTATU = 'auth/EMPTYSTATU';
 
-const TEST2 = 'auth/TEST2';
+const CURRENTCOUNT = 'auth/CURRENTCOUNT';
 
 const GETUSER = 'auth/GETUSER';
 const GETUSER_SUCCESS = 'auth/GETUSER_SUCCESS';
 
 const USERINFO_SUCCESS = 'auth/USERINFO_SUCCESS';
+const GETCHATLIST_SUCCESS = 'auth/GETCHATLIST_SUCCESS';
+const SAVESCROLL = 'auth/SAVESCROLL';
 
 const initialState = {
   loaded: false
@@ -112,10 +114,20 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         userList: action.res.data.userList
       };
-    case TEST2:
+    case GETCHATLIST_SUCCESS:
       return {
         ...state,
-        testcon: '测试内容'
+        chatList: action.message
+      };
+    case SAVESCROLL:
+      return {
+        ...state,
+        scrollTop: action.scrollTop
+      };
+    case CURRENTCOUNT:
+      return {
+        ...state,
+        currentCount: action.currentCount
       };
     default:
       return state;
@@ -189,9 +201,24 @@ export function getuser() {
     promise: axios.get('/api/getuser')
   };
 }
-export function test2() {
+
+export function saveCurrentCount(currentCount) {
   return {
-    type: TEST2,
-    text: '一些传值数据'
+    type: CURRENTCOUNT,
+    currentCount
+  };
+}
+
+export function saveChatList(message) {
+  return {
+    type: GETCHATLIST_SUCCESS,
+    message
+  };
+}
+
+export function saveScrollTop(scrollTop) {
+  return {
+    type: SAVESCROLL,
+    scrollTop
   };
 }

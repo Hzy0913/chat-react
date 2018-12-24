@@ -4,6 +4,8 @@ const ALLCOURSE = 'auth/ALLCOURSE';
 
 const LEARNEDALL = 'auth/LEARNEDALL';
 
+const SUBJECT = 'auth/SUBJECT';
+
 const initialState = {
   allCourse: [],
   hotCourse: []
@@ -26,6 +28,11 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         allLearned: action.res.course
       };
+    case SUBJECT:
+      return {
+        ...state,
+        subjects: action.res.subjects
+      };
     default:
       return state;
   }
@@ -47,6 +54,12 @@ export function getAllLearned() {
   return {
     types: ['', LEARNEDALL, ''],
     promise: axios.get('/getmycourse')
+  };
+}
+export function getAllSubject() {
+  return {
+    types: ['', SUBJECT, ''],
+    promise: axios.get('/subject')
   };
 }
 
