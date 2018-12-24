@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {createForm} from 'rc-form';
+import QueueAnim from 'rc-queue-anim';
 import {Toast} from 'antd-mobile';
 import {Link} from 'react-router-dom';
 
@@ -46,42 +47,44 @@ class Login extends Component {
     const {getFieldProps} = this.props.form;
     const {email, pass, passRepeat} = this.state;
     return (
-      <div className="login register">
-        <div className="login-box">
-          <div id="email" className="input-item">
-            <i className="iconfont icon-nicheng" />
-            <input
-              type="email"
-              placeholder="请输入您的邮箱账号"
-              value={email}
-              onChange={(value) => this.handleChange(value, 'email')}
-            />
-          </div>
-          <div id="pass" className="input-item">
-            <i className="iconfont icon-suo" />
-            <input
-              type="password"
-              placeholder="请输入您的密码"
-              value={pass}
-              onChange={(value) => this.handleChange(value, 'pass')}
-            />
-          </div>
-          <div id="pass-repeat" className="input-item">
-            <i className="iconfont icon-suo" />
-            <input
-              type="password"
-              placeholder="请再次输入您的密码"
-              value={passRepeat}
-              onChange={(value) => this.handleChange(value, 'passRepeat')}
-            />
-          </div>
-          <button className="login-submit input-item" onClick={this.handleSubmit}>确定</button>
-          <div className="directional">
-            <Link to="/login" style={{float: 'left'}}>登录</Link>
-            <Link to="/resetpass" style={{float: 'right'}}>忘记密码</Link>
+      <QueueAnim>
+        <div className="login register" key="animate">
+          <div className="login-box">
+            <div id="email" className="input-item">
+              <i className="iconfont icon-nicheng" />
+              <input
+                type="email"
+                placeholder="请输入您的邮箱账号"
+                value={email}
+                onChange={(value) => this.handleChange(value, 'email')}
+              />
+            </div>
+            <div id="pass" className="input-item">
+              <i className="iconfont icon-suo" />
+              <input
+                type="password"
+                placeholder="请输入您的密码"
+                value={pass}
+                onChange={(value) => this.handleChange(value, 'pass')}
+              />
+            </div>
+            <div id="pass-repeat" className="input-item">
+              <i className="iconfont icon-suo" />
+              <input
+                type="password"
+                placeholder="请再次输入您的密码"
+                value={passRepeat}
+                onChange={(value) => this.handleChange(value, 'passRepeat')}
+              />
+            </div>
+            <button className="login-submit input-item" onClick={this.handleSubmit}>确定</button>
+            <div className="directional">
+              <Link to="/login" style={{float: 'left'}}>登录</Link>
+              <Link to="/reset-pass" style={{float: 'right'}}>忘记密码</Link>
+            </div>
           </div>
         </div>
-      </div>
+      </QueueAnim>
     );
   }
 }

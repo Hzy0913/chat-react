@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import store from 'store';
+import QueueAnim from 'rc-queue-anim';
 import {Button} from 'antd-mobile';
 import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
@@ -25,23 +26,27 @@ class Learned extends Component {
   render() {
     const {learn = []} = this.state;
     return (
-      <div>
-        {!learn.length ? <h1 className="result-tip">您还没有学习过的课程</h1> : null}
-        {learn.map(item => (<div className="result-introduce learned" key={item._id} onClick={() => this.handleDetails(item._id)}>
-          <div className="result-left">
-            <h1>{item.title}</h1>
-            <h2>
-              <p>积分：{item.score}</p>
-              <p>标签：
-                <span className="learned-tag">{item.tag}</span>
-              </p>
-            </h2>
-          </div>
-          <div className="result-right">
-            <img src={item.bannerselect} />
-          </div>
-        </div>))}
-      </div>
+      <QueueAnim>
+        <div key="animate">
+          {!learn.length ? <h1 className="result-tip">您还没有学习过的课程</h1> : null}
+          <QueueAnim>
+            {learn.map(item => (<div className="result-introduce learned" key={item._id} onClick={() => this.handleDetails(item._id)}>
+              <div className="result-left">
+                <h1>{item.title}</h1>
+                <h2>
+                  <p>积分：{item.score}</p>
+                  <p>标签：
+                    <span className="learned-tag">{item.tag}</span>
+                  </p>
+                </h2>
+              </div>
+              <div className="result-right">
+                <img src={item.bannerselect} />
+              </div>
+            </div>))}
+          </QueueAnim>
+        </div>
+      </QueueAnim>
     );
   }
 }

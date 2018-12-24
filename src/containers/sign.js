@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import store from 'store';
 import {Button, Modal} from 'antd-mobile';
+import QueueAnim from 'rc-queue-anim';
 import {bindActionCreators} from 'redux';
 import Calendar from 'react-calendar';
 import {next, prev} from '../assets/svgs';
@@ -74,41 +75,43 @@ export default class ArticleDetails extends Component {
     />);
     const self = this;
     return (
-      <div className="sign-box">
-        <Modal
-          visible={this.state.modal}
-          transparent
-          maskClosable
-          title={tip}
-          onClose={() => this.onClose('modal')}
-          footer={[{
-            text: '确定',
-            onPress: () => { self.onClose('modal'); }
-          }]}
-        >
-          <div style={{height: 40}}>
-            {status === 2 ? <p style={{lineHeight: '40px'}}>今日已签到</p> :
-              (<p>恭喜您获得2积分<br />明天请继续签到哦</p>)}
+      <QueueAnim>
+        <div className="sign-box" key="animate">
+          <Modal
+            visible={this.state.modal}
+            transparent
+            maskClosable
+            title={tip}
+            onClose={() => this.onClose('modal')}
+            footer={[{
+              text: '确定',
+              onPress: () => { self.onClose('modal'); }
+            }]}
+          >
+            <div style={{height: 40}}>
+              {status === 2 ? <p style={{lineHeight: '40px'}}>今日已签到</p> :
+                (<p>恭喜您获得2积分<br />明天请继续签到哦</p>)}
+            </div>
+          </Modal>
+          <div className="Calendar-banner">
+            <p className="sign-week">星期{weeks[week]}</p>
+            <div className="sign-btn" onClick={this.handleSign}>签到</div>
+            {score && <p className="sign-score">积分:{score}</p>}
+            <img src="http://img.binlive.cn/upload/1508921355513" />
           </div>
-        </Modal>
-        <div className="Calendar-banner">
-          <p className="sign-week">星期{weeks[week]}</p>
-          <div className="sign-btn" onClick={this.handleSign}>签到</div>
-          {score && <p className="sign-score">积分:{score}</p>}
-          <img src="http://img.binlive.cn/upload/1508921355513" />
+          <Calendar
+            value={new Date()}
+            className="calendar"
+            returnValue="start"
+            prevLabel={<i className="iconfont icon-nextstep1" />}
+            prev2Label={prevSvg}
+            nextLabel={<i className="iconfont icon-nextstep" />}
+            next2Label={nextSvg}
+            tileClassName={this.tileClassName}
+            tileContent={this.tileContent}
+          />
         </div>
-        <Calendar
-          value={new Date()}
-          className="calendar"
-          returnValue="start"
-          prevLabel={<i className="iconfont icon-nextstep1" />}
-          prev2Label={prevSvg}
-          nextLabel={<i className="iconfont icon-nextstep" />}
-          next2Label={nextSvg}
-          tileClassName={this.tileClassName}
-          tileContent={this.tileContent}
-        />
-      </div>
+      </QueueAnim>
     );
   }
 }

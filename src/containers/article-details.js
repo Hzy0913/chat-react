@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Carousel, WingBlank, ListView} from 'antd-mobile';
 import {bindActionCreators} from 'redux';
+import QueueAnim from 'rc-queue-anim';
 import marked from 'marked';
 import highlight from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -62,19 +63,21 @@ export default class ArticleDetails extends Component {
     });
     const markHtml = marked(articleContent);
     return (
-      <div>
-        <div className="detail-header">
-          <h1>{title}</h1>
-          <div className="detail-body-tag">
-            <div className="time">{dateFormat(new Date(date), 'yyyy-MM-dd')}</div>
-            {label.map(item => <span className="tag" key={item}>{item}</span>)}
+      <QueueAnim>
+        <div key="1">
+          <div className="detail-header">
+            <h1>{title}</h1>
+            <div className="detail-body-tag">
+              <div className="time">{dateFormat(new Date(date), 'yyyy-MM-dd')}</div>
+              {label.map(item => <span className="tag" key={item}>{item}</span>)}
+            </div>
           </div>
+          <div
+            className="article-content"
+            dangerouslySetInnerHTML={{__html: markHtml}}
+          />
         </div>
-        <div
-          className="article-content"
-          dangerouslySetInnerHTML={{__html: markHtml}}
-        />
-      </div>
+      </QueueAnim>
     );
   }
 }

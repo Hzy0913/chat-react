@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
+import QueueAnim from 'rc-queue-anim';
 import {ListView, Tag, ActivityIndicator} from 'antd-mobile';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -91,6 +92,7 @@ class Article extends React.Component {
             />
             <div>
               <div
+                className="article-item-title"
                 style={{
                   height: '70px',
                   lineHeight: '28px',
