@@ -2,46 +2,59 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import store from 'store';
 import QueueAnim from 'rc-queue-anim';
+import {Circle} from 'rc-progress';
 import {Button} from 'antd-mobile';
 import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
+import {dateFormat} from '../utils';
 
 import * as courseActions from '../redux/reduces/course';
 
 @connect(
-  state => ({allLearned: state.course.allLearned}),
+  state => ({subjects: state.course.subjects}),
   dispatch => bindActionCreators(courseActions, dispatch)
 )
-class Learned extends Component {
+class Subject extends Component {
   state = {
-    learn: []
   }
   componentWillMount() {
-    const user = store.get('user') || {};
-    const {learn = []} = user;
-    learn.reverse();
-    this.setState({learn});
+    const {getAllSubject} = this.props;
+    getAllSubject();
   }
-  handleDetails = (id) => this.props.history.push(`/course-result/${id}`)
+  handleDetails = (id) => this.props.history.push(`/subject/${id}`)
   render() {
-    const {learn = []} = this.state;
+    const {subjects = []} = this.props;
+    const subjectsProgaess = store.get('subjects') || {};
+    console.log(subjectsProgaess);
+    console.log(subjects);
     return (
       <QueueAnim>
-        <div key="animate">
-          {!learn.length ? <h1 className="result-tip">您还没有学习过的课程</h1> : null}
+        <div key="animate" style={{paddingTop: 20}}>
           <QueueAnim>
-            {learn.map(item => (<div className="result-introduce learned" key={item._id} onClick={() => this.handleDetails(item._id)}>
-              <div className="result-left">
-                <h1>{item.title}</h1>
-                <h2>
-                  <p>积分：{item.score}</p>
-                  <p>标签：
-                    <span className="learned-tag">{item.tag}</span>
-                  </p>
-                </h2>
+            {subjects.map(item => (<div
+              className="subject-item"
+              key={item._id}
+              onClick={() => this.handleDetails(item._id)}
+            >
+              <div className="subject-item-top">
+                <div className="progress">
+                  <p className="progress-text">{(subjectsProgaess[item._id] || 0).toFixed(2)}%</p>
+                  <Circle percent={subjectsProgaess[item._id] || 0} trailColor="rgb(236, 236, 236)" trailWidth="6" strokeWidth="6" strokeColor="rgb(63, 199, 250)" />
+                </div>
+                <div className="subject-item-content">
+                  <h1 className="subject-item-title">{item.title}</h1>
+                  <p className="subject-item-introduce">{item.describe}</p>
+                </div>
               </div>
-              <div className="result-right">
-                <img src={item.bannerselect} />
+              <div className="subject-item-bottom">
+                <div className="subject-creat-time">
+                  <i className="icon-shijian iconfont" />
+                  {dateFormat(item.date, 'yyyy-MM-dd')}
+                </div>
+                <div className="subject-count">
+                  <i className="iconfont icon-wenzhang" />
+                  {item.count}
+                </div>
               </div>
             </div>))}
           </QueueAnim>
@@ -50,4 +63,4 @@ class Learned extends Component {
     );
   }
 }
-export default withRouter(Learned);
+export default withRouter(Subject);
