@@ -80,39 +80,5 @@ const Root = () => (
     </Provider>
   </BrowserRouter>
 );
-// const Root = () => (
-//   <BrowserRouter>
-//     <Provider store={Store}>
-//       <div className="router-content">
-//         {__DEVELOPMENT__ && <DevTools />}
-//         <Switch>
-//           <QueueAnim>
-//             <Route exact path="/login" component={Login} key={15} />
-//             <Route exact path="/register" component={Register} key={16} />
-//             <Route exact path="/reset-pass" component={ResetPass} key={17} />
-//             <Route exact path="/seting" component={Seting} key={18} />
-//             <Router exact component={Main} >
-//               <QueueAnim>
-//                 <Router exact path="/" component={Home} key={1} />
-//                 <Router exact path="/course" component={Course} key={2} />
-//                 <Router exact path="/my" component={My} key={3} />
-//                 <Router exact path="/article-details/:id" component={AarticleDetails} key={4} />
-//                 <Router exact path="/course/:id" component={CourseDetails} key={5} />
-//                 <Router exact path="/course-result/:id" component={CourseResult} key={6} />
-//                 <Router exact path="/learned" component={Learned} key={7} />
-//                 <Router exact path="/sign" component={Sign} key={8} />
-//                 <Router exact path="/share" component={Share} key={9} />
-//                 <Router exact path="/message" component={Message} key={10} />
-//                 <Router exact path="/login-chat" component={LoginChat} key={11} />
-//                 <Router exact path="/chat" component={Chat} key={12} />
-//                 <Router exact path="/user" component={User} key={13} />
-//               </QueueAnim>
-//             </Router>
-//           </QueueAnim>
-//         </Switch>
-//       </div>
-//     </Provider>
-//   </BrowserRouter>
-// );
 
 export default hot(module)(Root);
