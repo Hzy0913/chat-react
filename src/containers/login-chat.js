@@ -25,11 +25,6 @@ class LoginChat extends Component {
     ]
   }
   componentDidMount() {
-    const visitor = store.get('visitor');
-    const user = store.get('user');
-    if (visitor || user) {
-      return this.props.history.push('/chat');
-    }
     window.canvasdra = true;
     canvasAnimation();
   }

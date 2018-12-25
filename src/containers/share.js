@@ -11,12 +11,13 @@ import Calendar from 'react-calendar';
 import {iconAdd} from '../assets/svgs';
 
 import * as courseActions from '../redux/reduces/course';
+import * as authActions from '../redux/reduces/auth';
 
 const {alert} = Modal;
 
 @connect(
   state => ({course: state.course}),
-  dispatch => bindActionCreators(courseActions, dispatch)
+  dispatch => bindActionCreators({...courseActions, ...authActions}, dispatch)
 )
 class Share extends Component {
   state = {
@@ -24,6 +25,14 @@ class Share extends Component {
     errors: []
   }
   componentDidMount() {
+    const {token} = store.get('user') || {};
+    if (!token) {
+      return alert('未登录', '您需要登录才可以进行分享操作？', [
+        {text: '去登录', onPress: () => this.props.history.push('/login')},
+      ]);
+    }
+    const {userInfo} = this.props;
+    token && userInfo();
   }
   onChange = (val, val2) => {
     // console.log(val);
@@ -85,38 +94,36 @@ class Share extends Component {
       <QueueAnim>
         <div className="share-box" key="animate">
           <List renderHeader={() => <p style={{color: '#ff6633'}}>分享您的教学视频资源即可获取积分哦</p>}>
-            <QueueAnim>
-              {inputs.map((item, index) => (<div
-                style={{marginBottom: 10, position: 'relative'}}
-                key={index}
-              >
-                <InputItem
-                  onChange={() => this.onChange(`address${item}`)}
-                  key={`address${index}`}
-                  clear
-                  error={errors.includes(`address${item}`)}
-                  placeholder="请输入您分享的资源地址"
-                  {...getFieldProps(`address${item}`, {
-                    onChange() {
-                      const newErr = errors.filter(v => v !== `address${item}`);
-                      self.setState({errors: newErr});
-                    },
-                    rules: [{required: true}],
-                  })}
-                >资源地址</InputItem>
-                <InputItem
-                  onChange={this.onChange}
-                  clear
-                  key={`password${index}`}
-                  placeholder="请输入提取密码(若无密码可不填)"
-                  {...getFieldProps(`password${item}`)}
-                >提取密码</InputItem>
-                <Button
-                  onClick={() => this.deleteInput(item)}
-                  style={{width: '100%', margin: '0px auto'}}
-                >删除该项</Button>
-              </div>))}
-            </QueueAnim>
+            {inputs.map((item, index) => (<div
+              style={{marginBottom: 10, position: 'relative'}}
+              key={index}
+            >
+              <InputItem
+                onChange={() => this.onChange(`address${item}`)}
+                key={`address${index}`}
+                clear
+                error={errors.includes(`address${item}`)}
+                placeholder="请输入您分享的资源地址"
+                {...getFieldProps(`address${item}`, {
+                  onChange() {
+                    const newErr = errors.filter(v => v !== `address${item}`);
+                    self.setState({errors: newErr});
+                  },
+                  rules: [{required: true}],
+                })}
+              >资源地址</InputItem>
+              <InputItem
+                onChange={this.onChange}
+                clear
+                key={`password${index}`}
+                placeholder="请输入提取密码(若无密码可不填)"
+                {...getFieldProps(`password${item}`)}
+              >提取密码</InputItem>
+              <Button
+                onClick={() => this.deleteInput(item)}
+                style={{width: '100%', margin: '0px auto'}}
+              >删除该项</Button>
+            </div>))}
           </List>
           <Button
             onClick={this.submit}

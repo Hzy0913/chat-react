@@ -25,8 +25,6 @@ class Subject extends Component {
   render() {
     const {subjects = []} = this.props;
     const subjectsProgaess = store.get('subjects') || {};
-    console.log(subjectsProgaess);
-    console.log(subjects);
     return (
       <QueueAnim>
         <div key="animate" style={{paddingTop: 20}}>
@@ -39,7 +37,13 @@ class Subject extends Component {
               <div className="subject-item-top">
                 <div className="progress">
                   <p className="progress-text">{(subjectsProgaess[item._id] || 0).toFixed(2)}%</p>
-                  <Circle percent={subjectsProgaess[item._id] || 0} trailColor="rgb(236, 236, 236)" trailWidth="6" strokeWidth="6" strokeColor="rgb(63, 199, 250)" />
+                  <Circle
+                    percent={subjectsProgaess[item._id] || 0}
+                    trailColor="rgb(236, 236, 236)"
+                    trailWidth="6"
+                    strokeWidth="6"
+                    strokeColor="rgb(63, 199, 250)"
+                  />
                 </div>
                 <div className="subject-item-content">
                   <h1 className="subject-item-title">{item.title}</h1>

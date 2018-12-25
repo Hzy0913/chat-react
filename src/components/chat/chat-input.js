@@ -62,7 +62,6 @@ export default class ChatInput extends Component {
   submit = (e) => {
     const {userInfo, sendMessage} = this.props;
     const {textarea} = this.state;
-    console.log(textarea);
     const data = {
       value: textarea,
       timestamp: new Date().getTime(),

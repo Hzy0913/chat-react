@@ -31,7 +31,6 @@ class Main extends Component {
     this.visibleTab(path);
     this.context.router.history.listen((route) => {
       const {pathname} = route;
-      console.log(pathname);
       this.setState({selectedTab: ((pathname || '').split('/')[1] || '')});
       this.visibleTab(pathname);
     });
@@ -95,7 +94,11 @@ class Main extends Component {
             icon={<i className="iconfont icon-xiaoxi" {...iconSizeChat} />}
             selectedIcon={<i className="iconfont icon-xiaoxi" {...iconSizeChat} />}
             selected={selectedTab === 'chat'}
-            onPress={() => this.handleTabBar('chat')}
+            onPress={() => {
+              const {id} = store.get('user') || store.get('visitor') || {};
+              const route = id ? 'chat' : 'login-chat';
+              this.handleTabBar(route);
+            }}
           />
           <TabBar.Item
             title="我的"

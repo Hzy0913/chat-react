@@ -32,9 +32,10 @@ window.axios.interceptors.response.use(
     if (error) {
       Toast.fail(error);
     }
-    if (err.response.status === 403) {
-      localStore.remove('user');
+    if ([403, 401].includes(err.response.status)) {
+      localStore.get('user') && localStore.remove('user');
     }
+    return Promise.reject(err);
   }
 );
 ReactDOM.render(<Root />, document.getElementById('app'));

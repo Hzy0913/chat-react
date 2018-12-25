@@ -38,7 +38,7 @@ class Chat extends Component {
     timestamp: new Date().getTime()
   }
   componentWillMount() {
-    window.socket = io('ws://localhost:9000');
+    window.socket = io('ws://localhost:8989');
     const {name} = store.get('user') || {};
     const {name: visitorName} = store.get('visitor') || {};
     const {auth: {currentCount, chatList} = {}} = this.props;
@@ -66,12 +66,9 @@ class Chat extends Component {
     }
   }
   selectEmoje = (value) => {
-    console.log(value, '头像被选');
-    // this.setState({inputValue: `${inputValue}${value}`});
     this.refs.chatInput.inputFocus();
   }
   textareaChange = (inputValue = '') => {
-    console.log(inputValue);
     this.setState({inputValue});
   }
   getChatList = (page) => {
@@ -167,7 +164,6 @@ class Chat extends Component {
     this.refs.chatInput.inputFocus();
   }
   sendMessage = (v) => {
-    console.log(v);
     const {value} = v;
     if (!value) return;
     const {messages} = this.state;
