@@ -7,8 +7,7 @@
   "scripts": {
     "start": "webpack-dev-server --config build/dev.js",
     "dev": "npm start",
-    "build": "node build/build.js",
-    "publish": "cnpm i && npm run build"
+    "build": "node build/build.js"
   },
   "dependencies": {
     "antd": "^3.5.3",
