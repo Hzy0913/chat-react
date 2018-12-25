@@ -1,4 +1,4 @@
 const DevTools = {};
-DevTools.instrument = () => null;
+DevTools.instrument = () => () => null;
 
 export default DevTools;
