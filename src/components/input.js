@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Icon, Card, Avatar, Col, Row} from 'antd';
 import {bindActionCreators} from 'redux';
 import * as authActions from '../redux/reduces/auth';
 
 import '../style/chat-style.css';
 
-const {Meta} = Card;
 
 
 class Input extends Component {

@@ -9,11 +9,6 @@ import Home from '../containers/home';
 import Login from '../containers/login';
 import Main from '../containers/main';
 import NotFound from '../containers/notfound';
-import Img from '../containers/img';
-import Svg from '../containers/svg';
-import Icon from '../containers/icon';
-import User from '../containers/user';
-import List from '../containers/dev';
 import Course from '../containers/course';
 import My from '../containers/my';
 import AarticleDetails from '../containers/article-details';
@@ -66,13 +61,6 @@ const Root = () => (
             <Router exact path="/message" component={Message} />
             <Router exact path="/login-chat" component={LoginChat} />
             <Router exact path="/chat" component={Chat} />
-            <Router path="/list" component={List} >
-              <Router exact path="/list/img" component={Img} />
-              <Router exact path="/list/svg" component={Svg} />
-              <Router exact path="/list/icon" component={Icon} />
-              <Redirect to="/list/img" />
-            </Router>
-            <Router exact path="/user" component={User} />
             <Route path="*" component={NotFound} />
           </Router>
         </Switch>
