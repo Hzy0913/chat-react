@@ -44,10 +44,10 @@ exports.cssLoaders = function (options) {
       })
     }
 
-    if (options.extract && loader) {
+    if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
-        fallback: loader + '-loader'
+        fallback: (loader || 'style') + '-loader'
       })
     } else {
       return [{loader: 'style-loader'}].concat(loaders)
