@@ -38,7 +38,7 @@ class Chat extends Component {
     timestamp: new Date().getTime()
   }
   componentWillMount() {
-    window.socket = io('http://localhost:8989');
+    window.socket = io('http://127.0.0.1:8989');
     const {name} = store.get('user') || {};
     const {name: visitorName} = store.get('visitor') || {};
     const {auth: {currentCount, chatList} = {}} = this.props;
