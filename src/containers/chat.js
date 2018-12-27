@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import store from 'store';
-import io from 'socket.io-client';
 import {Link, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {Popover} from 'antd-mobile';
@@ -38,7 +37,6 @@ class Chat extends Component {
     timestamp: new Date().getTime()
   }
   componentWillMount() {
-    window.socket = io('http://localhost');
     const {name} = store.get('user') || {};
     const {name: visitorName} = store.get('visitor') || {};
     const {auth: {currentCount, chatList} = {}} = this.props;

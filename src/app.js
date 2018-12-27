@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Toast} from 'antd-mobile';
 import browserHistory from 'react-router';
 import axios from 'axios';
+import io from 'socket.io-client';
 import localStore from 'store';
 import createHistory from 'history/createBrowserHistory';
 import Root from './router';
@@ -22,7 +23,7 @@ window.store = store;
 window.axios = axios.create({
   baseURL: '/api',
 });
-
+window.socket = io('http://m.binlive.cn');
 const liveid = (localStore.get('user') || {}).token || '';
 axios.defaults.headers.liveid = liveid; // axios headers token
 window.axios.interceptors.response.use(
