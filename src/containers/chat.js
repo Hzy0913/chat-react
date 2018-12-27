@@ -46,7 +46,14 @@ class Chat extends Component {
     } else if (currentCount && currentCount !== '') {
       this.getChatList(1);
     }
-    socket.on('connect', this.socketConnect);
+    if ((socket || {}).connected) {
+      this.socketConnect(true);
+    } else {
+      socket.on('connect', this.socketConnect);
+    }
+    socket.on('disconnect', (reason) => {
+      socket.off('connect', this.socketConnect);
+    });
   }
   componentDidMount() {
     setTimeout(() => {
@@ -62,6 +69,13 @@ class Chat extends Component {
     if (chatList && scrollTop) {
       this.refs.message.setScrollTop(scrollTop);
     }
+  }
+  componentWillUnmount() {
+    socket.off('user-join', this.userJoin);
+    socket.off('user-info', this.userInfo);
+    socket.off('current-count', this.currentCount);
+    socket.off('update-message', this.updateMessage);
+    socket.off('update-robot-message', this.updateMessage2);
   }
   selectEmoje = (value) => {
     this.refs.chatInput.inputFocus();
@@ -91,7 +105,7 @@ class Chat extends Component {
     this.setState({inputValue: `${inputValue}@Robot小冰 `});
     this.refs.chatInput.inputFocus();
   }
-  socketConnect = (e) => {
+  socketConnect = (connected) => {
     const {name, id} = store.get('user') || {};
     const {name: visitorName, id: visitorId} = store.get('visitor') || {};
     const userName = name || visitorName;
@@ -131,7 +145,7 @@ class Chat extends Component {
     this.setState({onlineNumber});
   }
   userJoin = (msg = {}) => {
-    const {type, onlineNumber, joinName} = msg;
+    const {type, onlineNumber, name: joinName} = msg;
     if (type === 'disconnect') {
       return this.setState({onlineNumber});
     }

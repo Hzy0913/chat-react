@@ -23,7 +23,8 @@ window.store = store;
 window.axios = axios.create({
   baseURL: '/api',
 });
-window.socket = io('http://m.binlive.cn:8989');
+const wsHost = __DEVELOPMENT__ ? 'localhost' : 'm.binlive.cn';
+window.socket = io(`http://${wsHost}:8989`);
 const liveid = (localStore.get('user') || {}).token || '';
 axios.defaults.headers.liveid = liveid; // axios headers token
 window.axios.interceptors.response.use(
