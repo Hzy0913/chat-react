@@ -7,6 +7,7 @@ import {TabBar} from 'antd-mobile';
 import {bindActionCreators} from 'redux';
 import * as authActions from '../redux/reduces/auth';
 
+let listener = null;
 @connect(
   state => ({auth: state.auth}),
   dispatch => bindActionCreators(authActions, dispatch)
@@ -29,11 +30,36 @@ class Main extends Component {
     this.setState({selectedTab: ((path || '').split('/')[1] || '')});
     if (!Lroute && token) OAuth();
     this.visibleTab(path);
-    this.context.router.history.listen((route) => {
+    listener = this.context.router.history.listen((route) => {
       const {pathname} = route;
+      this.changeTiele(pathname);
+      console.log(pathname);
       this.setState({selectedTab: ((pathname || '').split('/')[1] || '')});
       this.visibleTab(pathname);
     });
+  }
+  componentWillUnmount() {
+    listener();
+  }
+  changeTiele = (path) => {
+    const titles = {
+      '': 'Binlive',
+      course: '课程',
+      chat: 'Binlive',
+      my: '个人中心',
+      learned: '学习过的课程',
+      sign: '每日签到',
+      share: '分享换分',
+      subject: '测试题目',
+      seting: '设置',
+      message: '消息中心',
+      'login-chat': '聊天室登录',
+      'article-details': false
+    };
+    const [un, route] = path.split('/') || [];
+    if (!titles[route]) return;
+    document.documentElement.classList.remove('article-style');
+    document.title = titles[route];
   }
   visibleTab = (path = '') => {
     const hiddenRoute = ['learned', 'article-details', 'chat', 'login-chat'];

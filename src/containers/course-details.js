@@ -48,6 +48,7 @@ class ArticleDetails extends Component {
     const {learn = []} = store.get('user') || {};
     const learned = learn.find(item => item._id === id);
     axios.get(`/courseDetails/${id}`).then(res => {
+      document.title = (res.courseDetail || {}).title || 'Binlive';
       this.setState({course: res.courseDetail, learned: !!learned});
     });
   }

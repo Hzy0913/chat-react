@@ -36,8 +36,11 @@ export default class ArticleDetails extends Component {
     article: {}
   }
   componentDidMount() {
+    document.documentElement.classList.add('article-style');
+    document.title = 'Binlive';
     const {match: {params: {id} = {}} = {}} = this.props;
-    axios.get(`/articleDetails/${id}`).then(res => {
+    axios.get(`/articleDetails/${id}`).then((res = {}) => {
+      document.title = (res.articleDetails || {}).title || 'Binlive';
       this.setState({article: res.articleDetails});
     });
   }
@@ -63,12 +66,12 @@ export default class ArticleDetails extends Component {
     });
     const markHtml = marked(articleContent);
     return (
-      <QueueAnim>
+      <QueueAnim delay={200} duration={800}>
         <div key="1">
           <div className="detail-header">
             <h1>{title}</h1>
             <div className="detail-body-tag">
-              <div className="time">{dateFormat(new Date(date), 'yyyy-MM-dd')}</div>
+              <div className="time">{date && dateFormat(new Date(date), 'yyyy-MM-dd')}</div>
               {label.map(item => <span className="tag" key={item}>{item}</span>)}
             </div>
           </div>

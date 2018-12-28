@@ -25,8 +25,8 @@ class LoginChat extends Component {
     ]
   }
   componentDidMount() {
-    window.canvasdra = true;
-    canvasAnimation();
+    // window.canvasdra = true;
+    // canvasAnimation();
   }
   componentWillUnmount() {
     window.canvasdra = false;
@@ -57,7 +57,7 @@ class LoginChat extends Component {
       fadeInup, selectFadeInup, avatarList, selectIndex = ''
     } = this.state;
     return (
-      <div style={{width: '100%', height: '100%', backgroundColor: '#000'}} className="chat-login">
+      <div style={{width: '100%', height: '100%', backgroundColor: '#000', position: 'fixed'}} className="chat-login">
         <canvas style={{display: 'block'}} width="1024" height="1024" id="canvas" />
         <div className="iconfont icon-homefill back-home" onClick={this.returnBack}>返回</div>
         <div className={`chat-icon-item ${fadeInup ? 'fadeInUp' : ''}`} onClick={this.handleLogin}>

@@ -25,14 +25,19 @@ class Share extends Component {
     errors: []
   }
   componentDidMount() {
+    this.needLogin();
+    const {token} = store.get('user') || {};
+    const {userInfo} = this.props;
+    token && userInfo();
+  }
+  needLogin = () => {
     const {token} = store.get('user') || {};
     if (!token) {
       return alert('未登录', '您需要登录才可以进行分享操作？', [
+        {text: '取消'},
         {text: '去登录', onPress: () => this.props.history.push('/login')},
       ]);
     }
-    const {userInfo} = this.props;
-    token && userInfo();
   }
   onChange = (val, val2) => {
     // console.log(val);
@@ -63,6 +68,7 @@ class Share extends Component {
         };
         content.push(obj);
       }
+      if (this.needLogin()) return;
       alert('提醒', '您确认输入正确完成提交吗？', [
         {text: '取消'},
         {text: '确定', onPress: () => this.shareSave(content)},

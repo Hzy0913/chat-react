@@ -56,13 +56,14 @@ export default function reducer(state = initialState, action = {}) {
     case LOGIN_SUCCESS:
       const {user: Luser} = action.res || {};
       const {route} = action;
-      const {Ltoken = ''} = Luser;
+      const {token: Ltoken = ''} = Luser;
       store.set('user', Luser);
       axios.defaults.headers.liveid = Ltoken;
       return {
         ...state,
         user: Luser,
-        route
+        route,
+        requesting: false
       };
     case LOGIN_FAIL:
       return {

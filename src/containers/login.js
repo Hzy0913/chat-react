@@ -9,7 +9,7 @@ import {bindActionCreators} from 'redux';
 import * as authActions from '../redux/reduces/auth';
 
 @connect(
-  state => ({user: state.auth.user}),
+  state => ({user: state.auth.user, requesting: state.auth.requesting, requested: state.auth.requested}),
   dispatch => bindActionCreators(authActions, dispatch)
 )
 class Login extends Component {
@@ -22,9 +22,15 @@ class Login extends Component {
     router: PropTypes.object.isRequired
   };
   componentWillReceiveProps(nextProps) {
-    const {user} = nextProps;
+    const {user, requesting, requested} = nextProps;
+    console.log(requesting);
+    if (requesting) {
+      Toast.loading('登录中...', 4000);
+    }
     if (user) {
-      return this.context.router.history.push('/');
+      Toast.hide();
+      Toast.success('登录成功', 0.56);
+      setTimeout(() => this.context.router.history.push('/'), 600);
     }
   }
   handleSubmit = () => {

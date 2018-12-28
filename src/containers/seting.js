@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {createForm} from 'rc-form';
-import {Toast} from 'antd-mobile';
+import {Toast, Modal} from 'antd-mobile';
 import store from 'store';
 import {withRouter} from 'react-router-dom';
 import Mavatar from 'mavatar';
@@ -9,6 +9,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as authActions from '../redux/reduces/auth';
 
+const {alert} = Modal;
 let mavatar;
 @connect(
   state => ({auth: state.auth}),
@@ -40,6 +41,7 @@ class Seting extends Component {
         this.setState({avatarHide: false, uploadFile: true});
       }
     });
+    const {token: userToken} = store.get('user') || {};
     if (email && hash) {
       axios.post('regSuccess', {email, hash}).then(res => {
         Swal({
@@ -52,6 +54,11 @@ class Seting extends Component {
         store.set('user', user);
         axios.defaults.headers.liveid = token;
       });
+    } else if (!userToken) {
+      return alert('未登录', '您需要登录才可以进行修改操作？', [
+        {text: '返回', onPress: () => this.props.history.go(-1)},
+        {text: '去登录', onPress: () => this.props.history.push('/login')},
+      ]);
     }
   }
   componentWillReceiveProps(nextProps) {

@@ -20,6 +20,7 @@ export default class ArticleDetails extends Component {
     const {match: {params: {id} = {}} = {}} = this.props;
     axios.get(`/subject/${id}`).then(res => {
       const {content} = res;
+      document.title = (content || {}).title || 'Binlive';
       this.setState({content});
     });
     window.addEventListener('scroll', this.onScroll);

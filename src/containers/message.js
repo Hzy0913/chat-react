@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Modal} from 'antd-mobile';
+import store from 'store';
 import {bindActionCreators} from 'redux';
 import {dateFormat} from '../utils';
 import * as authActions from '../redux/reduces/auth';
+
+const {alert} = Modal;
 
 @connect(
   state => ({auth: state.auth}),
@@ -10,6 +14,13 @@ import * as authActions from '../redux/reduces/auth';
 )
 class Message extends Component {
   componentDidMount() {
+    const {id} = store.get('user') || {};
+    if (!id) {
+      return alert('您还未登录', '是否前往登录?', [
+        {text: '取消'},
+        {text: '确定', onPress: () => this.props.history.push('/login')},
+      ]);
+    }
     axios.get('/readMessage').then(res => {
       const {status} = res;
       if (status === 1) {

@@ -3,17 +3,19 @@ import {connect} from 'react-redux';
 import store from 'store';
 import {Button, Modal} from 'antd-mobile';
 import QueueAnim from 'rc-queue-anim';
+import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import Calendar from 'react-calendar';
 import {next, prev} from '../assets/svgs';
-
 import * as courseActions from '../redux/reduces/course';
+
+const {alert} = Modal;
 
 @connect(
   state => ({course: state.course}),
   dispatch => bindActionCreators(courseActions, dispatch)
 )
-export default class ArticleDetails extends Component {
+class Sign extends Component {
   state = {
     now: new Date().setHours(0, 0, 0, 0),
     modal: false,
@@ -46,6 +48,12 @@ export default class ArticleDetails extends Component {
   }
   handleSign = () => {
     const {id} = store.get('user') || {};
+    if (!id) {
+      return alert('您还未登录', '是否前往登录?', [
+        {text: '取消', onPress: () => console.log('cancel')},
+        {text: '确定', onPress: () => this.props.history.push('/login')},
+      ]);
+    }
     axios.post('/auth/sign', {id}).then(res => {
       const {status} = res;
       if (status === 1) {
@@ -115,3 +123,6 @@ export default class ArticleDetails extends Component {
     );
   }
 }
+
+export default withRouter(Sign);
+
