@@ -10,6 +10,7 @@ import {ChatInput, Messages} from '../components/chat';
 import * as authActions from '../redux/reduces/auth';
 
 let pageNum = 1;
+const isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
 @connect(
   state => ({auth: state.auth}),
   dispatch => bindActionCreators(authActions, dispatch)
@@ -78,7 +79,8 @@ class Chat extends Component {
     socket.off('update-robot-message', this.updateMessage2);
   }
   selectEmoje = (value) => {
-    this.refs.chatInput.inputFocus();
+    console.log(isMobile);
+    !isMobile && this.refs.chatInput.inputFocus();
   }
   textareaChange = (inputValue = '') => {
     this.setState({inputValue});
