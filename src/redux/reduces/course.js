@@ -62,36 +62,3 @@ export function getAllSubject() {
     promise: axios.get('/subject')
   };
 }
-
-// export function register(user, pass) {
-//   return {
-//     types: [REGISTER, REGISTER_SUCCESS, REGISTER_FAIL],
-//     promise: axios.post('/auth/register', {user, pass})
-//   };
-// }
-//
-// export function logout() {
-//   return {
-//     types: [LOGOUT, LOGOUT_SUCCESS],
-//     promise: axios.post('/auth/logout')
-//   };
-// }
-//
-// export function emptyStatu() {
-//   return {
-//     type: EMPTYSTATU
-//   };
-// }
-//
-// export function getuser() {
-//   return {
-//     types: [GETUSER, GETUSER_SUCCESS],
-//     promise: axios.get('/api/getuser')
-//   };
-// }
-// export function test2() {
-//   return {
-//     type: TEST2,
-//     text: '一些传值数据'
-//   };
-// }

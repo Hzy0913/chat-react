@@ -5,8 +5,6 @@ import * as authActions from '../redux/reduces/auth';
 
 import '../style/chat-style.css';
 
-
-
 class Input extends Component {
   state = {
   }

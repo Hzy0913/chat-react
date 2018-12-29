@@ -51,7 +51,6 @@ class Home extends Component {
   render() {
     const bannerListDefault = [{bannerurl: bannerDefault}];
     const {home: {articleList = [], bannerList = []} = {}} = this.props;
-    const bannerFilter = bannerList.filter(v => v._id !== '59f1934f71811c2a26b3522e') || [];
     const row = (rowData, sectionID, rowID) => (
       <div key={rowID} style={{padding: '0 15px'}}>
         1231231231
@@ -73,7 +72,7 @@ class Home extends Component {
       <div>
         <div className="swiper-container">
           <div className="swiper-wrapper">
-            {bannerFilter.map((val, index) => (
+            {bannerList.map((val, index) => (
               <div
                 className="swiper-slide banner"
                 key={val.bannerurl}
