@@ -9,8 +9,6 @@ import * as authActions from '../redux/reduces/auth';
 import * as homeActions from '../redux/reduces/home';
 import Artiidcle from '../components/article';
 
-import bannerDefault from '../assets/banner-default.png';
-
 let mySwiper;
 
 @connect(
@@ -49,7 +47,6 @@ class Home extends Component {
     }
   }
   render() {
-    const bannerListDefault = [{bannerurl: bannerDefault}];
     const {home: {articleList = [], bannerList = []} = {}} = this.props;
     const row = (rowData, sectionID, rowID) => (
       <div key={rowID} style={{padding: '0 15px'}}>
