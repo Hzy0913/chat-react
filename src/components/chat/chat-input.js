@@ -34,9 +34,10 @@ export default class ChatInput extends Component {
     document.removeEventListener('click', this.hidePopup, true);
   }
   hidePopup = (e) => {
+    console.log(e);
     const {target: {className, id}} = e;
     console.log(className);
-    if (['emoji-item', 'emoji-icon-img'].includes(className) || id === 'emoji-picker-content-warpper') return;
+    if (['emoji-item', 'emoji-icon-img', 'emoji-item-content'].includes(className) || id === 'emoji-picker-content-warpper') return;
     this.setState({visible: false});
   }
   visiblePopup = (e) => {
@@ -107,7 +108,7 @@ export default class ChatInput extends Component {
                   key={v.text}
                   className="emoji-item"
                   onClick={(e) => { this.selectEmoje(v); }}
-                ><img src={v.url} /></div>))}
+                ><img src={v.url} className="emoji-item-content" /></div>))}
               {showEmoji && emojiContent.map(v =>
                 (<div
                   key={v.text}
