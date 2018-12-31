@@ -6,6 +6,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {Popover} from 'antd-mobile';
 import {ChatInput, Messages} from '../components/chat';
+import {emojis} from '../components/chat/icon';
 
 import * as authActions from '../redux/reduces/auth';
 
@@ -220,6 +221,7 @@ class Chat extends Component {
           </div>
         </div>
         <ChatInput
+          customEmoticon={emojis}
           sendMessage={this.sendMessage}
           userInfo={userInfo}
           placeholder="请输入内容..."

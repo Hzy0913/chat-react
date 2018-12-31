@@ -35,6 +35,7 @@ export default class ChatInput extends Component {
   }
   hidePopup = (e) => {
     const {target: {className, id}} = e;
+    console.log(className);
     if (['emoji-item', 'emoji-icon-img'].includes(className) || id === 'emoji-picker-content-warpper') return;
     this.setState({visible: false});
   }
@@ -46,8 +47,8 @@ export default class ChatInput extends Component {
   selectEmoje = ({text}, isEmoji) => {
     const {textarea} = this.state;
     const {emoji = [], selectEmoje, textareaChange} = this.props;
-    const emojiContent = [...emojiDefault, ...emoji];
     if (isEmoji) {
+      const emojiContent = [...emojiDefault, ...emoji];
       const {content} = emojiContent.find(item => item.text === text) || {};
       selectEmoje && selectEmoje(content);
       const valueContent = `${textarea}${content}`;
