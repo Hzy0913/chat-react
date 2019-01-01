@@ -50,7 +50,7 @@ class Sign extends Component {
     const {id} = store.get('user') || {};
     if (!id) {
       return alert('您还未登录', '是否前往登录?', [
-        {text: '取消', onPress: () => console.log('cancel')},
+        {text: '取消'},
         {text: '确定', onPress: () => this.props.history.push('/login')},
       ]);
     }

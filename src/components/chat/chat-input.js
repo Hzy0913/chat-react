@@ -2,17 +2,19 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {emojiIcon, submitIcon, emojis} from './icon';
 import {emojiDefault} from './emoji';
-import Popup from '../popup';
 import './style.css';
 
 export default class ChatInput extends Component {
   static propTypes = {
+    userInfo: PropTypes.object,
+    value: PropTypes.string,
     placeholder: PropTypes.string,
-    loading: PropTypes.bool,
-    scrolltoupper: PropTypes.func,
-    timestamp: PropTypes.number,
-    loader: PropTypes.node,
+    className: PropTypes.string,
+    textareaChange: PropTypes.func,
+    sendMessage: PropTypes.func,
+    selectEmoje: PropTypes.func,
     customEmoticon: PropTypes.array,
+    emoji: PropTypes.any
   };
   state = {
     visible: false,
@@ -21,22 +23,28 @@ export default class ChatInput extends Component {
   componentDidMount() {
     document.addEventListener('click', this.hidePopup, true);
   }
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const {textarea} = prevState;
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   const {textarea} = prevState;
+  //   const {value, textareaChange} = nextProps;
+  //   if (textarea !== value) {
+  //     textareaChange && textareaChange(value);
+  //     return {textarea: value};
+  //   }
+  //   return null;
+  // }
+  componentWillReceiveProps(nextProps) {
+    const {textarea} = this.state;
     const {value, textareaChange} = nextProps;
     if (textarea !== value) {
       textareaChange && textareaChange(value);
-      return {textarea: value};
+      this.setState({textarea: value});
     }
-    return null;
   }
   componentWillUnmount() {
     document.removeEventListener('click', this.hidePopup, true);
   }
   hidePopup = (e) => {
-    console.log(e);
     const {target: {className, id}} = e;
-    console.log(className);
     if (['emoji-item', 'emoji-icon-img', 'emoji-item-content'].includes(className) || id === 'emoji-picker-content-warpper') return;
     this.setState({visible: false});
   }
@@ -88,13 +96,13 @@ export default class ChatInput extends Component {
   render() {
     const {visible, textarea} = this.state;
     const {
-      placeholder, customEmoticon = [], emoji, value
+      placeholder, customEmoticon = [], emoji, value, className = ''
     } = this.props;
     const showEmoji = emoji !== false;
     const emojiContent = Array.isArray(emoji) ? [...emojiDefault, ...emoji] : emojiDefault;
     const inputValue = value || textarea;
     return (
-      <div className="chat-input-wrapper">
+      <div className={`chat-input-wrapper ${className}`}>
         <div className="emoji-box">
           <div
             id="emoji-picker-content-warpper"

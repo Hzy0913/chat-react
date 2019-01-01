@@ -1,3 +1,4 @@
+/* eslint-disable */
 const emojiDefault = [
   {text: 'smile', content: '😀'},
   {text: 'laugh', content: '😂'},
@@ -54,5 +55,4 @@ const emojiDefault = [
   {text: 'crown', content: '👑'},
   {text: 'kiss', content: '💋'},
 ];
-const def = '';
-export {emojiDefault, def};
+export {emojiDefault};

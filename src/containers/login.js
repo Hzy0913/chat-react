@@ -23,7 +23,6 @@ class Login extends Component {
   };
   componentWillReceiveProps(nextProps) {
     const {user, requesting, requested} = nextProps;
-    console.log(requesting);
     if (requesting) {
       Toast.loading('登录中...', 4000);
     }

@@ -21,6 +21,8 @@ const defaultStyle = {
   width: '100%',
   position: 'relative'
 };
+const localLanguage = (navigator.language || navigator.browserLanguage || '').toLowerCase();
+const isZh = ~localLanguage.indexOf('zh');
 
 const throttle = (function () {
   let _lastTime = null;
@@ -34,15 +36,20 @@ const throttle = (function () {
 }());
 export default class Messages extends Component {
   static propTypes = {
+    userInfo: PropTypes.object,
     dataSource: PropTypes.array,
-    loading: PropTypes.bool,
     scrolltoupper: PropTypes.func,
     avatarClick: PropTypes.func,
     unreadCountChange: PropTypes.func,
+    onScroll: PropTypes.func,
+    timeFormat: PropTypes.string,
     timestamp: PropTypes.number,
     timeBetween: PropTypes.number,
     timeagoMax: PropTypes.number,
-    loader: PropTypes.node
+    loading: PropTypes.bool,
+    loader: PropTypes.node,
+    noData: PropTypes.bool,
+    noDataEle: PropTypes.node
   };
   state = {
     betweenTime: 1000 * 60,
@@ -71,30 +78,54 @@ export default class Messages extends Component {
   setScrollTop = (value) => {
     this.refs['message-list-wrapper'].scrollTo(0, value);
   }
-  static getDerivedStateFromProps(nextProps, prevState) {
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   const {dataSource: nextDataSource = [], timestamp: nextTimestamp, unreadCountChange} = nextProps;
+  //   const {randerTimestamp: prevTimestamp} = prevState;
+  //   if (prevTimestamp !== nextTimestamp) {
+  //     const {timestamp: newDataSourceTimestamp} = nextDataSource[0] || {};
+  //     if (firstDataSourceTimestamp !== newDataSourceTimestamp) {
+  //       autoScroll = true;
+  //       firstDataSourceTimestamp = newDataSourceTimestamp;
+  //       return {randerTimestamp: nextTimestamp};
+  //     }
+  //     const {userInfo: {userId} = {}} = nextDataSource[nextDataSource.length - 1] || {};
+  //     const {userInfo: {userId: ownUserId} = {}} = nextProps;
+  //     if (userId === ownUserId) {
+  //       autoScroll = true;
+  //       return {randerTimestamp: nextTimestamp};
+  //     }
+  //     if (!autoScroll) {
+  //       let {unreadCount} = prevState;
+  //       unreadCount += (nextDataSource.length - messageLength);
+  //       unreadCountChange && unreadCountChange(unreadCount);
+  //       return {unreadCount, randerTimestamp: nextTimestamp};
+  //     }
+  //   }
+  //   return null;
+  // }
+  componentWillReceiveProps(nextProps) {
     const {dataSource: nextDataSource = [], timestamp: nextTimestamp, unreadCountChange} = nextProps;
-    const {randerTimestamp: prevTimestamp} = prevState;
+    const {randerTimestamp: prevTimestamp} = this.state;
     if (prevTimestamp !== nextTimestamp) {
       const {timestamp: newDataSourceTimestamp} = nextDataSource[0] || {};
       if (firstDataSourceTimestamp !== newDataSourceTimestamp) {
         autoScroll = true;
         firstDataSourceTimestamp = newDataSourceTimestamp;
-        return {randerTimestamp: nextTimestamp};
+        return this.setState({randerTimestamp: nextTimestamp});
       }
       const {userInfo: {userId} = {}} = nextDataSource[nextDataSource.length - 1] || {};
       const {userInfo: {userId: ownUserId} = {}} = nextProps;
       if (userId === ownUserId) {
         autoScroll = true;
-        return {randerTimestamp: nextTimestamp};
+        return this.setState({randerTimestamp: nextTimestamp});
       }
       if (!autoScroll) {
-        let {unreadCount} = prevState;
+        let {unreadCount} = this.state;
         unreadCount += (nextDataSource.length - messageLength);
         unreadCountChange && unreadCountChange(unreadCount);
-        return {unreadCount, randerTimestamp: nextTimestamp};
+        this.setState({unreadCount, randerTimestamp: nextTimestamp});
       }
     }
-    return null;
   }
   shouldComponentUpdate(nextProps, nextState) {
     const {dataSource: nextDataSource, loading: nextLoading, timestamp: nextTimestamp} = nextProps;
@@ -139,15 +170,15 @@ export default class Messages extends Component {
     <span /><span /><span /><span /><span /><span /><span /><span />
   </div>)
   renderMessageList = (data = []) => {
-    // timeBetween ---- 分钟单位
-    // timeagoMax ----- 小时单位
-    const {timeBetween = 5, timeagoMax = (24 * 3)} = this.props;
+    const {timeBetween = 5, timeagoMax = 24, timeFormat} = this.props;
     messageLength = data.length;
     const {userInfo: {userId: ownUserId, avatar: ownAvatar, name: ownName} = {}} = this.props;
     let {maxTimeago, betweenTime} = this.state;
     const timeagoInstance = timeago();
     maxTimeago *= timeagoMax;
     betweenTime *= timeBetween;
+    const language = isZh ? 'zh_CN' : 'en_US';
+    const timeFormatString = timeFormat || (isZh ? 'MM月dd hh:mm' : 'MM-dd hh:mm');
     let startTimeStamp = 0;
     return data.map((item, itemIndex) => {
       const {
@@ -161,8 +192,8 @@ export default class Messages extends Component {
       let timeInfoNode = '';
       if ((timestamp - startTimeStamp) > betweenTime) {
         timeInfoNode = (new Date().getTime() - timestamp) < maxTimeago ?
-          <p className="time-info"><span>{timeagoInstance.format(timestamp, 'zh_CN')}</span></p> :
-          <p className="time-info"><span>{dateFormat(timestamp, 'MM月dd hh:mm')}</span></p>;
+          <p className="time-info"><span>{timeagoInstance.format(timestamp, language)}</span></p> :
+          <p className="time-info"><span>{dateFormat(timestamp, timeFormatString)}</span></p>;
       }
       startTimeStamp = timestamp;
       const concatChat = [];
@@ -188,12 +219,9 @@ export default class Messages extends Component {
       });
       let lastDomRef = {};
       if (!itemIndex) {
-        //第一个元素
         if (!firstDom) {
-          // firstDom 为空时 第一次render
           firstDom = timestamp;
         } else if ((firstDom !== timestamp)) {
-          // 执行了unshift操作
           const unshiftLastIndex = (data.findIndex(v => v.timestamp === firstDom)) - 1;
           unshiftLastTimestamp = (data[unshiftLastIndex] || {}).timestamp;
           isUnShift = true;
@@ -228,9 +256,9 @@ export default class Messages extends Component {
     });
   }
   render() {
-    const {dataSource = [], loading = false, loader, noData, className = '', style = defaultStyle} = this.props;
+    const {dataSource = [], loading = false, loader, noData, noDataEle, className = '', style = defaultStyle} = this.props;
     const {unreadCount} = this.state;
-    const noDataElement = typeof noData === 'object' ? noData : <p className="noData-tips">没有更多数据了</p>;
+    const noDataElement = noDataEle || (<p className="noData-tips">{isZh ? '没有更多数据了' : 'no more data'}</p>);
     return (
       <div className={`massage-container ${className}`} style={style}>
         <div className="message-list-wrapper" ref="message-list-wrapper">

@@ -2,13 +2,13 @@
 export function dateFormat(time, format) {
   time = new Date(time);
   const o = {
-    'M+': time.getMonth() + 1, //month
-    'd+': time.getDate(), //day
-    'h+': time.getHours(), //hour
-    'm+': time.getMinutes(), //minute
-    's+': time.getSeconds(), //second
-    'q+': Math.floor((time.getMonth() + 3) / 3), //quarter
-    'S': time.getMilliseconds() //millisecond
+    'M+': time.getMonth() + 1,
+    'd+': time.getDate(),
+    'h+': time.getHours(),
+    'm+': time.getMinutes(),
+    's+': time.getSeconds(),
+    'q+': Math.floor((time.getMonth() + 3) / 3),
+    'S': time.getMilliseconds()
   };
   if (/(y+)/.test(format)) {
     format = format.replace(RegExp.$1, (time.getFullYear() + '').substr(4 - RegExp.$1.length));

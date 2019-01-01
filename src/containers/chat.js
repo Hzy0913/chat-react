@@ -80,8 +80,7 @@ class Chat extends Component {
     socket.off('update-robot-message', this.updateMessage2);
   }
   selectEmoje = (value) => {
-    console.log(isMobile);
-    !isMobile && this.refs.chatInput.inputFocus();
+    !isMobile && this.chatInput.inputFocus();
   }
   textareaChange = (inputValue = '') => {
     this.setState({inputValue});
@@ -106,7 +105,6 @@ class Chat extends Component {
   robotClick = () => {
     const {inputValue = ''} = this.state;
     this.setState({inputValue: `${inputValue}@Robot小冰 `});
-    this.refs.chatInput.inputFocus();
   }
   socketConnect = (connected) => {
     const {name, id} = store.get('user') || {};
@@ -176,7 +174,6 @@ class Chat extends Component {
     if (userId.toString() === id.toString()) return;
     const {inputValue = ''} = this.state;
     this.setState({inputValue: `${inputValue}@${name} `});
-    this.refs.chatInput.inputFocus();
   }
   sendMessage = (v) => {
     const {value} = v;
@@ -228,7 +225,8 @@ class Chat extends Component {
           value={inputValue}
           selectEmoje={this.selectEmoje}
           textareaChange={this.textareaChange}
-          ref="chatInput"
+          ref={el => this.chatInput = el}
+          className="chat-input"
         />
         <Messages
           style={{height: '100%', width: '100%', position: 'fixed', padding: '46px 0px 52px 0px'}}
@@ -239,8 +237,10 @@ class Chat extends Component {
           loading={this.state.loading}
           userInfo={userInfo}
           noData={noData}
+          noDataEle={12312312}
           onScroll={this.onScroll}
           timeagoMax={24}
+          timeFormat="yyyy-MM-dd hh:mm"
           ref="message"
         />
       </div>

@@ -33,7 +33,6 @@ class Main extends Component {
     listener = this.context.router.history.listen((route) => {
       const {pathname} = route;
       this.changeTiele(pathname);
-      console.log(pathname);
       this.setState({selectedTab: ((pathname || '').split('/')[1] || '')});
       this.visibleTab(pathname);
     });
