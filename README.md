@@ -1,3 +1,19 @@
+![chat-react](https://raw.githubusercontent.com/Hzy0913/hanlibrary/master/chat-react.gif "chat-react")
+### Usage
+
+ - Install
+
+```bash
+npm install chat-react
+```
+ - Import
+
+```js
+import { ChatInput, Messages} from 'chat-react';
+```
+
+ - usage
+
 #### ChatInput component
 | prop & func  | type  | description   |
 | ------------ | ------------ | ------------ |
@@ -78,5 +94,5 @@ const customEmoticon = [{
     value: "😀"
 }]
 ```
- - `timestamp`
-
+ - `timestamp`  this parameter needs to be set to the current timestamp when the data of **dataSource** param has changes.
+ - `timeFormat` formatting times, such as display 2019-2-1 20:20 set to yyyy-MM-dd hh:mm.
