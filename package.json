@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Hzy0913/chat-react/issues"
   },
-  "homepage": "https://github.com/Hzy0913/chat-react#readme"
+  "homepage": "https://github.com/Hzy0913/chat-react#readme",
+  "dependencies": {
+    "timeago.js": "^4.0.0-beta.2"
+  }
 }
