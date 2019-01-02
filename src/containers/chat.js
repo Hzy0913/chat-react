@@ -5,7 +5,7 @@ import store from 'store';
 import {Link, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {Popover} from 'antd-mobile';
-import {ChatInput, Messages} from '../components/chat';
+import {ChatInput, Messages} from 'chat-react';
 import {emojis} from '../components/chat/icon';
 
 import * as authActions from '../redux/reduces/auth';
