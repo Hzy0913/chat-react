@@ -8,15 +8,13 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const NODE_ENV = process.env.NODE_ENV;
 console.log(NODE_ENV)
 module.exports = {
-  // entry: {
-  //   'smallButton': './smallButton'
-  // },
+  // entry: {'chat': './src/index'},
   entry: NODE_ENV === 'production' ? path.resolve(__dirname, 'src/index.js') : path.resolve(__dirname, 'app.js'),
   output: {
     path: path.join(__dirname, 'dist'),
     filename: "main.js",
-    libraryTarget: 'commonjs2',
-    library: 'ReactChatElements',
+    // libraryTarget: 'commonjs2',
+    // library: 'ReactChatElements',
   },
   // output: {
   //   path: path.resolve(__dirname, 'lib'),

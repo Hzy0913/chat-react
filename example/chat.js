@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 // import {ChatInput, Messages} from '../src';
-import {SmallButton} from '../dist/main';
-console.log(SmallButton)
+import ChatInput from '../dist/main';
+// import ChatInput from '../src';
+console.log(ChatInput)
 
-const isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
+// const isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
 
 export default class Chat extends Component {
   // state = {
@@ -131,8 +132,7 @@ export default class Chat extends Component {
     // const {name: joinName} = joinUser;
     return (
       <div className="chat-box">
-        <SmallButton />
-        123123
+        <ChatInput />
       </div>
     );
   }

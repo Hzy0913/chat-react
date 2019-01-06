@@ -5,17 +5,6 @@ import {emojiDefault} from './emoji';
 import './style.css';
 
 export default class ChatInput extends Component {
-  static propTypes = {
-    userInfo: PropTypes.object,
-    value: PropTypes.string,
-    placeholder: PropTypes.string,
-    className: PropTypes.string,
-    textareaChange: PropTypes.func,
-    sendMessage: PropTypes.func,
-    selectEmoje: PropTypes.func,
-    customEmoticon: PropTypes.array,
-    emoji: PropTypes.any
-  };
   state = {
     visible: false,
     textarea: ''
