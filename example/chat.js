@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-// import {ChatInput, Messages} from '../src';
-import ChatInput from '../dist/main';
-// import ChatInput from '../src';
-console.log(ChatInput)
+// import ChatReact from '../dist/main';
+import ChatReact from '../src';
 
 // const isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
 
@@ -125,14 +123,14 @@ export default class Chat extends Component {
     //   inputValue, messages, timestamp, popoverVisible, joinUser = {}, onlineNumber = 1, noData,
     //   overlayNode
     // } = this.state;
-    // const userInfo = {
-    //   avatar: "http://img.binlive.cn/Fv0UOcmxAB7k_4JSWMzJLkgpZfUg",
-    //   userId: "59e454ea53107d66ceb0a598"
-    // };
+    const userInfo = {
+      avatar: "http://img.binlive.cn/Fv0UOcmxAB7k_4JSWMzJLkgpZfUg",
+      userId: "59e454ea53107d66ceb0a598"
+    };
     // const {name: joinName} = joinUser;
     return (
       <div className="chat-box">
-        <ChatInput />
+        <ChatReact userInfo={userInfo}/>
       </div>
     );
   }

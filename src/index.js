@@ -3,22 +3,43 @@ import ChatInput from './chat-input.js';
 import Message from './messages.js';
 
 export default class Chat extends React.Component {
-  static propTypes = {
-    userInfo: PropTypes.object,
-    value: PropTypes.string,
-    placeholder: PropTypes.string,
-    className: PropTypes.string,
-    textareaChange: PropTypes.func,
-    sendMessage: PropTypes.func,
-    selectEmoje: PropTypes.func,
-    customEmoticon: PropTypes.array,
-    emoji: PropTypes.any
-  };
   render() {
+    const {userInfo, value, placeholder, emoji, customEmoticon, textareaChange, selectEmoje,
+      inputFocus, dataSource, timestamp, timeBetween, timeagoMax, timeFormat, loading, loader,
+      noData, noDataEle, scrolltoupper, onScroll, avatarClick, unreadCountChange
+    } = this.props;
+    const inputProps = {
+      userInfo,
+      value,
+      placeholder,
+      emoji,
+      customEmoticon,
+      textareaChange,
+      selectEmoje,
+      inputFocus
+    };
+    const messageProps = {
+      userInfo,
+      dataSource,
+      emoji,
+      customEmoticon,
+      timestamp,
+      timestamp,
+      timeagoMax,
+      timeFormat,
+      loading,
+      loader,
+      noData,
+      noDataEle,
+      scrolltoupper,
+      onScroll,
+      avatarClick,
+      unreadCountChange
+    };
     return (
       <div>
-        <ChatInput/>
-        <Message/>
+        <ChatInput {...inputProps} />
+        <Message {...messageProps} />
       </div>
     );
   }
