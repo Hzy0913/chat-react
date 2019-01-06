@@ -2,10 +2,10 @@
   "name": "chat-react",
   "version": "0.0.1",
   "description": "chat-react component",
-  "main": "index.js",
+  "main": "lib/chat-react.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "build": "cross-env NODE_ENV=production webpack --mode production"
+    "start": "webpack-dev-server",
+    "build": "webpack --config webpack.prd.js"
   },
   "repository": {
     "type": "git",

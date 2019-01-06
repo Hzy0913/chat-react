@@ -6,13 +6,17 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const NODE_ENV = process.env.NODE_ENV;
-
 module.exports = {
-  mode: 'development',
-  entry: path.resolve(__dirname, 'app.js'),
+  mode: 'production',
+  entry: path.resolve(__dirname, 'src/index.js'),
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: "main.js",
+    path: path.join(__dirname, 'lib'),
+    filename: "chat-react.js",
+    libraryTarget: 'commonjs2',
+    library: 'ReactChatElements',
+  },
+  externals: {
+    react: 'react'
   },
   module: {
     rules: [
@@ -34,18 +38,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      hash: true,
-      template: './index.html',
-    }),
-    new webpack.HotModuleReplacementPlugin(), // 热更新插件
-  ],
-  devtool: 'inline-source-map', // map文件追踪错误提示
-  devServer: {                  // 启动本地开发的node服务器环境（webpack-dev-server）
-    port: 8080,                 // 端口
-    contentBase: './dist',      // 开发环境的服务目录
-    historyApiFallback: true,
-    inline: true,
-    hot: true,
-  },
+    new BundleAnalyzerPlugin()
+  ]
 };
