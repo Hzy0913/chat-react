@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import timeago from 'timeago.js';
+import {format} from 'timeago.js';
 import './style.css';
-import {emojis} from './icon';
 import {dateFormat} from './utils';
 import {errorIcon} from './icon';
 
@@ -149,7 +148,8 @@ export default class Messages extends Component {
     messageLength = data.length;
     const {userInfo: {userId: ownUserId, avatar: ownAvatar, name: ownName} = {}} = this.props;
     let {maxTimeago, betweenTime} = this.state;
-    const timeagoInstance = timeago();
+    // const timeagoInstance = timeago();
+    // console.log(timeagoInstance);
     maxTimeago *= timeagoMax;
     betweenTime *= timeBetween;
     const language = isZh ? 'zh_CN' : 'en_US';
@@ -167,7 +167,7 @@ export default class Messages extends Component {
       let timeInfoNode = '';
       if ((timestamp - startTimeStamp) > betweenTime) {
         timeInfoNode = (new Date().getTime() - timestamp) < maxTimeago ?
-          <p className="time-info"><span>{timeagoInstance.format(timestamp, language)}</span></p> :
+          <p className="time-info"><span>{format(timestamp, language)}</span></p> :
           <p className="time-info"><span>{dateFormat(timestamp, timeFormatString)}</span></p>;
       }
       startTimeStamp = timestamp;

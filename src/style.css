@@ -97,6 +97,10 @@
   min-height: 100%;
   border-radius: 5px;
   overflow: hidden;
+  box-sizing: border-box;
+}
+.chat-input-wrapper{
+  box-sizing: border-box;
 }
 .chat-input-wrapper .chat-input{
   width: 100%;
@@ -114,6 +118,8 @@
   background-color: #edf5f8;
   border: none;
   resize: none;
+  outline: none;
+  box-sizing: border-box;
 }
 .textareaPlaceholder{
   white-space:normal;
@@ -128,6 +134,8 @@
   font-size: 18px;
   max-height: 200px;
   padding: 0px 10px;
+  box-sizing: border-box;
+  margin: 0px;
 }
 .emoji-picker-content img{
   width: 100%;
@@ -200,6 +208,8 @@
   font-size: 18px;
   word-break: break-all;
   min-height: 36px;
+  margin: 0px;
+  box-sizing: border-box;
 }
 .message-item .message-item-content:before{
   content: '';
@@ -267,6 +277,7 @@
 .massage-container {
   position: relative;
   background-color: #f0f2f5;
+  box-sizing: border-box;
 }
 .message-list-wrapper {
   overflow: auto;
