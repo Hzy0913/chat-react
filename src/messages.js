@@ -102,7 +102,7 @@ export default class Messages extends Component {
     }
   }
   shouldComponentUpdate(nextProps, nextState) {
-    const {dataSource: nextDataSource, loading: nextLoading, timestamp: nextTimestamp} = nextProps;
+    const {dataSource: nextDataSource = [], loading: nextLoading, timestamp: nextTimestamp} = nextProps;
     const {dataSource, loading, timestamp} = this.props;
     const {unreadCount} = this.state;
     const {unreadCount: nextUnreadCount} = nextState;
@@ -148,8 +148,6 @@ export default class Messages extends Component {
     messageLength = data.length;
     const {userInfo: {userId: ownUserId, avatar: ownAvatar, name: ownName} = {}} = this.props;
     let {maxTimeago, betweenTime} = this.state;
-    // const timeagoInstance = timeago();
-    // console.log(timeagoInstance);
     maxTimeago *= timeagoMax;
     betweenTime *= timeBetween;
     const language = isZh ? 'zh_CN' : 'en_US';

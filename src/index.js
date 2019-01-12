@@ -4,7 +4,7 @@ import Message from './messages.js';
 
 export default class Chat extends React.Component {
   render() {
-    const {userInfo, value, placeholder, emoji, customEmoticon, textareaChange, selectEmoje,
+    const {className = '', style = {}, userInfo, value, placeholder, emoji, customEmoticon, textareaChange, selectEmoje, sendMessage,
       inputFocus, dataSource, timestamp, timeBetween, timeagoMax, timeFormat, loading, loader,
       noData, noDataEle, scrolltoupper, onScroll, avatarClick, unreadCountChange
     } = this.props;
@@ -16,7 +16,9 @@ export default class Chat extends React.Component {
       customEmoticon,
       textareaChange,
       selectEmoje,
-      inputFocus
+      inputFocus,
+      sendMessage,
+      ref: 'input'
     };
     const messageProps = {
       userInfo,
@@ -24,7 +26,7 @@ export default class Chat extends React.Component {
       emoji,
       customEmoticon,
       timestamp,
-      timestamp,
+      timeBetween,
       timeagoMax,
       timeFormat,
       loading,
@@ -34,10 +36,11 @@ export default class Chat extends React.Component {
       scrolltoupper,
       onScroll,
       avatarClick,
-      unreadCountChange
+      unreadCountChange,
+      ref: 'message'
     };
     return (
-      <div>
+      <div className={className} style={style}>
         <ChatInput {...inputProps} />
         <Message {...messageProps} />
       </div>

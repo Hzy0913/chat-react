@@ -349,6 +349,7 @@
   border-bottom-left-radius: 5px;
   background: #0a0a0a;
   position: absolute;
+  opacity: 0.2;
   -webkit-animation: load-animation 1.04s ease infinite;
 }
 @-webkit-keyframes load-animation{
