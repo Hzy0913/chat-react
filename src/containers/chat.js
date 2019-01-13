@@ -5,12 +5,11 @@ import store from 'store';
 import {Link, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {Popover} from 'antd-mobile';
-import ChatReact from 'chat-react';
+// import ChatReact from 'chat-react';
+import ChatReact from '../../lib/chat-react';
 import {emojis} from '../components/chat/icon';
 
 import * as authActions from '../redux/reduces/auth';
-
-console.log(emojis);
 
 let pageNum = 1;
 const isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);

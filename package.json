@@ -10,7 +10,6 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "antd": "^3.5.3",
     "antd-mobile": "^2.2.3",
     "axios": "^0.17.1",
     "chat-react": "^0.1.0",
@@ -18,6 +17,7 @@
     "marked": "^0.5.0",
     "mavatar": "^1.2.1",
     "photoswipe": "^4.1.2",
+    "rc-form": "^2.4.1",
     "rc-progress": "^2.2.6",
     "rc-queue-anim": "^1.6.10",
     "react": "^16.2.0",
