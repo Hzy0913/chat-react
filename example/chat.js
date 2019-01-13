@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-// import ChatReact from '../dist/main';
-import ChatReact from '../src';
+// import ChatReact from '../src';
+import ChatReact from '../lib/chat-react';
 // import {emojis} from '../components/chat/icon';
-
-// const isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
 
 export default class Chat extends Component {
   state = {

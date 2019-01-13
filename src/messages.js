@@ -144,7 +144,7 @@ export default class Messages extends Component {
     <span /><span /><span /><span /><span /><span /><span /><span />
   </div>)
   renderMessageList = (data = []) => {
-    const {timeBetween = 5, timeagoMax = 24, timeFormat} = this.props;
+    const {timeBetween = 5, timeagoMax = 24, timeFormat, customEmoticon = []} = this.props;
     messageLength = data.length;
     const {userInfo: {userId: ownUserId, avatar: ownAvatar, name: ownName} = {}} = this.props;
     let {maxTimeago, betweenTime} = this.state;
@@ -183,7 +183,7 @@ export default class Messages extends Component {
           case 'text':
             return chatValue;
           case 'emoji':
-            const {url} = chatValue && emojis.find(emv => emv.text === chatValue) || {};
+            const {url} = chatValue && customEmoticon.find(emv => emv.text === chatValue) || {};
             return url ? <img key={index} src={url} className="message-content-emoji" /> :
               `[${chatValue}]`;
           default:
