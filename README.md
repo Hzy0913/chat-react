@@ -1,3 +1,5 @@
+## Chat-React
+##### chat component for react.  [中文文档](https://github.com/Hzy0913/chat-react/blob/master/README_zh.md "中文文档")
 ![chat-react](https://raw.githubusercontent.com/Hzy0913/hanlibrary/master/chat-react.gif "chat-react")
 ### Usage
 
@@ -9,23 +11,80 @@ npm install chat-react
  - Import
 
 ```js
-import { ChatInput, Messages} from 'chat-react';
+import Chat from 'chat-react';
 ```
 
  - usage
 
-#### ChatInput component
+```js
+export default class MyChat extends Component {
+  state = {
+    inputValue: '',
+    messages: [],
+    timestamp: new Date().getTime()
+  }
+  setInputfoucs = () => {
+    this.chat.refs.input.inputFocus();  //set input foucus
+  }
+  setScrollTop = () => {
+    this.chat.refs.message.setScrollTop(1200);  //set scrollTop position
+  }
+  sendMessage = (v) => {
+    const {value} = v;
+    if (!value) return;
+    const {messages = []} = this.state;
+    messages.push(v);
+    this.setState({messages, timestamp: new Date().getTime(), inputValue: ''});
+  }
+  render() {
+    const {inputValue, messages, timestamp} = this.state;
+    const userInfo = {
+      avatar: "http://img.binlive.cn/6.png",
+      userId: "59e454ea53107d66ceb0a598",
+      name: 'ricky'
+    };
+    return (
+      <Chat
+        ref={el => this.chat = el}
+        className="my-chat-box"
+        dataSource={messages}
+        userInfo={userInfo}
+        value={inputValue}
+        sendMessage={this.sendMessage}
+        timestamp={timestamp}
+        placeholder="write some thing..."
+        messageListStyle={{width: '100%', height: window.outerHeight}}
+      />
+    );
+  }
+}
+```
+#### API
 | prop & func  | type  | description   |
 | ------------ | ------------ | ------------ |
-| userInfo  | object  | userinfo of sent the message  |
+| userInfo  | object  | info of current user  |
 |  value | string  | the message of input content     |
-|  placeholder | string  |  placeholders for input box      |
+|  placeholder | string  |  placeholder for input box      |
 |  emoji | any  |   define content of the emoji     |
 |  customEmoticon | array  |  customized emoticon      |
 |  textareaChange | (value) => {}  |   callback function when the content of input box changes. the first function parameter is current input value      |
 |  selectEmoje | (emojeInfo) => {}   |   callback function after select a emoje. the first function parameter is selected emoje info          |
-|  inputFocus | func  |  method of component, set input focus        |
-##### param description of ChatInput component
+|  inputFocus | func  |  method of input child component, set input focus. `this.chat.refs.input.inputFocus()`          |
+|  dataSource | array  |  data content of message list      |
+|  timestamp | number  |    timestamp to be set when dataSource changes     |
+|  timeBetween | number  |   how many time between show time prompts (unit: min, default: 5)    |
+|  timeagoMax | number  |   time range of the show timeago  (unit: hour, default: 24)    |
+|   timeFormat  | string  |  custom format time (yyyy-MM-dd hh:mm)    |
+|  loading | bool  |  is the dataSource loading   |
+|  loader | node  |  custom loader      |
+|  noData | bool  |  whether has no more data      |
+|  noDataEle | node  |  custom dom node displayed when there is no more data      |
+|  scrolltoupper | func  |   callback function when the  scroll bar of message list to the top     |
+|  onScroll | func  |   callback function when the  scroll bar change    |
+|  avatarClick | func  |   callback function user to click the avatar     |
+|  unreadCountChange | func  |   callback function when the unread message has change     |
+|  setScrollTop | func  |  method of message child component, set scroll bar position.  `this.chat.refs.message.setScrollTop(1200)`        |
+##### the param description of component
  - `userInfo` you must to be define **userId** and **avatar** for this param, and you can also add some attributes if you need.
  ```javascript
 userInfo = {
@@ -52,28 +111,6 @@ customEmoticon = [
 	{text: 'weep', url: 'data:image/png;base64,iVBORw0KGgoA...'}
 ]
 ```
- - `inputFocus` set input box focus
-
-#### Messages component
-| prop & func  | type  | description   |
-| ------------ | ------------ | ------------ |
-| userInfo  | object  | userinfo of the message lists (It's the same as userInfo param of ChatInput component) |
-|  dataSource | array  |  data content of message list      |
-|  timestamp | number  |    timestamp to be set when dataSource changes     |
-|  timeBetween | number  |   how many time between show time prompts (unit: min, default: 5)    |
-|  timeagoMax | number  |   time range of the show timeago  (unit: hour, default: 24)    |
-|   timeFormat  | string  |  custom format time (yyyy-MM-dd hh:mm)    |
-|  loading | bool  |  is the dataSource loading   |
-|  loader | node  |  custom loader      |
-|  noData | bool  |  whether has no more data      |
-|  noDataEle | node  |  custom dom node displayed when there is no more data      |
-|  scrolltoupper | func  |   callback function when the  scroll bar of message list to the top     |
-|  onScroll | func  |   callback function when the  scroll bar change    |
-|  avatarClick | func  |   callback function user to click the avatar     |
-|  unreadCountChange | func  |   callback function when the unread message has change     |
-|  setScrollTop | func  |  method of component, set scroll bar position        |
-##### param description of Messages component
- - `userInfo`  the usage of this parameter is consistent with that of ChatInput component.
  - `dataSource`  data source of message list, the data format is as follows:
 ```javascript
 const customEmoticon = [{
