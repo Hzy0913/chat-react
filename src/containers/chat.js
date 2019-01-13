@@ -5,10 +5,12 @@ import store from 'store';
 import {Link, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {Popover} from 'antd-mobile';
-import {ChatInput, Messages} from 'chat-react';
+import ChatReact from 'chat-react';
 import {emojis} from '../components/chat/icon';
 
 import * as authActions from '../redux/reduces/auth';
+
+console.log(emojis);
 
 let pageNum = 1;
 const isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
@@ -80,7 +82,7 @@ class Chat extends Component {
     socket.off('update-robot-message', this.updateMessage2);
   }
   selectEmoje = (value) => {
-    !isMobile && this.chatInput.inputFocus();
+    !isMobile && this.chat.refs.input.inputFocus();
   }
   textareaChange = (inputValue = '') => {
     this.setState({inputValue});
@@ -217,7 +219,8 @@ class Chat extends Component {
             <span>{onlineNumber}</span>
           </div>
         </div>
-        <ChatInput
+        <ChatReact
+          messageListStyle={{height: '100%', width: '100%', position: 'fixed', padding: '46px 0px 52px 0px'}}
           customEmoticon={emojis}
           sendMessage={this.sendMessage}
           userInfo={userInfo}
@@ -225,23 +228,16 @@ class Chat extends Component {
           value={inputValue}
           selectEmoje={this.selectEmoje}
           textareaChange={this.textareaChange}
-          ref={el => this.chatInput = el}
-          className="chat-input"
-        />
-        <Messages
-          style={{height: '100%', width: '100%', position: 'fixed', padding: '46px 0px 52px 0px'}}
+          ref={el => this.chat = el}
           timestamp={timestamp}
           scrolltoupper={this.scrolltoupper}
           avatarClick={this.avatarClick}
           dataSource={messages}
           loading={this.state.loading}
-          userInfo={userInfo}
           noData={noData}
-          noDataEle={12312312}
           onScroll={this.onScroll}
           timeagoMax={24}
           timeFormat="yyyy-MM-dd hh:mm"
-          ref="message"
         />
       </div>
     );
