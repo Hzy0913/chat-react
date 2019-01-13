@@ -6,7 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const NODE_ENV = process.env.NODE_ENV;
-module.exports = {
+const prdWebpackConfig= {
   mode: 'production',
   entry: path.resolve(__dirname, 'src/index.js'),
   output: {
@@ -37,7 +37,11 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new BundleAnalyzerPlugin()
-  ]
+  plugins: []
 };
+
+if (NODE_ENV !== 'publish') {
+  prdWebpackConfig.plugins.push(new BundleAnalyzerPlugin())
+}
+
+module.exports = prdWebpackConfig;
