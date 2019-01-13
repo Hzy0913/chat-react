@@ -1,5 +1,7 @@
 ## Chat-React
 ##### chat component for react.  [中文文档](https://github.com/Hzy0913/chat-react/blob/master/README_zh.md "中文文档")
+![chat-react](https://raw.githubusercontent.com/Hzy0913/hanlibrary/master/chat-react.png "chat-react")
+#### Demonstration
 ![chat-react](https://raw.githubusercontent.com/Hzy0913/hanlibrary/master/chat-react.gif "chat-react")
 ### Usage
 
