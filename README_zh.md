@@ -1,6 +1,6 @@
 ## Chat-React
 ##### 基于react的聊天会话组件
-![chat-react](https://raw.githubusercontent.com/Hzy0913/hanlibrary/master/chat-react.png "chat-react")
+![chat-react](https://raw.githubusercontent.com/Hzy0913/hanlibrary/master/chat-react-350.png "chat-react")
 #### 演示
 ![chat-react](https://raw.githubusercontent.com/Hzy0913/hanlibrary/master/chat-react.gif "chat-react")
 #### 使用方法
@@ -72,6 +72,7 @@ export default class MyChat extends Component {
 |  selectEmoje | (emojeInfo) => {}   |   选择一个emoji后的回调函数，函数的第一个参数是选择的emoje内容信息   |
 |  inputFocus | func  |  子组件input的内置方法，用于设置input焦点  `this.chat.refs.input.inputFocus()`       |
 |  dataSource | array  |  消息列表的数据内容     |
+|  messageListStyle | object  |  消息列表的样式，需要为列表设置一个固定的高度     |
 |  timestamp | number  |   数据源发生变化时候设置的时间戳   |
 |  timeBetween | number  |   在指定时间间隔内显示时间提示(单位:分钟,默认值:5)    |
 |  timeagoMax | number  |   在指定时间范围内显示多长时间之前(单位:小时,默认值:24) |
@@ -133,5 +134,6 @@ const customEmoticon = [{
     error: true //设置消息状态为失败，显示错误状态图标
 }]
 ```
+ - `messageListStyle` 消息列表的容器样式，你必须为其设置一个固定的高度，保证其不会被内容撑开，例如`{width: '100%', height: 500}`
  - `timestamp` 当前**dataSource**的数据发生变化时候必须重新设置该参数为当前的时间戳
  - `timeFormat` 格式化时间参数，例如显示2019-2-1 20: 20设置为yyyy-MM-dd hh:mm

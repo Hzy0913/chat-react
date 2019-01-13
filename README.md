@@ -1,6 +1,6 @@
 ## Chat-React
 ##### chat component for react.  [中文文档](https://github.com/Hzy0913/chat-react/blob/master/README_zh.md "中文文档")
-![chat-react](https://raw.githubusercontent.com/Hzy0913/hanlibrary/master/chat-react.png "chat-react")
+![chat-react](https://raw.githubusercontent.com/Hzy0913/hanlibrary/master/chat-react-350.png "chat-react")
 #### Demonstration
 ![chat-react](https://raw.githubusercontent.com/Hzy0913/hanlibrary/master/chat-react.gif "chat-react")
 ### Usage
@@ -73,6 +73,7 @@ export default class MyChat extends Component {
 |  selectEmoje | (emojeInfo) => {}   |   callback function after select a emoje. the first function parameter is selected emoje info          |
 |  inputFocus | func  |  method of input child component, set input focus. `this.chat.refs.input.inputFocus()`          |
 |  dataSource | array  |  data content of message list      |
+|  messageListStyle | object  | message list container style，you need to set a fixed size  height for it.     |
 |  timestamp | number  |    timestamp to be set when dataSource changes     |
 |  timeBetween | number  |   how many time between show time prompts (unit: min, default: 5)    |
 |  timeagoMax | number  |   time range of the show timeago  (unit: hour, default: 24)    |
@@ -130,8 +131,10 @@ const customEmoticon = [{
         name: "游客1544365758856",
         userId: "1544365758856"
     },
-    value: "😀"
+    value: "😀",
+    error: true //set error is true，this message will be show error icon
 }]
 ```
+ - `messageListStyle` message list container style，you need to set a fixed size height for it,make sure it's not pushed up ， for example `{width: '100%', height: 500}`
  - `timestamp`  this parameter needs to be set to the current timestamp when the data of **dataSource** param has changes.
  - `timeFormat` formatting times, such as display 2019-2-1 20:20 set to yyyy-MM-dd hh:mm.
