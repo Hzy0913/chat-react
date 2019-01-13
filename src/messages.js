@@ -233,7 +233,7 @@ export default class Messages extends Component {
     const {unreadCount} = this.state;
     const noDataElement = noDataEle || (<p className="noData-tips">{isZh ? '没有更多数据了' : 'no more data'}</p>);
     return (
-      <div className={`massage-container ${className}`} style={{...messageListStyle, position: 'relative'}}>
+      <div className={`massage-container ${className}`} style={messageListStyle}>
         <div className="message-list-wrapper" ref="message-list-wrapper">
           {!noData && loading && <div className="message-loading">
             {loader || this.loaderContent()}
