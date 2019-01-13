@@ -17,8 +17,7 @@ let firstDataSourceTimestamp;
 
 const defaultStyle = {
   height: 500,
-  width: '100%',
-  position: 'relative'
+  width: '100%'
 };
 const localLanguage = (navigator.language || navigator.browserLanguage || '').toLowerCase();
 const isZh = ~localLanguage.indexOf('zh');
@@ -37,7 +36,8 @@ export default class Messages extends Component {
   static propTypes = {
     userInfo: PropTypes.object,
     dataSource: PropTypes.array,
-    scrolltoupper: PropTypes.func,
+    messageListStyle: PropTypes.object,
+    scrolltoUpper: PropTypes.func,
     avatarClick: PropTypes.func,
     unreadCountChange: PropTypes.func,
     onScroll: PropTypes.func,
@@ -60,10 +60,10 @@ export default class Messages extends Component {
   }
   onScroll = (e) => {
     const {target} = e;
-    const {loading, scrolltoupper, noData, onScroll} = this.props;
+    const {loading, scrolltoUpper, noData, onScroll} = this.props;
     const {unreadCount} = this.state;
     if (target.scrollTop === 0 && !loading && !noData) {
-      scrolltoupper && scrolltoupper();
+      scrolltoUpper && scrolltoUpper();
     }
     onScroll && throttle(onScroll, target.scrollTop, 100);
     const scrollBottom = target.scrollHeight - target.clientHeight - target.scrollTop;
@@ -229,11 +229,11 @@ export default class Messages extends Component {
     });
   }
   render() {
-    const {dataSource = [], loading = false, loader, noData, noDataEle, className = '', style = defaultStyle} = this.props;
+    const {dataSource = [], loading = false, loader, noData, noDataEle, className = '', messageListStyle = defaultStyle} = this.props;
     const {unreadCount} = this.state;
     const noDataElement = noDataEle || (<p className="noData-tips">{isZh ? '没有更多数据了' : 'no more data'}</p>);
     return (
-      <div className={`massage-container ${className}`} style={style}>
+      <div className={`massage-container ${className}`} style={{...messageListStyle, position: 'relative'}}>
         <div className="message-list-wrapper" ref="message-list-wrapper">
           {!noData && loading && <div className="message-loading">
             {loader || this.loaderContent()}
