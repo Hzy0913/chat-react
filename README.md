@@ -82,7 +82,7 @@ export default class MyChat extends Component {
 |  loader | node  |  custom loader      |
 |  noData | bool  |  whether has no more data      |
 |  noDataEle | node  |  custom dom node displayed when there is no more data      |
-|  scrolltoupper | func  |   callback function when the  scroll bar of message list to the top     |
+|  scrolltoUpper | func  |   callback function when the  scroll bar of message list to the top     |
 |  onScroll | func  |   callback function when the  scroll bar change    |
 |  avatarClick | func  |   callback function user to click the avatar     |
 |  unreadCountChange | func  |   callback function when the unread message has change     |

@@ -81,7 +81,7 @@ export default class MyChat extends Component {
 |  loader | node  |  自定义加载器     |
 |  noData | bool  |  是否没有更多的数据了   |
 |  noDataEle | node  |  当没有更多的数据时显示自定义的元素节点      |
-|  scrolltoupper | func  |  滚动条滚动到顶部时触发的回调函数  |
+|  scrolltoUpper | func  |  滚动条滚动到顶部时触发的回调函数  |
 |  onScroll | func  |   当滚动条滚动时触发的回调函数    |
 |  avatarClick | (value) => {}  |  用户点击头像触发的回调函数, 参数value为被点击用户信息     |
 |  unreadCountChange | func  |  未读消息变化时的回调函数   |
