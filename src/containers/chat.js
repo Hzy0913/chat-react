@@ -5,8 +5,7 @@ import store from 'store';
 import {Link, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {Popover} from 'antd-mobile';
-// import ChatReact from 'chat-react';
-import ChatReact from '../../lib/chat-react';
+import ChatReact from 'chat-react';
 import {emojis} from '../components/chat/icon';
 
 import * as authActions from '../redux/reduces/auth';
@@ -229,7 +228,7 @@ class Chat extends Component {
           textareaChange={this.textareaChange}
           ref={el => this.chat = el}
           timestamp={timestamp}
-          scrolltoupper={this.scrolltoupper}
+          scrolltoUpper={this.scrolltoupper}
           avatarClick={this.avatarClick}
           dataSource={messages}
           loading={this.state.loading}
