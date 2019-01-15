@@ -25,7 +25,6 @@ const prdWebpackConfig= {
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
-      //{test: /\.js$/, use: 'eslint-loader', exclude: /node_modules/, enforce: 'pre'},
       {test: /\.css$/, loader: 'style-loader!css-loader'},
       {
         test: /\.(png|jpg|gif|svg)$/,  //对图片文件，使用 url-loader里的加载器处理

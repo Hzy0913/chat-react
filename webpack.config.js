@@ -21,7 +21,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
-      //{test: /\.js$/, use: 'eslint-loader', exclude: /node_modules/, enforce: 'pre'},
+      // {test: /\.js$/, use: 'eslint-loader', exclude: /node_modules/, enforce: 'pre'},
       {test: /\.css$/, loader: 'style-loader!css-loader'},
       {
         test: /\.(png|jpg|gif|svg)$/,  //对图片文件，使用 url-loader里的加载器处理
@@ -45,6 +45,7 @@ module.exports = {
     port: 8080,                 // 端口
     contentBase: './dist',      // 开发环境的服务目录
     historyApiFallback: true,
+    host: '0.0.0.0',
     inline: true,
     hot: true,
   },
