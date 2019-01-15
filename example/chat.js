@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-// import ChatReact from '../src';
-import ChatReact from '../lib/chat-react';
+import ChatReact from '../src';
+// import ChatReact from '../lib/chat-react';
 // import {emojis} from '../components/chat/icon';
 
 export default class Chat extends Component {
@@ -11,7 +11,7 @@ export default class Chat extends Component {
   foucss = () => {
     this.chat.refs.message.setScrollTop(1200);
   }
-  scrolltoupper = (v) => {
+  scrolltoUpper = (v) => {
     console.log(v);
   }
   onScroll = (v) => {
@@ -54,7 +54,7 @@ export default class Chat extends Component {
           // loading
           // noData
           // noDataEle={<div>无数据</div>}
-          scrolltoupper={this.scrolltoupper}
+          scrolltoUpper={this.scrolltoUpper}
           avatarClick={this.onScroll}
         />
       </div>

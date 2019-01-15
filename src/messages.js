@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {format} from 'timeago.js';
+import IScroll from 'iscroll';
 import './style.css';
 import {dateFormat} from './utils';
 import {errorIcon} from './icon';
@@ -56,6 +57,10 @@ export default class Messages extends Component {
     unreadCount: 0
   }
   componentDidMount() {
+    const myScroll = new IScroll('#massage-container', {
+      mouseWheel: true,
+      scrollbars: true
+    });
     this.refs['message-list-wrapper'].addEventListener('scroll', this.onScroll);
   }
   onScroll = (e) => {
@@ -233,7 +238,7 @@ export default class Messages extends Component {
     const {unreadCount} = this.state;
     const noDataElement = noDataEle || (<p className="noData-tips">{isZh ? '没有更多数据了' : 'no more data'}</p>);
     return (
-      <div className={`massage-container ${className}`} style={messageListStyle}>
+      <div className={`massage-container ${className}`} style={messageListStyle} id="massage-container">
         <div className="message-list-wrapper" ref="message-list-wrapper">
           {!noData && loading && <div className="message-loading">
             {loader || this.loaderContent()}
