@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack --config webpack.prd.js",
-    "prepublish": "NODE_ENV='publish' npm run build"
+    "prepublishOnly": "NODE_ENV='publish' npm run build"
   },
   "repository": {
     "type": "git",
@@ -23,10 +23,6 @@
     "url": "https://github.com/Hzy0913/chat-react/issues"
   },
   "homepage": "https://github.com/Hzy0913/chat-react#readme",
-  "peerDependencies": {
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
@@ -60,12 +56,10 @@
     "react-dom": "^16.7.0",
     "timeago.js": "^4.0.0-beta.2",
     "style-loader": "^0.23.1",
+    "iscroll": "^5.2.0",
     "webpack": "^4.28.3",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.14"
-  },
-  "dependencies": {
-    "iscroll": "^5.2.0"
   }
 }

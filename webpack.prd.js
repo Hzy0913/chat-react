@@ -1,8 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -12,11 +9,10 @@ const prdWebpackConfig= {
   output: {
     path: path.join(__dirname, 'lib'),
     filename: "chat-react.js",
-    libraryTarget: 'commonjs2',
-    library: 'ReactChatElements',
+    libraryTarget: 'commonjs2'  //模块输出方式
   },
   externals: {
-    react: 'react'
+    react: 'react' //打包时候排除react
   },
   module: {
     rules: [
@@ -27,11 +23,11 @@ const prdWebpackConfig= {
       },
       {test: /\.css$/, loader: 'style-loader!css-loader'},
       {
-        test: /\.(png|jpg|gif|svg)$/,  //对图片文件，使用 url-loader里的加载器处理
+        test: /\.(png|jpg|gif|svg)$/,
         loader: 'url-loader',
         options: {
-          limit: 8192,   //限制图片文件字节，大于8KB则不生成base64 用路径引用替代（相当于file－loader）
-          name: '[name].[ext]?[hash]' //文件名
+          limit: 8192,
+          name: '[name].[ext]?[hash]'
         }
       }
     ]

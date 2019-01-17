@@ -2,10 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-const NODE_ENV = process.env.NODE_ENV;
 
 module.exports = {
   mode: 'development',
@@ -21,7 +17,6 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
-      // {test: /\.js$/, use: 'eslint-loader', exclude: /node_modules/, enforce: 'pre'},
       {test: /\.css$/, loader: 'style-loader!css-loader'},
       {
         test: /\.(png|jpg|gif|svg)$/,  //对图片文件，使用 url-loader里的加载器处理
