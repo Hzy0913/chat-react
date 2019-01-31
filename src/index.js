@@ -38,6 +38,7 @@ export default class Chat extends React.Component {
       onScroll,
       avatarClick,
       unreadCountChange,
+      scrollOptions,
       ref: 'message'
     };
     return (

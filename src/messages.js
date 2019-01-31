@@ -29,6 +29,7 @@ export default class Messages extends Component {
     userInfo: PropTypes.object,
     dataSource: PropTypes.array,
     messageListStyle: PropTypes.object,
+    scrollOptions: PropTypes.object,
     scrolltoUpper: PropTypes.func,
     avatarClick: PropTypes.func,
     unreadCountChange: PropTypes.func,
@@ -48,10 +49,12 @@ export default class Messages extends Component {
     unreadCount: 0
   }
   componentDidMount() {
+    const {scrollbars = {}} = this.props;
     this.myScroll = new IScroll('#massage-container', {
       mouseWheel: true,
       click: true,
-      scrollbars: true
+      scrollOptions: true,
+      ...scrollbars
     });
     const _this = this;
     this.myScroll.on('scrollEnd', function () {
@@ -123,8 +126,8 @@ export default class Messages extends Component {
     this.myScroll.refresh();
     if (setScrollTop && autoScroll) {
       setScrollTop = false;
+      const adimatonTime = (firstRender || isUnShift) ? 0 : undefined;
       isUnShift = false;
-      const adimatonTime = firstRender ? 0 : undefined;
       firstRender && (firstRender = false);
       this.myScroll.scrollToElement(lastDomEle, adimatonTime);
     }
