@@ -15,6 +15,7 @@ let messageLength;
 let autoScroll = true;
 let isUnShift = false;
 let firstDataSourceTimestamp;
+let firstRender;
 
 const defaultStyle = {
   height: 500,
@@ -23,16 +24,6 @@ const defaultStyle = {
 const localLanguage = (navigator.language || navigator.browserLanguage || '').toLowerCase();
 const isZh = ~localLanguage.indexOf('zh');
 
-const throttle = (function () {
-  let _lastTime = null;
-  return function (fn, param, millisecond) {
-    const _nowTime = new Date().getTime();
-    if (_nowTime - _lastTime > millisecond || !_lastTime) {
-      fn(param);
-      _lastTime = _nowTime;
-    }
-  };
-}());
 export default class Messages extends Component {
   static propTypes = {
     userInfo: PropTypes.object,
@@ -57,30 +48,35 @@ export default class Messages extends Component {
     unreadCount: 0
   }
   componentDidMount() {
-    const myScroll = new IScroll('#massage-container', {
+    this.myScroll = new IScroll('#massage-container', {
       mouseWheel: true,
+      click: true,
       scrollbars: true
     });
-    this.refs['message-list-wrapper'].addEventListener('scroll', this.onScroll);
+    const _this = this;
+    this.myScroll.on('scrollEnd', function () {
+      _this.onScroll(_this, this)
+    });
+    firstRender = true;
   }
-  onScroll = (e) => {
-    const {target} = e;
-    const {loading, scrolltoUpper, noData, onScroll} = this.props;
-    const {unreadCount} = this.state;
-    if (target.scrollTop === 0 && !loading && !noData) {
+  onScroll(_this, self) {
+    const {scrollerHeight, wrapperHeight, y} = self;
+    const {loading, scrolltoUpper, noData, onScroll} = _this.props;
+    const {unreadCount} = _this.state;
+    if (y === 0 && !loading && !noData) {
       scrolltoUpper && scrolltoUpper();
     }
-    onScroll && throttle(onScroll, target.scrollTop, 100);
-    const scrollBottom = target.scrollHeight - target.clientHeight - target.scrollTop;
+    onScroll && onScroll(self);
+    const scrollBottom = scrollerHeight - wrapperHeight + y;
     if (scrollBottom <= 2) {
       autoScroll = true;
-      (unreadCount !== 0) && this.setState({unreadCount: 0});
+      (unreadCount !== 0) && _this.setState({unreadCount: 0});
     } else {
       autoScroll = false;
     }
   }
   setScrollTop = (value) => {
-    this.refs['message-list-wrapper'].scrollTo(0, value);
+    this.myScroll.scrollTo(0, -value);
   }
   componentWillReceiveProps(nextProps) {
     const {dataSource: nextDataSource = [], timestamp: nextTimestamp, unreadCountChange} = nextProps;
@@ -123,21 +119,24 @@ export default class Messages extends Component {
     return false;
   }
   componentDidUpdate() {
-    const {offsetTop} = this.refs[lastDom] || {};
-    if (setScrollTop && offsetTop && autoScroll) {
+    const lastDomEle = this.refs[lastDom] || {};
+    this.myScroll.refresh();
+    if (setScrollTop && autoScroll) {
       setScrollTop = false;
-      const offsetTopVlaue = isUnShift ? offsetTop - 50 : offsetTop;
       isUnShift = false;
-      this.refs['message-list-wrapper'].scrollTo(0, offsetTopVlaue);
+      const adimatonTime = firstRender ? 0 : undefined;
+      firstRender && (firstRender = false);
+      this.myScroll.scrollToElement(lastDomEle, adimatonTime);
     }
   }
   componentWillUnmount() {
-    this.refs['message-list-wrapper'].removeEventListener('scroll', this.onScroll);
+    this.myScroll.destroy();
+    this.myScroll = null;
   }
   handleRead = () => {
-    const target = this.refs['message-list-wrapper'];
     const {unreadCountChange} = this.props;
-    target.scrollTo(0, target.scrollHeight);
+    const {scrollerHeight, wrapperHeight} = this.myScroll;
+    this.myScroll.scrollTo(0, -(scrollerHeight - wrapperHeight));
     this.setState({unreadCount: 0});
     unreadCountChange && unreadCountChange(0);
   }
@@ -202,6 +201,12 @@ export default class Messages extends Component {
         } else if ((firstDom !== timestamp)) {
           const unshiftLastIndex = (data.findIndex(v => v.timestamp === firstDom)) - 1;
           unshiftLastTimestamp = (data[unshiftLastIndex] || {}).timestamp;
+          if (unshiftLastIndex === 0) {
+            lastDomRef = {ref: timestamp};
+            lastDom = timestamp;
+            firstDom = timestamp;
+            unshiftLastTimestamp = '';
+          }
           isUnShift = true;
         } else {
           isUnShift = false;
