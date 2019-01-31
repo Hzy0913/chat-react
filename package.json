@@ -1,6 +1,6 @@
 {
   "name": "chat-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "chat-react component",
   "main": "lib/chat-react.js",
   "scripts": {
@@ -23,6 +23,9 @@
     "url": "https://github.com/Hzy0913/chat-react/issues"
   },
   "homepage": "https://github.com/Hzy0913/chat-react#readme",
+  "dependencies": {
+    "iscroll": "^5.2.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
@@ -54,9 +57,9 @@
     "html-webpack-plugin": "^3.2.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "timeago.js": "^4.0.0-beta.2",
     "style-loader": "^0.23.1",
-    "iscroll": "^5.2.0",
+    "timeago.js": "^4.0.0-beta.2",
+    "vconsole": "^3.2.2",
     "webpack": "^4.28.3",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
