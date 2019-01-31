@@ -106,6 +106,7 @@ export default class Chat extends Component {
           // noDataEle={<div>无数据</div>}
           scrolltoUpper={this.scrolltoUpper}
           onScroll={this.onScroll}
+          scrollOptions={{fadeScrollbars: true}}
           // unreadCountChange={this.onScroll}
         />
       </div>

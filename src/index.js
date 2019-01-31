@@ -6,7 +6,7 @@ export default class Chat extends React.Component {
   render() {
     const {className = '', style = {}, userInfo, value, placeholder, emoji, customEmoticon, textareaChange, selectEmoje, sendMessage,
       inputFocus, dataSource, timestamp, timeBetween, timeagoMax, timeFormat, loading, loader, messageListStyle,
-      noData, noDataEle, scrolltoUpper, onScroll, avatarClick, unreadCountChange
+      noData, noDataEle, scrolltoUpper, onScroll, avatarClick, unreadCountChange, scrollOptions
     } = this.props;
     const inputProps = {
       userInfo,
