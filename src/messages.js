@@ -49,12 +49,12 @@ export default class Messages extends Component {
     unreadCount: 0
   }
   componentDidMount() {
-    const {scrollbars = {}} = this.props;
+    const {scrollOptions = {}} = this.props;
     this.myScroll = new IScroll('#massage-container', {
       mouseWheel: true,
       click: true,
-      scrollOptions: true,
-      ...scrollbars
+      scrollbars: true,
+      ...scrollOptions
     });
     const _this = this;
     this.myScroll.on('scrollEnd', function () {
