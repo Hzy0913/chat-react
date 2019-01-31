@@ -81,6 +81,7 @@ export default class MyChat extends Component {
 |  loading | bool  |  is the dataSource loading   |
 |  loader | node  |  custom loader      |
 |  noData | bool  |  whether has no more data      |
+|  scrollOptions | object  |   this param used iscroll.js's scrollbars parameter, [view iscroll.js Doc.](https://github.com/cubiq/iscroll#scrollbars "Doc")      |
 |  noDataEle | node  |  custom dom node displayed when there is no more data      |
 |  scrolltoUpper | func  |   callback function when the  scroll bar of message list to the top     |
 |  onScroll | func  |   callback function when the  scroll bar change    |
@@ -91,27 +92,27 @@ export default class MyChat extends Component {
  - `userInfo` you must to be define **userId** and **avatar** for this param, and you can also add some attributes if you need.
  ```javascript
 userInfo = {
-	avatar: 'http://example/avatar.jpg', //user avatar,  required parameters
-	userId: '5bf7cf25a069a537ffe7c324', //user id,  required parameters
-	name: 'rigcky',
-	other: 'otherInfo'
+  avatar: 'http://example/avatar.jpg', //user avatar,  required parameters
+  userId: '5bf7cf25a069a537ffe7c324', //user id,  required parameters
+  name: 'rigcky',
+  other: 'otherInfo'
 }
 ```
  - `emoji ` if emoji param is **false**,  not show emoji. if  you want to add more emoji,you can set this param is array content.
 ```javascript
 // add more emoji
 emoji = [
-	{text: 'panda', content: '🐼'},
-	{text: 'tiger', content: '🐯'},
-	{text: 'pig', content: '🐷'}
+  {text: 'panda', content: '🐼'},
+  {text: 'tiger', content: '🐯'},
+  {text: 'pig', content: '🐷'}
 ]
 ```
  - `customEmoticon` customized emoticon,it is array type of this param.
  ```javascript
 customEmoticon = [
-	{text: 'smile', url: 'http://example/emoticon.png'},
-	{text: 'angry', url: 'http://example/emoticon2.png'},
-	{text: 'weep', url: 'data:image/png;base64,iVBORw0KGgoA...'}
+  {text: 'smile', url: 'http://example/emoticon.png'},
+  {text: 'angry', url: 'http://example/emoticon2.png'},
+  {text: 'weep', url: 'data:image/png;base64,iVBORw0KGgoA...'}
 ]
 ```
  - `dataSource`  data source of message list, the data format is as follows:
