@@ -280,8 +280,7 @@
   box-sizing: border-box;
 }
 .message-list-wrapper {
-  overflow: auto;
-  height: 100%;
+  padding-bottom: 20px;
 }
 .message-list-wrapper .time-info{
   margin: 10px 0px;
