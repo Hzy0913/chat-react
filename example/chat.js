@@ -37,6 +37,31 @@ export default class Chat extends Component {
       "timestamp": 1448156977298,
       "userInfo": {"avatar":"http://img.binlive.cn/Fv0UOcmxAB7k_4JSWMzJLkgpZfUg","userId":"59e454ea52107d66ceb0a598"}
     });
+    messages.unshift({
+      "value": "vvvvvvv2222",
+      "timestamp": 1448156977398,
+      "userInfo": {"avatar":"http://img.binlive.cn/Fv0UOcmxAB7k_4JSWMzJLkgpZfUg","userId":"59e454ea52107d66ceb0a598"}
+    });
+    messages.unshift({
+      "value": "vvvvvvv2222",
+      "timestamp": 1448156977498,
+      "userInfo": {"avatar":"http://img.binlive.cn/Fv0UOcmxAB7k_4JSWMzJLkgpZfUg","userId":"59e454ea52107d66ceb0a598"}
+    });
+    messages.unshift({
+      "value": "vvvvvvv2222",
+      "timestamp": 1448156977598,
+      "userInfo": {"avatar":"http://img.binlive.cn/Fv0UOcmxAB7k_4JSWMzJLkgpZfUg","userId":"59e454ea52107d66ceb0a598"}
+    });
+    messages.unshift({
+      "value": "vvvvvvv2222",
+      "timestamp": 1448156977698,
+      "userInfo": {"avatar":"http://img.binlive.cn/Fv0UOcmxAB7k_4JSWMzJLkgpZfUg","userId":"59e454ea52107d66ceb0a598"}
+    });
+    messages.unshift({
+      "value": "vvvvvvv2222",
+      "timestamp": 1448156977898,
+      "userInfo": {"avatar":"http://img.binlive.cn/Fv0UOcmxAB7k_4JSWMzJLkgpZfUg","userId":"59e454ea52107d66ceb0a598"}
+    });
     setTimeout(() => {
       this.setState({messages, timestamp: new Date().getTime(), loading: false});
     }, 1222)
