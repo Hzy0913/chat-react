@@ -81,7 +81,7 @@ export default class MyChat extends Component {
 |  loading | bool  |  is the dataSource loading   |
 |  loader | node  |  custom loader      |
 |  noData | bool  |  whether has no more data      |
-|  scrollOptions | object  |   this param used iscroll.js's scrollbars parameter, [view iscroll.js Doc.](https://github.com/cubiq/iscroll#scrollbars "Doc")      |
+|  scrollOptions | object  |   this param used iscroll.js's scrollbars parameter, [iscroll.js Doc.](https://github.com/cubiq/iscroll#scrollbars "Doc")      |
 |  noDataEle | node  |  custom dom node displayed when there is no more data      |
 |  scrolltoUpper | func  |   callback function when the  scroll bar of message list to the top     |
 |  onScroll | func  |   callback function when the  scroll bar change    |
