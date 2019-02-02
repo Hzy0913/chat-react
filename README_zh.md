@@ -24,10 +24,10 @@ export default class MyChat extends Component {
     timestamp: new Date().getTime()
   }
   setInputfoucs = () => {
-    this.chat.refs.input.inputFocus();  //set input foucus
+    this.chat.refs.input.inputFocus();  //设置输入框为焦点状态
   }
   setScrollTop = () => {
-    this.chat.refs.message.setScrollTop(1200);  //set scrollTop position
+    this.chat.refs.message.setScrollTop(1200);  //设置滚动条的位置
   }
   sendMessage = (v) => {
     const {value} = v;
@@ -91,15 +91,15 @@ export default class MyChat extends Component {
  - `userInfo` 你必须为这个参数定义**userId**和 **avatar**属性,也可以添加一些你需要属性。
  ```javascript
 userInfo = {
-  avatar: 'http://example/avatar.jpg', //user avatar,  required parameters
-  userId: '5bf7cf25a069a537ffe7c324', //user id,  required parameters
+  avatar: 'http://example/avatar.jpg', //用户头像,  该参数必须有
+  userId: '5bf7cf25a069a537ffe7c324', //用户ID,  该参数必须有
   name: 'rigcky',
   other: 'otherInfo'
 }
 ```
  - `emoji ` 如果设置emoji参数为**false**,则不显示emoji。如果你想添加更多的emoji,您可以设置这个参数为数组，内容为你所添加的emoji。
 ```javascript
-// add more emoji
+// 添加更多emoji
 emoji = [
   {text: 'panda', content: '🐼'},
   {text: 'tiger', content: '🐯'},
