@@ -73,7 +73,7 @@ export default class MyChat extends Component {
 |  selectEmoje | (emojeInfo) => {}   |   callback function after select a emoje. the first function parameter is selected emoje info          |
 |  inputFocus | func  |  method of input child component, set input focus. `this.chat.refs.input.inputFocus()`          |
 |  dataSource | array  |  data content of message list      |
-|  messageListStyle | object  | message list container style，you need to set a fixed size  height for it.     |
+|  messageListStyle | object  | message list container style,you need to set a fixed size  height for it.     |
 |  timestamp | number  |    timestamp to be set when dataSource changes     |
 |  timeBetween | number  |   how many time between show time prompts (unit: min, default: 5)    |
 |  timeagoMax | number  |   time range of the show timeago  (unit: hour, default: 24)    |
@@ -81,13 +81,13 @@ export default class MyChat extends Component {
 |  loading | bool  |  is the dataSource loading   |
 |  loader | node  |  custom loader      |
 |  noData | bool  |  whether has no more data      |
-|  scrollOptions | object  |   this param used iscroll.js's scrollbars parameter, [iscroll.js Doc.](https://github.com/cubiq/iscroll#scrollbars "Doc")      |
+|  scrollOptions | object  |   this param used iscroll.js's scrollbars parameter,[iscroll.js Doc.](https://github.com/cubiq/iscroll#scrollbars "Doc")      |
 |  noDataEle | node  |  custom dom node displayed when there is no more data      |
 |  scrolltoUpper | func  |   callback function when the  scroll bar of message list to the top     |
 |  onScroll | func  |   callback function when the  scroll bar change    |
 |  avatarClick | func  |   callback function user to click the avatar     |
 |  unreadCountChange | func  |   callback function when the unread message has change     |
-|  setScrollTop | func  |  method of message child component, set scroll bar position.  `this.chat.refs.message.setScrollTop(1200)`        |
+|  setScrollTop | func  |  method of message child component,set scroll bar position.  `this.chat.refs.message.setScrollTop(1200)`        |
 ##### the param description of component
  - `userInfo` you must to be define **userId** and **avatar** for this param, and you can also add some attributes if you need.
  ```javascript
@@ -133,9 +133,9 @@ const customEmoticon = [{
         userId: "1544365758856"
     },
     value: "😀",
-    error: true //set error is true，this message will be show error icon
+    error: true //set error is true,this message will be show error icon
 }]
 ```
- - `messageListStyle` message list container style，you need to set a fixed size height for it,make sure it's not pushed up ， for example `{width: '100%', height: 500}`
+ - `messageListStyle` message list container style,you need to set a fixed size height for it,make sure it's not pushed up, for example `{width: '100%', height: 500}`
  - `timestamp`  this parameter needs to be set to the current timestamp when the data of **dataSource** param has changes.
  - `timeFormat` formatting times, such as display 2019-2-1 20:20 set to yyyy-MM-dd hh:mm.
