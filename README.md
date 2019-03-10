@@ -98,7 +98,7 @@ userInfo = {
   other: 'otherInfo'
 }
 ```
- - `emoji ` if emoji param is **false**,  not show emoji. if  you want to add more emoji,you can set this param is array content.
+ - `emoji ` if emoji param is **false**,  not show emoji. if you want to add more emoji, you can set this param is array content.
 ```javascript
 // add more emoji
 emoji = [
@@ -107,7 +107,7 @@ emoji = [
   {text: 'pig', content: '🐷'}
 ]
 ```
- - `customEmoticon` customized emoticon,it is array type of this param.
+ - `customEmoticon` customized emoticon, it is array type of this param.
  ```javascript
 customEmoticon = [
   {text: 'smile', url: 'http://example/emoticon.png'},
@@ -133,9 +133,9 @@ const customEmoticon = [{
         userId: "1544365758856"
     },
     value: "😀",
-    error: true //set error is true,this message will be show error icon
+    error: true //set error is true, this message will be show error icon
 }]
 ```
- - `messageListStyle` message list container style,you need to set a fixed size height for it,make sure it's not pushed up, for example `{width: '100%', height: 500}`
+ - `messageListStyle` message list container style, you need to set a fixed size height for it, make sure it's not pushed up, for example `{width: '100%', height: 500}`
  - `timestamp`  this parameter needs to be set to the current timestamp when the data of **dataSource** param has changes.
  - `timeFormat` formatting times, such as display 2019-2-1 20:20 set to yyyy-MM-dd hh:mm.
