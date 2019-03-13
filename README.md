@@ -81,24 +81,24 @@ export default class MyChat extends Component {
 |  loading | bool  |  is the dataSource loading   |
 |  loader | node  |  custom loader      |
 |  noData | bool  |  whether has no more data      |
-|  scrollOptions | object  |   this param used iscroll.js's scrollbars parameter,[iscroll.js Doc.](https://github.com/cubiq/iscroll#scrollbars "Doc")      |
+|  scrollOptions | object  |   this param used iscroll.js's scrollbars parameter, [iscroll.js Doc.](https://github.com/cubiq/iscroll#scrollbars "Doc")      |
 |  noDataEle | node  |  custom dom node displayed when there is no more data      |
-|  scrolltoUpper | func  |   callback function when the  scroll bar of message list to the top     |
+|  scrolltoUpper | func  |   callback function when the scroll bar of message list to the top     |
 |  onScroll | func  |   callback function when the  scroll bar change    |
 |  avatarClick | func  |   callback function user to click the avatar     |
 |  unreadCountChange | func  |   callback function when the unread message has change     |
-|  setScrollTop | func  |  method of message child component,set scroll bar position.  `this.chat.refs.message.setScrollTop(1200)`        |
+|  setScrollTop | func  |  method of message child component, set scroll bar position.  `this.chat.refs.message.setScrollTop(1200)`        |
 ##### the param description of component
  - `userInfo` you must to be define **userId** and **avatar** for this param, and you can also add some attributes if you need.
  ```javascript
 userInfo = {
-  avatar: 'http://example/avatar.jpg', //user avatar,  required parameters
-  userId: '5bf7cf25a069a537ffe7c324', //user id,  required parameters
+  avatar: 'http://example/avatar.jpg', //user avatar, required parameters
+  userId: '5bf7cf25a069a537ffe7c324', //user id, required parameters
   name: 'rigcky',
   other: 'otherInfo'
 }
 ```
- - `emoji ` if emoji param is **false**,  not show emoji. if you want to add more emoji, you can set this param is array content.
+ - `emoji` if emoji param is **false**,  not show emoji. if you want to add more emoji, you can set this param is array content.
 ```javascript
 // add more emoji
 emoji = [
@@ -115,7 +115,7 @@ customEmoticon = [
   {text: 'weep', url: 'data:image/png;base64,iVBORw0KGgoA...'}
 ]
 ```
- - `dataSource`  data source of message list, the data format is as follows:
+ - `dataSource` data source of message list, the data format is as follows:
 ```javascript
 const customEmoticon = [{
     timestamp: 1545925494422,
