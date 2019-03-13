@@ -87,7 +87,7 @@ export default class MyChat extends Component {
 |  onScroll | func  |   callback function when the  scroll bar change    |
 |  avatarClick | func  |   callback function user to click the avatar     |
 |  unreadCountChange | func  |   callback function when the unread message has change     |
-|  setScrollTop | func  |  method of message child component, set scroll bar position.  `this.chat.refs.message.setScrollTop(1200)`        |
+|  setScrollTop | func  |  method of message child component, set scroll bar position. `this.chat.refs.message.setScrollTop(1200)`        |
 ##### the param description of component
  - `userInfo` you must to be define **userId** and **avatar** for this param, and you can also add some attributes if you need.
  ```javascript
